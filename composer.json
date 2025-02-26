@@ -1,0 +1,7 @@
+{
+    "require": {
+        "sc0vu/web3.php": "^0.1.4",
+        "guzzlehttp/guzzle": "^6.5",
+        "php-http/guzzle6-adapter": "^2.0"
+    }
+}

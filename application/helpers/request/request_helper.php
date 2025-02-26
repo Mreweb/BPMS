@@ -1,0 +1,1 @@
+<?php$CI =& get_instance();$headers = $CI->input->request_headers();if (!isset($headers['SecretKey']) || strpos($headers['SecretKey'] , "MY-CMS") !==0) {    $arr = array(        'type' => "red",        'content' => "درخواست نامعتبر می باشد",        'success' => false    );    echo json_encode($arr);    die();}?>
