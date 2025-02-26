@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TradingView Custom Datafeed</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+    <!-- TradingView Library -->
+    <script src="charting_library/charting_library.js"></script>
+    
+
+</head>
+<body style="margin:0;">
+    <div id="tv_chart_container" style="width: 100%; height: 100vh;"></div>
+    <script>
+        /*function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            const regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                  results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+        function initOnReady() {
+            const widget = new TradingView.widget({
+                fullscreen: true,
+                symbol: 'AAPL',
+                interval: '1D',
+                container_id: "tv_chart_container",
+                datafeed: customDataFeed,
+                library_path: "charting_library/",
+                locale: getParameterByName('lang') || "en",
+                disabled_features: ["use_localstorage_for_settings"],
+                enabled_features: ["study_templates"],
+                charts_storage_url: 'https://saveload.tradingview.com',
+                charts_storage_api_version: "1.1",
+                client_id: 'tradingview.com',
+                user_id: 'public_user_id',
+                theme: getParameterByName('theme') || 'light',
+            });
+        }
+        window.addEventListener('DOMContentLoaded', initOnReady, false);*/
+
+        setTimeout(function(){
+            const customDataFeed = {
+                onReady(callback) {
+                    setTimeout(() => callback({
+                        supports_search: true,
+                        supports_group_request: false,
+                        supports_marks: true,
+                        supports_timescale_marks: true,
+                        supports_time: true,
+                    }), 0);
+                },
+                searchSymbols(userInput, exchange, symbolType, onResultReadyCallback) {
+                    // Use your API to search for symbols
+                    $.ajax({
+                        url: 'YOUR_API_ENDPOINT/search',
+                        data: { query: userInput, exchange: exchange, type: symbolType },
+                        success: function(data) {
+                            onResultReadyCallback(data); // send back the result
+                        }
+                    });
+                },
+                resolveSymbol(symbolName, onSymbolResolvedCallback, onResolveErrorCallback) {
+                    // Resolve symbol information from your API
+                    $.ajax({
+                        url: 'YOUR_API_ENDPOINT/symbols',
+                        data: { symbol: symbolName },
+                        success: function(data) {
+                            onSymbolResolvedCallback(data);
+                        },
+                        error: function() {
+                            onResolveErrorCallback('Symbol not found');
+                        }
+                    });
+                },
+                getBars(symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, isFirstCall) {
+                    // Fetch historical bars
+                    $.ajax({
+                        url: 'YOUR_API_ENDPOINT/history',
+                        data: {
+                            symbol: symbolInfo.ticker,
+                            resolution: resolution,
+                            from: from,
+                            to: to,
+                        },
+                        success: function(data) {
+                            if (data.s === 'ok') {
+                                const bars = data.bars.map(bar => ({
+                                    time: bar.time * 1000,
+                                    low: bar.low,
+                                    high: bar.high,
+                                    open: bar.open,
+                                    close: bar.close,
+                                    volume: bar.volume
+                                }));
+                                onHistoryCallback(bars, { noData: false });
+                            } else {
+                                onHistoryCallback([], { noData: true });
+                            }
+                        },
+                        error: function() {
+                            onErrorCallback('Error fetching historical data');
+                        }
+                    });
+                },
+                subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback) {
+                    // Subscribing to real-time data updates
+                    this.updateInterval = setInterval(() => {
+                        $.ajax({
+                            url: 'YOUR_API_ENDPOINT/realtime',
+                            data: { symbol: symbolInfo.ticker, resolution: resolution },
+                            success: function(data) {
+                                const lastBar = data[data.length - 1];
+                                onRealtimeCallback({
+                                    time: lastBar.time * 1000,
+                                    open: lastBar.open,
+                                    high: lastBar.high,
+                                    low: lastBar.low,
+                                    close: lastBar.close,
+                                    volume: lastBar.volume
+                                });
+                            }
+                        });
+                    }, 1000); // Adjust the interval as needed
+                },
+                unsubscribeBars(subscriberUID) {
+                    clearInterval(this.updateInterval); // Stop real-time updates
+                }
+            };
+            new TradingView.widget({
+                symbol: 'AAPL',
+                interval: 'D',
+                container_id: 'tv_chart_container',
+                datafeed: customDataFeed,
+                library_path: 'charting_library/',
+                locale: 'fa',
+                enabled_features: ['study_templates'],
+                disabled_features: ['use_localstorage_for_settings'],
+                charts_storage_url: 'https://saveload.tradingview.com',
+                charts_storage_api_version: '1.1',
+                client_id: 'tradingview.com',
+                user_id: 'public_user_id',
+            });
+        },4000);
+
+    </script>
+</body>
+</html>

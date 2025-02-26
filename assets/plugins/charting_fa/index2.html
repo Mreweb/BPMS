@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jalaali-js/dist/jalaali.min.js"></script>
+<script src="charting_library/charting_library.js"></script>
+<script>
+    const customDataFeed = {
+        onReady(callback) {
+            setTimeout(() => callback({
+                supports_search: true,
+                supports_group_request: false,
+                supports_marks: true,
+                supports_timescale_marks: true,
+                supports_time: true,
+            }), 0);
+        },
+
+        searchSymbols(userInput, exchange, symbolType, onResultReadyCallback) {
+            $.ajax({
+                url: 'YOUR_API_ENDPOINT/search',
+                data: { query: userInput, exchange: exchange, type: symbolType },
+                success: function(data) {
+                    onResultReadyCallback(data);
+                }
+            });
+        },
+
+        resolveSymbol(symbolName, onSymbolResolvedCallback, onResolveErrorCallback) {
+            $.ajax({
+                url: 'YOUR_API_ENDPOINT/symbols',
+                data: { symbol: symbolName },
+                success: function(data) {
+                    onSymbolResolvedCallback(data);
+                },
+                error: function() {
+                    onResolveErrorCallback('Symbol not found');
+                }
+            });
+        },
+
+        getBars(symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback) {
+            $.ajax({
+                url: 'YOUR_API_ENDPOINT/history',
+                data: {
+                    symbol: symbolInfo.ticker,
+                    resolution: resolution,
+                    from: from,
+                    to: to,
+                },
+                success: function(data) {
+                    if (data.s === 'ok') {
+                        const bars = data.bars.map(bar => ({
+                            time: convertToJalaliTimestamp(bar.time), // Convert to Shamsi date
+                            low: bar.low,
+                            high: bar.high,
+                            open: bar.open,
+                            close: bar.close,
+                            volume: bar.volume
+                        }));
+                        onHistoryCallback(bars, { noData: false });
+                    } else {
+                        onHistoryCallback([], { noData: true });
+                    }
+                },
+                error: function() {
+                    onErrorCallback('Error fetching historical data');
+                }
+            });
+        },
+
+        subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback) {
+            this.updateInterval = setInterval(() => {
+                $.ajax({
+                    url: 'YOUR_API_ENDPOINT/realtime',
+                    data: { symbol: symbolInfo.ticker, resolution: resolution },
+                    success: function(data) {
+                        const lastBar = data[data.length - 1];
+                        onRealtimeCallback({
+                            time: convertToJalaliTimestamp(lastBar.time), // Convert to Shamsi date
+                            open: lastBar.open,
+                            high: lastBar.high,
+                            low: lastBar.low,
+                            close: lastBar.close,
+                            volume: lastBar.volume
+                        });
+                    }
+                });
+            }, 1000);
+        },
+
+        unsubscribeBars(subscriberUID) {
+            clearInterval(this.updateInterval);
+        }
+    };
+
+    // Helper function to convert Gregorian timestamp to Jalali timestamp
+    function convertToJalaliTimestamp(gregorianTimestamp) {
+        const date = new Date(gregorianTimestamp * 1000);
+        const jalaliDate = jalaali.toJalaali(date.getFullYear(), date.getMonth() + 1, date.getDate());
+        return new Date(jalaliDate.jy, jalaliDate.jm - 1, jalaliDate.jd).getTime();
+    }
+
+</script>
+
+<script>
+    new TradingView.widget({
+        symbol: 'AAPL',
+        interval: 'D',
+        container_id: 'tradingview_chart',
+        datafeed: customDataFeed,
+        library_path: '/charting_library/',
+        locale: 'fa',  // Persian locale
+        enabled_features: ['study_templates'],
+        disabled_features: ['use_localstorage_for_settings'],
+        charts_storage_url: 'https://saveload.tradingview.com',
+        charts_storage_api_version: '1.1',
+        client_id: 'tradingview.com',
+        user_id: 'public_user_id',
+    });
+
+</script>
+
+<div id="tradingview_chart"></div>
+
+</body>
+</html>
