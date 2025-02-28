@@ -64,6 +64,33 @@ class ModelRequests extends CI_Model{
         return $result;
     }
 
+    public function doStepCentralBankPagination($inputs)
+    {
+        $limit = $inputs['pageIndex'];
+        $start = ($limit - 1) * $this->config->item('defaultPageSize');
+        $end = $this->config->item('defaultPageSize');
+        $this->db->select('*');
+        $this->db->from('person_requests');
+        if ($inputs['inputTitle'] != '') {
+            $this->db->like('ReqTitle', $inputs['inputTitle']);
+        }
+        $this->db->where('ReqStatus', 'CENTRALBANK');
+        $this->db->order_by('ReqId', 'DESC');
+
+        $tempdb = clone $this->db; /* For Count Of Rows */
+        $this->db->limit($end, $start);
+        $query = $this->db->get()->result_array();
+        $queryCount = $tempdb->count_all_results();
+        if (count($query) > 0) {
+            $result['data'] = $query;
+            $result['count'] = $queryCount;
+        } else {
+            $result['data'] = array();
+            $result['count'] = 0;
+        }
+        return $result;
+    }
+
     public function doStepLegalPagination($inputs)
     {
         $limit = $inputs['pageIndex'];
@@ -176,7 +203,9 @@ class ModelRequests extends CI_Model{
     {
         $this->db->select('*');
         $this->db->from('person_requests');
-        $this->db->where('ReqId', $id);
+        $this->db->join('person_requests_property_info' , 'person_requests_property_info.RequestId = person_requests.ReqId' , 'left');
+        $this->db->join('person_requests_property_owner_info' , 'person_requests_property_owner_info.RequestId = person_requests.ReqId' , 'left');
+         $this->db->where('ReqId', $id);
         return $this->db->get()->result_array();
     }
 
@@ -208,8 +237,10 @@ class ModelRequests extends CI_Model{
             $status = 'DRAFT';
         }
         else {
-            $status = 'LEGAL';
+            $status = 'CENTRALBANK';
         }
+
+        /* Add Request Main Info*/
         $userArray = array(
             'ReqPersonId' => $inputs['inputCreatePersonId'],
             'ReqTitle' => $inputs['inputTitle'],
@@ -226,7 +257,6 @@ class ModelRequests extends CI_Model{
         $this->db->insert('person_requests', $userArray);
 
         $reqId = $this->db->insert_id();
-
         foreach ($inputs['inputAttachments'] as $inputAttachment) {
             if ($inputAttachment['src'] != "") {
                 $userArray = array(
@@ -240,6 +270,46 @@ class ModelRequests extends CI_Model{
                 $this->db->insert('person_requests_attachments', $userArray);
             }
         }
+
+        /* Add Request Property Info*/
+        $userArray = array(
+            'RequestId' => $reqId,
+            'PropertyID' => $inputs['inputPropertyID'],
+            'PropertyRegisterDate' => $inputs['inputPropertyRegisterDate'],
+            'PropertyType' => $inputs['inputPropertyType'],
+            'PropertySpecialStatus' => $inputs['inputPropertySpecialStatus'],
+            'PropertyUseType' => $inputs['inputPropertyUseType'],
+            'PropertyDocType' => $inputs['inputPropertyDocType'],
+            'PropertyUseReason' => $inputs['inputPropertyUseReason'],
+            'PropertyUUID' => $inputs['inputPropertyUUID'],
+            'PropertyPassword' => $inputs['inputPropertyPassword'],
+            'PropertyAreaSupply' => $inputs['inputPropertyAreaSupply'],
+            'PropertyAreaNobility' => $inputs['inputPropertyAreaNobility'],
+            'PropertyRegistrationPlate' => $inputs['inputPropertyRegistrationPlate'],
+            'PropertySeparate' => $inputs['inputPropertySeparate'],
+            'PropertyPiece' => $inputs['inputPropertyPiece'],
+            'PropertyRegistrationDepartment' => $inputs['inputPropertyRegistrationDepartment'],
+            'PropertyDistrict' => $inputs['inputPropertyDistrict'],
+            'PropertyBlock' => $inputs['inputPropertyBlock'],
+            'PropertyFloor' => $inputs['inputPropertyFloor'],
+            'PropertySide' => $inputs['inputPropertySide'],
+            'CreateDatetime' => time(),
+            'CreatePersonId' => $inputs['inputCreatePersonId']
+        );
+        $this->db->insert('person_requests_property_info', $userArray);
+
+        $userArray = array(
+            'RequestId' => $reqId,
+            'OwnerNationalCode' => $inputs['inputOwnerNationalCode'],
+            'OwnerName' => $inputs['inputOwnerName'],
+            'OwnerBankRelation' => $inputs['inputOwnerBankRelation'],
+            'OwnerCompanyType' => $inputs['inputOwnerCompanyType'],
+            'OwnerTypeDependentPerson' => $inputs['inputOwnerTypeDependentPerson'],
+            'OwnerOwnershipPercentage' => $inputs['inputOwnerOwnershipPercentage'],
+            'CreateDatetime' => time(),
+            'CreatePersonId' => $inputs['inputCreatePersonId']
+        );
+        $this->db->insert('person_requests_property_owner_info', $userArray);
 
 
         return $this->config->item('DBMessages')['SuccessAction'];
@@ -260,7 +330,7 @@ class ModelRequests extends CI_Model{
                 $status = 'DRAFT';
             }
             else {
-                $status = 'LEGAL';
+                $status = 'CENTRALBANK';
             }
             $userArray = array(
                 'ReqTitle' => $inputs['inputTitle'],
@@ -296,7 +366,85 @@ class ModelRequests extends CI_Model{
             }
 
 
+            /* Add Request Property Info*/
+            $this->db->delete('person_requests_property_info', array(
+                'RequestId' => $inputs['inputReqId']
+            ));
+            $userArray = array(
+                'RequestId' => $inputs['inputReqId'],
+                'PropertyID' => $inputs['inputPropertyID'],
+                'PropertyRegisterDate' => $inputs['inputPropertyRegisterDate'],
+                'PropertyType' => $inputs['inputPropertyType'],
+                'PropertySpecialStatus' => $inputs['inputPropertySpecialStatus'],
+                'PropertyUseType' => $inputs['inputPropertyUseType'],
+                'PropertyDocType' => $inputs['inputPropertyDocType'],
+                'PropertyUseReason' => $inputs['inputPropertyUseReason'],
+                'PropertyUUID' => $inputs['inputPropertyUUID'],
+                'PropertyPassword' => $inputs['inputPropertyPassword'],
+                'PropertyAreaSupply' => $inputs['inputPropertyAreaSupply'],
+                'PropertyAreaNobility' => $inputs['inputPropertyAreaNobility'],
+                'PropertyRegistrationPlate' => $inputs['inputPropertyRegistrationPlate'],
+                'PropertySeparate' => $inputs['inputPropertySeparate'],
+                'PropertyPiece' => $inputs['inputPropertyPiece'],
+                'PropertyRegistrationDepartment' => $inputs['inputPropertyRegistrationDepartment'],
+                'PropertyDistrict' => $inputs['inputPropertyDistrict'],
+                'PropertyBlock' => $inputs['inputPropertyBlock'],
+                'PropertyFloor' => $inputs['inputPropertyFloor'],
+                'PropertySide' => $inputs['inputPropertySide'],
+                'CreateDatetime' => time(),
+                'CreatePersonId' => $inputs['inputCreatePersonId']
+            );
+            $this->db->insert('person_requests_property_info', $userArray);
+
+            /*  */
+            $this->db->delete('person_requests_property_owner_info', array(
+                'RequestId' => $inputs['inputReqId']
+            ));
+            $userArray = array(
+                'RequestId' => $inputs['inputReqId'],
+                'OwnerNationalCode' => $inputs['inputOwnerNationalCode'],
+                'OwnerName' => $inputs['inputOwnerName'],
+                'OwnerBankRelation' => $inputs['inputOwnerBankRelation'],
+                'OwnerCompanyType' => $inputs['inputOwnerCompanyType'],
+                'OwnerTypeDependentPerson' => $inputs['inputOwnerTypeDependentPerson'],
+                'OwnerOwnershipPercentage' => $inputs['inputOwnerOwnershipPercentage'],
+                'CreateDatetime' => time(),
+                'CreatePersonId' => $inputs['inputCreatePersonId']
+            );
+            $this->db->insert('person_requests_property_owner_info', $userArray);
+
+
         }
+        return $this->config->item('DBMessages')['SuccessAction'];
+    }
+
+    public function doEditCentralBank($inputs){
+
+        $status = "LEGAL";
+        if ($inputs['inputResult'] == "0") {
+            $status = "DRAFT";
+        }
+        if ($inputs['inputResult'] == "1") {
+            $status = "LEGAL";
+        }
+        $userArray = array(
+            'ReqStatus' => $status
+        );
+        $this->db->where('ReqId', $inputs['inputReqId']);
+        $this->db->update('person_requests', $userArray);
+
+        if ($inputs['inputResultDescription'] != "") {
+            $userArray = array(
+                'CommentReqId' => $inputs['inputReqId'],
+                'CommentType' => 'CENTRALBANK',
+                'CommentContent' => $inputs['inputResultDescription'],
+                'CommentPersonId' => $inputs['inputCreatePersonId'],
+                'CreatePersonId' => $inputs['inputCreatePersonId'],
+                'CreateDateTime' => time()
+            );
+            $this->db->insert('person_requests_comments', $userArray);
+        }
+
         return $this->config->item('DBMessages')['SuccessAction'];
     }
 
@@ -304,7 +452,7 @@ class ModelRequests extends CI_Model{
 
         $status = "LEGAL";
         if ($inputs['inputResult'] == "0") {
-            $status = "DRAFT";
+            $status = "CENTRALBANK";
         }
         if ($inputs['inputResult'] == "1") {
             $status = "ECONOMIC";

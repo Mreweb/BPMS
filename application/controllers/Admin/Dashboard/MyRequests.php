@@ -1,8 +1,8 @@
 <?php
 
 defined('BASEPATH') OR exit('No direct script access allowed');
-class MyRequests extends CI_Controller{
 
+class MyRequests extends CI_Controller{
 
     private $loginInfo;
     private $loginRoles;
@@ -83,7 +83,6 @@ class MyRequests extends CI_Controller{
         }
 
 
-
         $page['pageTitle'] = 'ویرایش درخواست';
         $data['loginInfo'] = $this->loginInfo;
         $data['enum'] = $this->enum;
@@ -107,7 +106,7 @@ class MyRequests extends CI_Controller{
 
         $data['request'] = $this->ModelRequests->getById($inputs['inputReqId'])[0];
 
-        if($data['request']['ReqStatus'] != 'DRAFT'){
+        if($data['request']['ReqStatus'] != 'DRAFT' ){
             response(get_req_message('ErrorAction' , 'درخواست در مرحله بررسی است و قابل ویرایش نیست.') , 400);
             die();
         }

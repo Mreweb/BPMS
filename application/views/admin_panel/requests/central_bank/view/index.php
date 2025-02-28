@@ -14,6 +14,12 @@
                             </a>
                         </li>
                         <li class="breadcrumb-item active" aria-current="page"><?php echo $pageTitle; ?></li>
+                        <input
+                                type="hidden"
+                                <?php setInputValue($request['ReqId']); ?>
+                                id="inputReqId"
+                                aria-label=""
+                                class="form-control">
                     </ol>
                 </nav>
             </div>
@@ -22,23 +28,25 @@
             <!-- row-->
             <div class="row">
                 <div class="col-12 mx-auto">
+
                     <div class="card">
                         <div class="card-body">
-                            <?php  if($request['ReqStatus'] == 'LEGAL'){ ?>
+                            <?php if ($request['ReqStatus'] == 'CENTRALBANK') { ?>
                                 <div class="row">
-                                    <?php  if($request['ReqStatus'] == 'LEGAL'){ ?>
+                                    <?php if ($request['ReqStatus'] == 'CENTRALBANK') { ?>
                                         <div class="alert alert-success text-white">
                                             لطفا وضعیت درخواست را مشخص کنید
                                         </div>
-                                    <?php } else{ ?>
+                                    <?php } else { ?>
                                         <div class="alert alert-danger text-white">
-                                            درخواست در مرحله کمیسیون حقوقی قرار ندارد.
+                                            درخواست در مرحله تایید بانک مرکزی قرار ندارد.
                                         </div>
                                     <?php } ?>
                                     <div class="col-sm-12 col-md-3 mb-3">
                                         <div class="input-group">
                                             <span class="input-group-text">وضعیت تایید</span>
-                                            <select class="form-select" id="inputResult" data-placeholder="یک مورد راانتخاب کنید">
+                                            <select class="form-select" id="inputResult"
+                                                    data-placeholder="یک مورد راانتخاب کنید">
                                                 <option></option>
                                                 <?php foreach ($enum['ACCEPT'] as $key => $value) { ?>
                                                     <option value="<?php echo $key; ?>">
@@ -56,9 +64,10 @@
                                 <div class="col-12 text-end mb-2">
                                     <button id="do_save" class="btn btn-success">ذخیره</button>
                                 </div>
-                            <?php } else{ ?>
+                            <?php }
+                            else { ?>
                                 <div class="alert alert-danger text-white">
-                                    درخواست در مرحله کمیسیون حقوقی قرار ندارد.
+                                    درخواست در مرحله تایید بانک مرکزی قرار ندارد.
                                 </div>
                             <?php } ?>
                         </div>

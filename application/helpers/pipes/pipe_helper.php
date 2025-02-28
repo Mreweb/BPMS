@@ -19,6 +19,8 @@ function getRequestsStatusClass($status){
             return 'badge bg-secondary';
         case 'LEGAL':
             return 'badge bg-primary';
+        case 'CENTRALBANK':
+            return 'badge bg-primary';
         case 'ECONOMIC':
             return 'badge bg-warning';
         case 'FINAL_ACCEPT':

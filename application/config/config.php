@@ -92,6 +92,10 @@ $config['ENUM'] = array(
         '0' => 'ندارد',
         '1' => 'دارد'
     ),
+    'YES_NO' => array(
+        '0' => 'خیر',
+        '1' => 'بله'
+    ),
     'GENDER' => array(
         'MALE' => 'آقا',
         'FEMALE' => 'خانم'
@@ -102,6 +106,7 @@ $config['ENUM'] = array(
     ),
     'REQ_STATUS' => array(
         'DRAFT' => 'ثبت اولیه',
+        'CENTRALBANK' => 'بررسی بانک مرکزی',
         'LEGAL' => 'بررسی کمیسیون حقوقی',
         'ECONOMIC' => 'بررسی کمیسیون اقتصادی',
         'FINAL_ACCEPT' => 'بررسی نهایی ارشد',
@@ -113,6 +118,10 @@ $config['ENUM'] = array(
         'BUILDING' => 'ملک',
         'IRON_HOUSE' => 'ملک نیمه ساخته',
     ),
+    'DOC_TYPE' => array(
+        'SIX_PART' => 'شش دانگ',
+        'Single' => 'تک برگ'
+    ),
     'REQ_DOC_TYPE' => array(
         'PROPERTY_DEED' => 'سند ملک',
         'VALUATION_REPORT' => 'گزارش ارزش گذاری',
@@ -121,6 +130,11 @@ $config['ENUM'] = array(
         'MARKET_MANAGER_INTRODUCTION_LETTER' => 'نامه معرفی بازارگردان',
         'WHITE_PAPER' => 'سپیدنامه',
         'OTHER' => 'سایر',
+    ),
+    'CompanyType' => array(
+        'PRIVATE' => 'خصوصی',
+        'GOVERNANCE' => 'دولتی',
+        'GOVPRIVATE' => 'خصولتی',
     ),
     'USE_TYPE' => array(
         '1' => 'مسکونی',
@@ -146,7 +160,8 @@ $config['ENUM'] = array(
         'MANAGER' => 'ارشد',
         'ECONOMIC' => 'اقتصادی',
         'LEGAL' => 'حقوقی',
-        'PUBLISHER' => 'ناشر'
+        'PUBLISHER' => 'ناشر / بانک',
+        'CENTRALBANK' => 'بانک مرکزی'
     ),
     'TRANSLATES' => array(
         'Report' => 'گزارشات',

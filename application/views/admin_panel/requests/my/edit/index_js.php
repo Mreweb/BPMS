@@ -2,8 +2,8 @@
     $(document).ready(function () {
         $("#do_save").click(function (e) {
             e.preventDefault();
-
             $this = $(this);
+            $attachments = [];
             $.confirm({
                 title: 'ثبت درخواست',
                 content: 'آیا از ثبت درخواست مطمئن هستید؟',
@@ -15,7 +15,8 @@
                         btnClass: 'btn-green',
                         action: function () {
                             toggleLoader();
-                            $attachments = [];
+
+                            /*Request Info*/
                             $inputReqId = $.trim($("#inputReqId").val());
                             $inputTitle = $.trim($("#inputTitle").val());
                             $inputReqType = $.trim($("#inputReqType").val());
@@ -24,6 +25,36 @@
                             $inputMarketMakerNationalCode = $.trim($("#inputMarketMakerNationalCode").val());
                             $inputPrice = $.trim($("#inputPrice").val());
                             $inputDescription = $.trim($("#inputDescription").val());
+
+                            /*Request Property Info*/
+                            $inputPropertyID = $.trim($("#inputPropertyID").val());
+                            $inputPropertyRegisterDate = $.trim($("#inputPropertyRegisterDate").val());
+                            $inputPropertyType = $.trim($("#inputPropertyType").val());
+                            $inputPropertySpecialStatus = $.trim($("#inputPropertySpecialStatus").val());
+                            $inputPropertyUseType = $.trim($("#inputPropertyUseType").val());
+                            $inputPropertyDocType = $.trim($("#inputPropertyDocType").val());
+                            $inputPropertyUseReason = $.trim($("#inputPropertyUseReason").val());
+                            $inputPropertyUUID = $.trim($("#inputPropertyUUID").val());
+                            $inputPropertyPassword = $.trim($("#inputPropertyPassword").val());
+                            $inputPropertyAreaSupply = $.trim($("#inputPropertyAreaSupply").val());
+                            $inputPropertyAreaNobility = $.trim($("#inputPropertyAreaNobility").val());
+                            $inputPropertyRegistrationPlate = $.trim($("#inputPropertyRegistrationPlate").val());
+                            $inputPropertySeparate = $.trim($("#inputPropertySeparate").val());
+                            $inputPropertyPiece = $.trim($("#inputPropertyPiece").val());
+                            $inputPropertyRegistrationDepartment = $.trim($("#inputPropertyRegistrationDepartment").val());
+                            $inputPropertyDistrict = $.trim($("#inputPropertyDistrict").val());
+                            $inputPropertyBlock = $.trim($("#inputPropertyBlock").val());
+                            $inputPropertyFloor = $.trim($("#inputPropertyFloor").val());
+                            $inputPropertySide = $.trim($("#inputPropertySide").val());
+
+                            /*Request Property Owner Info*/
+                            $inputOwnerNationalCode = $.trim($("#inputOwnerNationalCode").val());
+                            $inputOwnerName = $.trim($("#inputOwnerName").val());
+                            $inputOwnerBankRelation = $.trim($("#inputOwnerBankRelation").val());
+                            $inputOwnerCompanyType = $.trim($("#inputOwnerCompanyType").val());
+                            $inputOwnerTypeDependentPerson = $.trim($("#inputOwnerTypeDependentPerson").val());
+                            $inputOwnerOwnershipPercentage = $.trim($("#inputOwnerOwnershipPercentage").val());
+
                             $(".uploaded-files tbody tr").each(function(){
                                 $attach = {
                                     'type' : $(this).data('type'),
@@ -32,17 +63,52 @@
                                 };
                                 $attachments.push($attach);
                             });
+
                             $sendData = {
+
+                                /* Property Info */
                                 'inputReqId': $inputReqId,
+                                'inputPropertyID': $inputPropertyID,
+                                'inputPropertyRegisterDate': $inputPropertyRegisterDate,
+                                'inputPropertyType': $inputPropertyType,
+                                'inputPropertySpecialStatus': $inputPropertySpecialStatus,
+                                'inputPropertyUseType': $inputPropertyUseType,
+                                'inputPropertyDocType': $inputPropertyDocType,
+                                'inputPropertyUseReason': $inputPropertyUseReason,
+                                'inputPropertyUUID': $inputPropertyUUID,
+                                'inputPropertyPassword': $inputPropertyPassword,
+                                'inputPropertyAreaSupply': $inputPropertyAreaSupply,
+                                'inputPropertyAreaNobility': $inputPropertyAreaNobility,
+                                'inputPropertyRegistrationPlate': $inputPropertyRegistrationPlate,
+                                'inputPropertySeparate': $inputPropertySeparate,
+                                'inputPropertyPiece': $inputPropertyPiece,
+                                'inputPropertyRegistrationDepartment': $inputPropertyRegistrationDepartment,
+                                'inputPropertyDistrict': $inputPropertyDistrict,
+                                'inputPropertyBlock': $inputPropertyBlock,
+                                'inputPropertyFloor': $inputPropertyFloor,
+                                'inputPropertySide': $inputPropertySide,
+
+
+                                /* Request Info */
                                 'inputTitle': $inputTitle,
                                 'inputReqType': $inputReqType,
                                 'inputAgentNationalCode': $inputAgentNationalCode,
                                 'inputMarketMakerNationalCode': $inputMarketMakerNationalCode,
                                 'inputReqUseType': $inputReqUseType,
-                                'inputReqStatus': 'LEGAL',
                                 'inputPrice': $inputPrice,
                                 'inputDescription': $inputDescription,
-                                'inputAttachments': $attachments
+                                'inputAttachments': $attachments,
+
+
+                                /* Property Owner Info */
+                                'inputOwnerNationalCode': $inputOwnerNationalCode,
+                                'inputOwnerName': $inputOwnerName,
+                                'inputOwnerBankRelation': $inputOwnerBankRelation,
+                                'inputOwnerCompanyType': $inputOwnerCompanyType,
+                                'inputOwnerTypeDependentPerson': $inputOwnerTypeDependentPerson,
+                                'inputOwnerOwnershipPercentage': $inputOwnerOwnershipPercentage,
+
+                                'inputReqStatus': 'CENTRAL'
                             };
                             $.ajax({
                                 type: 'post',
@@ -52,7 +118,7 @@
                                     $result = data;
                                     notify($result['content'], $result['type']);
                                     toggleLoader();
-                                    location.reload();
+                                    window.history.back();
                                 }
                             });
                         }
@@ -62,8 +128,9 @@
                         btnClass: 'btn-blue',
                         action: function () {
                             toggleLoader();
-                            $attachments = [];
+
                             $inputReqId = $.trim($("#inputReqId").val());
+                            /*Request Info*/
                             $inputTitle = $.trim($("#inputTitle").val());
                             $inputReqType = $.trim($("#inputReqType").val());
                             $inputReqUseType = $.trim($("#inputReqUseType").val());
@@ -71,6 +138,36 @@
                             $inputMarketMakerNationalCode = $.trim($("#inputMarketMakerNationalCode").val());
                             $inputPrice = $.trim($("#inputPrice").val());
                             $inputDescription = $.trim($("#inputDescription").val());
+
+                            /*Request Property Info*/
+                            $inputPropertyID = $.trim($("#inputPropertyID").val());
+                            $inputPropertyRegisterDate = $.trim($("#inputPropertyRegisterDate").val());
+                            $inputPropertyType = $.trim($("#inputPropertyType").val());
+                            $inputPropertySpecialStatus = $.trim($("#inputPropertySpecialStatus").val());
+                            $inputPropertyUseType = $.trim($("#inputPropertyUseType").val());
+                            $inputPropertyDocType = $.trim($("#inputPropertyDocType").val());
+                            $inputPropertyUseReason = $.trim($("#inputPropertyUseReason").val());
+                            $inputPropertyUUID = $.trim($("#inputPropertyUUID").val());
+                            $inputPropertyPassword = $.trim($("#inputPropertyPassword").val());
+                            $inputPropertyAreaSupply = $.trim($("#inputPropertyAreaSupply").val());
+                            $inputPropertyAreaNobility = $.trim($("#inputPropertyAreaNobility").val());
+                            $inputPropertyRegistrationPlate = $.trim($("#inputPropertyRegistrationPlate").val());
+                            $inputPropertySeparate = $.trim($("#inputPropertySeparate").val());
+                            $inputPropertyPiece = $.trim($("#inputPropertyPiece").val());
+                            $inputPropertyRegistrationDepartment = $.trim($("#inputPropertyRegistrationDepartment").val());
+                            $inputPropertyDistrict = $.trim($("#inputPropertyDistrict").val());
+                            $inputPropertyBlock = $.trim($("#inputPropertyBlock").val());
+                            $inputPropertyFloor = $.trim($("#inputPropertyFloor").val());
+                            $inputPropertySide = $.trim($("#inputPropertySide").val());
+
+                            /*Request Property Owner Info*/
+                            $inputOwnerNationalCode = $.trim($("#inputOwnerNationalCode").val());
+                            $inputOwnerName = $.trim($("#inputOwnerName").val());
+                            $inputOwnerBankRelation = $.trim($("#inputOwnerBankRelation").val());
+                            $inputOwnerCompanyType = $.trim($("#inputOwnerCompanyType").val());
+                            $inputOwnerTypeDependentPerson = $.trim($("#inputOwnerTypeDependentPerson").val());
+                            $inputOwnerOwnershipPercentage = $.trim($("#inputOwnerOwnershipPercentage").val());
+
                             $(".uploaded-files tbody tr").each(function(){
                                 $attach = {
                                     'type' : $(this).data('type'),
@@ -79,17 +176,48 @@
                                 };
                                 $attachments.push($attach);
                             });
+
                             $sendData = {
+
                                 'inputReqId': $inputReqId,
+                                'inputPropertyID': $inputPropertyID,
+                                'inputPropertyRegisterDate': $inputPropertyRegisterDate,
+                                'inputPropertyType': $inputPropertyType,
+                                'inputPropertySpecialStatus': $inputPropertySpecialStatus,
+                                'inputPropertyUseType': $inputPropertyUseType,
+                                'inputPropertyDocType': $inputPropertyDocType,
+                                'inputPropertyUseReason': $inputPropertyUseReason,
+                                'inputPropertyUUID': $inputPropertyUUID,
+                                'inputPropertyPassword': $inputPropertyPassword,
+                                'inputPropertyAreaSupply': $inputPropertyAreaSupply,
+                                'inputPropertyAreaNobility': $inputPropertyAreaNobility,
+                                'inputPropertyRegistrationPlate': $inputPropertyRegistrationPlate,
+                                'inputPropertySeparate': $inputPropertySeparate,
+                                'inputPropertyPiece': $inputPropertyPiece,
+                                'inputPropertyRegistrationDepartment': $inputPropertyRegistrationDepartment,
+                                'inputPropertyDistrict': $inputPropertyDistrict,
+                                'inputPropertyBlock': $inputPropertyBlock,
+                                'inputPropertyFloor': $inputPropertyFloor,
+                                'inputPropertySide': $inputPropertySide,
+
+
                                 'inputTitle': $inputTitle,
                                 'inputReqType': $inputReqType,
-                                'inputReqUseType': $inputReqUseType,
                                 'inputAgentNationalCode': $inputAgentNationalCode,
                                 'inputMarketMakerNationalCode': $inputMarketMakerNationalCode,
-                                'inputReqStatus': 'DRAFT',
+                                'inputReqUseType': $inputReqUseType,
                                 'inputPrice': $inputPrice,
                                 'inputDescription': $inputDescription,
-                                'inputAttachments': $attachments
+                                'inputAttachments': $attachments,
+
+                                'inputOwnerNationalCode': $inputOwnerNationalCode,
+                                'inputOwnerName': $inputOwnerName,
+                                'inputOwnerBankRelation': $inputOwnerBankRelation,
+                                'inputOwnerCompanyType': $inputOwnerCompanyType,
+                                'inputOwnerTypeDependentPerson': $inputOwnerTypeDependentPerson,
+                                'inputOwnerOwnershipPercentage': $inputOwnerOwnershipPercentage,
+                                'inputReqStatus': 'DRAFT'
+
                             };
                             $.ajax({
                                 type: 'post',
@@ -99,7 +227,7 @@
                                     $result = data;
                                     notify($result['content'], $result['type']);
                                     toggleLoader();
-                                    location.reload();
+                                    //window.history.back();
                                 }
                             });
                         }
@@ -108,10 +236,7 @@
                     },
                 }
             });
-
-
         });
-
         $(document).on('click', '.remove-file',function(){
             $this = $(this);
             $.confirm({

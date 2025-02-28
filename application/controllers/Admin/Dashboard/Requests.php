@@ -116,7 +116,6 @@ class Requests extends CI_Controller{
 
     }
 
-
     public function publishProposal($id){
 
         if(!is_numeric($id)){
@@ -157,6 +156,61 @@ class Requests extends CI_Controller{
         } else {
             response(get_req_message('SuccessAction') , 200);
         }*/
+
+    }
+
+
+    public function centralBank(){
+        $page['pageTitle'] = 'درخواست های در مرحله کمیسیون حقوقی';
+        $data['loginInfo'] = $this->loginInfo;
+        $data['enum'] = $this->enum;
+        $this->load->view('admin_panel/static/header', $page);
+        $this->load->view('admin_panel/requests/central_bank/index', $data);
+        $this->load->view('admin_panel/requests/central_bank/index_js', $data);
+        $this->load->view('admin_panel/static/footer');
+    }
+    public function doStepCentralBankPagination(){
+        $inputs = $this->input->post(NULL, TRUE);
+        $data = $this->ModelRequests->doStepCentralBankPagination($inputs);
+        $data['htmlResult'] = $this->load->view('admin_panel/requests/central_bank/pagination', $data, TRUE);
+        unset($data['data']);
+        echo json_encode($data);
+    }
+    public function EditCentralBank($id){
+        if(!is_numeric($id)){
+            invalidUrlParameterInput();
+        }
+        $page['pageTitle'] = 'بررسی درخواست';
+        $data['loginInfo'] = $this->loginInfo;
+        $data['enum'] = $this->enum;
+        $data['request'] = $this->ModelRequests->getById($id)[0];
+        $data['request_attachment'] = $this->ModelRequests->getAttachmentByReqId($id);
+        $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
+        $this->load->view('admin_panel/static/header', $page);
+        $this->load->view('admin_panel/requests/central_bank/view/index', $data);
+        $this->load->view('admin_panel/requests/central_bank/view/index_css', $data);
+        $this->load->view('admin_panel/requests/central_bank/view/index_js', $data);
+        $this->load->view('admin_panel/static/footer');
+    }
+    public function doEditCentralBank(){
+        $inputs = $this->input->post(NULL, TRUE);
+
+        $inputs['inputModifyPersonId'] = $this->loginInfo['PersonId'];
+        $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId']; /* For Editing Roles Need create Person Id */
+        $result = $this->ModelRequests->doEditCentralBank($inputs);
+
+        /* Log Action */
+        $logArray = getVisitorInfo();
+        $logArray['Action'] = $this->router->fetch_class() . "_" . $this->router->fetch_method();
+        $logArray['Description'] = json_encode($inputs);
+        $logArray['LogPersonId'] = $this->loginInfo['PersonId'];
+        $this->ModelLog->doAdd($logArray);
+        /* End Log Action */
+        if (!$result['success']) {
+            response(get_req_message('DuplicateInfo') , 400);
+        } else {
+            response(get_req_message('SuccessAction') , 200);
+        }
 
     }
 
