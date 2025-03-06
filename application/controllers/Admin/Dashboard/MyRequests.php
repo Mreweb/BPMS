@@ -47,16 +47,9 @@ class MyRequests extends CI_Controller{
         $this->load->view('admin_panel/static/footer');
     }
     public function doAdd(){
+
         $inputs = $this->input->post(NULL, TRUE);
-
-        //$inputs = secureInput($inputs);
-        /*$this->form_validation->set_data($inputs);
-        $this->form_validation->set_rules('inputPackageTitle', 'عنوان', 'trim|required|min_length[3]|max_length[80]');
-        $this->form_validation->set_rules('inputPackageType', 'نوع', 'trim|required|min_length[3]|max_length[80]');
-        if ($this->form_validation->run() == FALSE) {
-            response(get_req_message('ErrorAction', validation_errors()), 400);
-        }*/
-
+        $inputs = secureInput($inputs);
 
         $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId'];
         $result = $this->ModelRequests->doAdd($inputs);
@@ -82,7 +75,6 @@ class MyRequests extends CI_Controller{
             invalidUrlParameterInput();
         }
 
-
         $page['pageTitle'] = 'ویرایش درخواست';
         $data['loginInfo'] = $this->loginInfo;
         $data['enum'] = $this->enum;
@@ -93,6 +85,9 @@ class MyRequests extends CI_Controller{
         }
         $data['request_attachment'] = $this->ModelRequests->getAttachmentByReqId($id);
         $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
+        $data['request_property_info'] = $this->ModelRequests->getPropertyInfoById($id)[0];
+        $data['request_owner_info'] = $this->ModelRequests->getPropertyOwnerInfoById($id)[0];
+
 
 
         $this->load->view('admin_panel/static/header', $page);
@@ -102,13 +97,18 @@ class MyRequests extends CI_Controller{
         $this->load->view('admin_panel/static/footer');
     }
     public function doEdit(){
+
         $inputs = $this->input->post(NULL, TRUE);
+        $inputs = secureInput($inputs);
 
         $data['request'] = $this->ModelRequests->getById($inputs['inputReqId'])[0];
 
-        if($data['request']['ReqStatus'] != 'DRAFT' ){
-            response(get_req_message('ErrorAction' , 'درخواست در مرحله بررسی است و قابل ویرایش نیست.') , 400);
-            die();
+
+        if(isset($_GET['draft']) && $_GET['draft']){
+            if($data['request']['ReqStatus'] != 'DRAFT' ){
+                response(get_req_message('ErrorAction' , 'درخواست در مرحله بررسی است و قابل ویرایش نیست.') , 400);
+                die();
+            }
         }
 
         $inputs['inputModifyPersonId'] = $this->loginInfo['PersonId'];
@@ -129,10 +129,5 @@ class MyRequests extends CI_Controller{
         }
 
     }
-
-
-
-
-
 
 }

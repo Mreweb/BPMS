@@ -27,7 +27,8 @@
                         <div class="card-body">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link active" data-bs-toggle="tab" href="#primaryhome" role="tab" aria-selected="true">
+                                    <a class="nav-link active" data-bs-toggle="tab" href="#primaryhome" role="tab"
+                                       aria-selected="true">
                                         <div class="d-flex align-items-center">
                                             <div class="tab-icon"><i class="bx bx-home font-18 me-1"></i>
                                             </div>
@@ -36,16 +37,8 @@
                                     </a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#primaryprofile" role="tab" aria-selected="false" tabindex="-1">
-                                        <div class="d-flex align-items-center">
-                                            <div class="tab-icon"><i class="bx bx-user-pin font-18 me-1"></i>
-                                            </div>
-                                            <div class="tab-title">اطلاعات ملک</div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#primarycontact" role="tab" aria-selected="false" tabindex="-1">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#primarycontact" role="tab"
+                                       aria-selected="false" tabindex="-1">
                                         <div class="d-flex align-items-center">
                                             <div class="tab-icon"><i class="bx bx-user-pin font-18 me-1"></i>
                                             </div>
@@ -54,7 +47,18 @@
                                     </a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#primarysave" role="tab" aria-selected="false" tabindex="-1">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#primaryprofile" role="tab"
+                                       aria-selected="false" tabindex="-1">
+                                        <div class="d-flex align-items-center">
+                                            <div class="tab-icon"><i class="bx bx-user-pin font-18 me-1"></i>
+                                            </div>
+                                            <div class="tab-title">اطلاعات ملک</div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#primarysave" role="tab"
+                                       aria-selected="false" tabindex="-1">
                                         <div class="d-flex align-items-center">
                                             <div class="tab-icon"><i class="bx bx-user-pin font-18 me-1"></i>
                                             </div>
@@ -65,6 +69,12 @@
                             </ul>
                             <div class="tab-content py-3">
                                 <div class="tab-pane fade active show" id="primaryhome" role="tabpanel">
+
+                                    <style>
+                                        #primaryhome .input-group-text {
+                                            min-width: 175px !important;
+                                        }
+                                    </style>
                                     <div class="row">
                                         <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
@@ -79,22 +89,10 @@
                                         <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">نوع</span>
-                                                <select class="form-select" id="inputReqType" data-placeholder="یک مورد راانتخاب کنید">
+                                                <select class="form-select" id="inputReqType"
+                                                        data-placeholder="یک مورد راانتخاب کنید">
                                                     <option></option>
                                                     <?php foreach ($enum['REQ_TYPE'] as $key => $value) { ?>
-                                                        <option value="<?php echo $key; ?>">
-                                                            <?php echo $value; ?>
-                                                        </option>
-                                                    <?php } ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
-                                            <div class="input-group">
-                                                <span class="input-group-text">کاربری</span>
-                                                <select class="form-select" id="inputReqUseType" data-placeholder="یک مورد راانتخاب کنید">
-                                                    <option></option>
-                                                    <?php foreach ($enum['USE_TYPE'] as $key => $value) { ?>
                                                         <option value="<?php echo $key; ?>">
                                                             <?php echo $value; ?>
                                                         </option>
@@ -138,9 +136,10 @@
                                         </div>
 
                                         <div class="col-sm-12 mb-3">
-                                            <?php include VIEWPATH.'alerts.php'; ?>
+                                            <?php include VIEWPATH . 'alerts.php'; ?>
                                             <div class="input-group">
-                                                <label for="file" class="input-group-text">مدارک را بارگذاری کنید</label>
+                                                <label for="file" class="input-group-text">مدارک را بارگذاری
+                                                    کنید</label>
                                                 <input
                                                         type="file"
                                                         id="file"
@@ -148,7 +147,8 @@
                                                         class="form-control">
                                             </div>
                                             <div class="uploaded-files mt-3">
-                                                <table class="table table-bordered table-hover table-stripped"  style="display:none;">
+                                                <table class="table table-bordered table-hover table-stripped"
+                                                       style="display:none;">
                                                     <thead>
                                                     <tr>
                                                         <th>عنوان</th>
@@ -162,9 +162,80 @@
 
 
                                     </div>
+
+                                </div>
+                                <div class="tab-pane fade" id="primarycontact" role="tabpanel">
+
+                                    <div class="row">
+                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">شناسه ملی مالک</span>
+                                                <input type="text" maxlength="11" id="inputOwnerNationalCode"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">نام مالک(شرکت - موسسه اعتباری)</span>
+                                                <input type="text" id="inputOwnerName" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">رابطه با بانک</span>
+                                                <select class="form-select" id="inputOwnerBankRelation"
+                                                        data-placeholder="یک مورد راانتخاب کنید">
+                                                    <option></option>
+                                                    <?php foreach ($enum['BANK_RELATION'] as $key => $value) { ?>
+                                                        <option value="<?php echo $key; ?>">
+                                                            <?php echo $value; ?>
+                                                        </option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">نوع شرکت</span>
+                                                <select class="form-select" id="inputOwnerCompanyType"
+                                                        data-placeholder="یک مورد راانتخاب کنید">
+                                                    <option></option>
+                                                    <?php foreach ($enum['COMPANY_TYPE'] as $key => $value) { ?>
+                                                        <option value="<?php echo $key; ?>">
+                                                            <?php echo $value; ?>
+                                                        </option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">نوع شخص وابسته</span>
+                                                <select class="form-select" id="inputOwnerTypeDependentPerson"
+                                                        data-placeholder="یک مورد راانتخاب کنید">
+                                                    <option></option>
+                                                    <?php foreach ($enum['PERSON_RELATION_TYPE'] as $key => $value) { ?>
+                                                        <option value="<?php echo $key; ?>">
+                                                            <?php echo $value; ?>
+                                                        </option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">درصد مالیکت موسسه اعتباری بر شخص وابسته</span>
+                                                <input type="text" id="inputOwnerOwnershipPercentage"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
                                 </div>
                                 <div class="tab-pane fade" id="primaryprofile" role="tabpanel">
-
 
                                     <div class="row">
                                         <div class="col-12 col-md-4 col-sm-6 mb-2">
@@ -184,7 +255,7 @@
                                                 <span class="input-group-text">نوع ملک</span>
                                                 <select class="form-select" id="inputPropertyType" data-placeholder="یک مورد راانتخاب کنید">
                                                     <option></option>
-                                                    <?php foreach ($enum['REQ_TYPE'] as $key => $value) { ?>
+                                                    <?php foreach ($enum['PROPERTY_TYPE'] as $key => $value) { ?>
                                                         <option value="<?php echo $key; ?>">
                                                             <?php echo $value; ?>
                                                         </option>
@@ -195,13 +266,22 @@
                                         <div class="col-12 col-md-4 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">وضعیت خاص</span>
-                                                <input type="text" id="inputPropertySpecialStatus" class="form-control">
+                                                <select class="form-select" id="inputPropertySpecialStatus"
+                                                        data-placeholder="یک مورد راانتخاب کنید">
+                                                    <option></option>
+                                                    <?php foreach ($enum['PROPERTY_SPECIAL_STATUS'] as $key => $value) { ?>
+                                                        <option value="<?php echo $key; ?>">
+                                                            <?php echo $value; ?>
+                                                        </option>
+                                                    <?php } ?>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">کاربری</span>
-                                                <select class="form-select" id="inputPropertyUseType" data-placeholder="یک مورد راانتخاب کنید">
+                                                <select class="form-select" id="inputPropertyUseType"
+                                                        data-placeholder="یک مورد راانتخاب کنید">
                                                     <option></option>
                                                     <?php foreach ($enum['USE_TYPE'] as $key => $value) { ?>
                                                         <option value="<?php echo $key; ?>">
@@ -214,7 +294,8 @@
                                         <div class="col-12 col-md-4 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">نوع سند</span>
-                                                <select class="form-select" id="inputPropertyDocType" data-placeholder="یک مورد راانتخاب کنید">
+                                                <select class="form-select" id="inputPropertyDocType"
+                                                        data-placeholder="یک مورد راانتخاب کنید">
                                                     <option></option>
                                                     <?php foreach ($enum['DOC_TYPE'] as $key => $value) { ?>
                                                         <option value="<?php echo $key; ?>">
@@ -257,20 +338,14 @@
                                         <div class="col-12 col-md-4 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">پلاک ثبتی (اصلی- فرعی)</span>
-                                                <input type="text" id="inputPropertyRegistrationPlate" class="form-control">
+                                                <input type="text" id="inputPropertyRegistrationPlate"
+                                                       class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4 col-sm-6 mb-2">
                                             <div class="input-group">
-                                                <span class="input-group-text">مفروز از مجزی از</span>
-                                                <select class="form-select" id="inputPropertySeparate" data-placeholder="یک مورد راانتخاب کنید">
-                                                    <option></option>
-                                                    <?php foreach ($enum['YES_NO'] as $key => $value) { ?>
-                                                        <option value="<?php echo $key; ?>">
-                                                            <?php echo $value; ?>
-                                                        </option>
-                                                    <?php } ?>
-                                                </select>
+                                                <span class="input-group-text">مفروز از / مجزی از</span>
+                                                <input type="text" id="inputPropertySeparate" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4 col-sm-6 mb-2">
@@ -282,7 +357,8 @@
                                         <div class="col-12 col-md-4 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">بخش ثبتی</span>
-                                                <input type="text" id="inputPropertyRegistrationDepartment" class="form-control">
+                                                <input type="text" id="inputPropertyRegistrationDepartment"
+                                                       class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4 col-sm-6 mb-2">
@@ -309,72 +385,52 @@
                                                 <input type="text" id="inputPropertySide" class="form-control">
                                             </div>
                                         </div>
-                                    </div>
+                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">سال ساخت</span>
+                                                <input type="text" id="inputPropertyBuildYear" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">کد پستی</span>
+                                                <input type="text" id="inputPropertyPostalCode" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">آدرس</span>
+                                                <input type="text" id="inputPropertyAddress" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">پهنه کاربری</span>
+                                                <input type="text" id="inputPropertyUseTypeSide" class="form-control">
+                                            </div>
+                                        </div>
 
-
-                                </div>
-                                <div class="tab-pane fade" id="primarycontact" role="tabpanel">
-
-                                     <div class="row">
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
-                                            <div class="input-group">
-                                                <span class="input-group-text">شناسه ملی مالک</span>
-                                                <input type="text" id="inputOwnerNationalCode" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
-                                            <div class="input-group">
-                                                <span class="input-group-text">نام مالک(شرکت - موسسه اعتباری)</span>
-                                                <input type="text" id="inputOwnerName" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
-                                            <div class="input-group">
-                                                <span class="input-group-text">رابطه با بانک</span>
-                                                <input type="text" id="inputOwnerBankRelation" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
-                                            <div class="input-group">
-                                                <span class="input-group-text">نوع شرکت</span>
-                                                <select class="form-select" id="inputOwnerCompanyType" data-placeholder="یک مورد راانتخاب کنید">
-                                                    <option></option>
-                                                    <?php foreach ($enum['CompanyType'] as $key => $value) { ?>
-                                                        <option value="<?php echo $key; ?>">
-                                                            <?php echo $value; ?>
-                                                        </option>
-                                                    <?php } ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
-                                            <div class="input-group">
-                                                <span class="input-group-text">نوع شخص وابسته</span>
-                                                <input type="text" id="inputOwnerTypeDependentPerson" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
-                                            <div class="input-group">
-                                                <span class="input-group-text">درصد مالیکت موسسه اعتباری بر شخص وابسته</span>
-                                                <input type="text" id="inputOwnerOwnershipPercentage" class="form-control">
-                                            </div>
-                                        </div>
 
                                     </div>
 
-
                                 </div>
+
+
                                 <div class="tab-pane fade" id="primarysave" role="tabpanel">
                                     <div class="col-12 text-start mb-2">
                                         <div class="alert border-0 alert-dismissible fade show py-2">
                                             <div class="d-flex align-items-center">
-                                                <div class="font-35 text-white"><i class="bx bx-bookmark-heart"></i></div>
+                                                <div class="font-35 text-white"><i class="bx bx-bookmark-heart"></i>
+                                                </div>
                                                 <div class="ms-3">
                                                     <h6 class="mb-0 text-white">هشدار</h6>
-                                                    <div class="text-white">لطفا جهت تسریع در فرآیند بررسی، از صحت اطلاعات وارد شده اطمینان حاصل نمائید.</div>
+                                                    <div class="text-white">لطفا جهت تسریع در فرآیند بررسی، از صحت
+                                                        اطلاعات وارد شده اطمینان حاصل نمائید.
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="یستن"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                    aria-label="یستن"></button>
                                         </div>
                                         <button id="do_save" class="btn btn-success">ذخیره</button>
                                     </div>
@@ -384,7 +440,6 @@
                     </div>
 
                 </div>
-
             </div>
         </div>
     </div>
@@ -395,10 +450,10 @@
 <div class="form-group d-none alert-form">
     <label class="mb-2">نوع سند را انتخاب کنید</label>
     <select class="type form-control mb-2">
-        <?php foreach ($enum['REQ_DOC_TYPE'] as $k=>$v){ ?>
+        <?php foreach ($enum['REQ_DOC_TYPE'] as $k => $v) { ?>
             <option style="background-color: #0b0d0f;" value="<?php echo $k; ?>"><?php echo $v; ?></option>
         <?php } ?>
     </select>
     <label class="name-title mb-2">عنوان سند را وارد کنید</label>
-    <input type="text" placeholder="اینجا بنویسید" class="name form-control" required />
+    <input type="text" placeholder="اینجا بنویسید" class="name form-control" required/>
 </div>

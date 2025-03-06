@@ -344,11 +344,14 @@ function log_requests($personId){
 }
 function secureInput($input){
     $input = array_map(function ($v) {
-        return strip_tags($v);
+        if(!is_array($v)){
+            return strip_tags($v);
+        }
+        return $v;
     }, $input);
-    $input = array_map(function ($v) {
+    /*$input = array_map(function ($v) {
         return remove_invisible_characters($v);
-    }, $input);
+    }, $input);*/
     $input = array_map(function ($v) {
         return makeSafeInput($v);
     }, $input);
