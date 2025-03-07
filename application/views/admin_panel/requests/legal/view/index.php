@@ -1,5 +1,6 @@
 <?php $_DIR = base_url(); ?>
 
+<input type="hidden" id="inputReqId" <?php setInputValue($request['ReqId']); ?> />
 <!--start page wrapper -->
 <div class="page-wrapper">
     <div class="page-content">

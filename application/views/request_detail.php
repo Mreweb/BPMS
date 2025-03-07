@@ -1,411 +1,313 @@
+<div class="main-body">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-column align-items-center text-center">
+                        <div class="mt-3">
+                            <h4><?php echo($request['ReqTitle']); ?></h4>
+                        </div>
+                    </div>
+                    <hr class="my-4"/>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">نوع</h6>
+                            <span class="text-white">
+                                 <?php
+                                 foreach ($enum['REQ_TYPE'] as $key => $value) {
+                                     if ($key == $request['ReqType']){ echo $value; }
+                                 }
+                                 ?>
+                            </span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">کاربری</h6>
+                            <span class="text-white">
+                                 <?php  foreach ($enum['USE_TYPE'] as $key => $value) { if ($key == $request['ReqUseType']){ echo $value; } }  ?>
+                            </span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">ارزش گذاری رسمی</h6>
+                            <span class="text-white"><?php echo $request['ReqPrice'];  ?></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">کد ملی نماینده</h6>
+                            <span class="text-white"><?php echo $request['ReqAgentNationalCode'];  ?></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">کد ملی بازارگردان</h6>
+                            <span class="text-white"><?php echo $request['ReqMarketMakerNationalCode'];  ?></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <span class="text-white" style="text-align:justify"><?php echo $request['ReqDescription'];  ?></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="d-flex align-items-center mb-3 bg bg-success alert">اسناد بارگذاری شده</h5>
 
-<div class="card">
-    <div class="card-body">
-        <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item" role="presentation">
-                <a class="nav-link active" data-bs-toggle="tab" href="#primaryhome" role="tab" aria-selected="true">
-                    <div class="d-flex align-items-center">
-                        <div class="tab-icon"><i class="bx bx-home font-18 me-1"></i>
-                        </div>
-                        <div class="tab-title">فرم درخواست</div>
-                    </div>
-                </a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" data-bs-toggle="tab" href="#primaryprofile" role="tab" aria-selected="false" tabindex="-1">
-                    <div class="d-flex align-items-center">
-                        <div class="tab-icon"><i class="bx bx-user-pin font-18 me-1"></i>
-                        </div>
-                        <div class="tab-title">اطلاعات ملک</div>
-                    </div>
-                </a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" data-bs-toggle="tab" href="#primarycontact" role="tab" aria-selected="false" tabindex="-1">
-                    <div class="d-flex align-items-center">
-                        <div class="tab-icon"><i class="bx bx-user-pin font-18 me-1"></i>
-                        </div>
-                        <div class="tab-title">اطلاعات مالک</div>
-                    </div>
-                </a>
-            </li>
-        </ul>
-        <div class="tab-content py-3">
-            <div class="tab-pane fade active show" id="primaryhome" role="tabpanel">
-
-                <div class="row">
-                    <div class="col-12 col-md-6 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">عنوان</span>
-                            <input
-                                type="hidden"
-                                <?php setInputValue($request['ReqId']); ?>
-                                id="inputReqId"
-                                aria-label=""
-                                class="form-control">
-                            <input
-                                type="text"
-                                <?php setInputValue($request['ReqTitle']); ?>
-                                id="inputTitle"
-                                aria-label=""
-                                class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">نوع</span>
-                            <select class="form-select" id="inputReqType"
-                                    data-placeholder="یک مورد راانتخاب کنید">
-                                <option></option>
-                                <?php foreach ($enum['REQ_TYPE'] as $key => $value) { ?>
-                                    <option
-                                        <?php setOptionSelected($key, $request['ReqType']); ?>
-                                        value="<?php echo $key; ?>">
-                                        <?php echo $value; ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">کاربری</span>
-                            <select class="form-select" id="inputReqUseType"
-                                    data-placeholder="یک مورد راانتخاب کنید">
-                                <option></option>
-                                <?php foreach ($enum['USE_TYPE'] as $key => $value) { ?>
-                                    <option <?php setOptionSelected($key, $request['ReqUseType']); ?>
-                                        value="<?php echo $key; ?>">
-                                        <?php echo $value; ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">ارزش گذاری رسمی (تومان)</span>
-                            <input
-                                type="text"
-                                <?php setInputValue($request['ReqPrice']); ?>
-                                id="inputPrice"
-                                aria-label=""
-                                class="form-control money">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">کد ملی نماینده</span>
-                            <input
-                                type="text"
-                                id="inputAgentNationalCode"
-                                <?php setInputValue($request['ReqAgentNationalCode']); ?>
-                                aria-label=""
-                                class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">کد ملی بازارگردان</span>
-                            <input
-                                type="text"
-                                id="inputMarketMakerNationalCode"
-                                <?php setInputValue($request['ReqMarketMakerNationalCode']); ?>
-                                aria-label=""
-                                class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-sm-12 mb-3">
-                        <label class="col-sm-12 col-md-3 mb-3">توضیحات</label>
-                        <textarea rows="6" id="inputDescription"
-                                  class="form-control"><?php echo nl2br($request['ReqDescription']); ?></textarea>
-                    </div>
-                    <div class="col-sm-12 mb-3">
-                        <?php include VIEWPATH . 'alerts.php'; ?>
-
-
-                        <?php  if($request['ReqStatus'] == 'DRAFT'){ ?>
-                            <div class="input-group">
-                                <span class="input-group-text">اسناد را بارگذاری کنید</span>
-                                <input
-                                    type="file"
-                                    id="file"
-                                    aria-label=""
-                                    class="form-control">
-                            </div>
-                        <?php  } ?>
-
-                        <div class="uploaded-files mt-3">
-                            <table class="table table-bordered table-hover table-stripped">
-                                <thead>
-                                <tr>
-                                    <th>عنوان</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php foreach ($request_attachment as $item) { ?>
-                                    <tr data-type='<?php echo $item['AttachType']; ?>'
-                                        data-name='<?php echo $item['AttachTitle']; ?>'
-                                        data-src='<?php echo $item['AttachUrl']; ?>'>
-                                        <td><a target="_blank"
-                                               href="<?php echo $item['AttachUrl']; ?>"><?php echo $item['AttachTitle']; ?></a>
-                                        </td>
+                            <div class="mt-3">
+                                <table class="table table-bordered table-hover table-stripped">
+                                    <thead>
+                                    <tr>
+                                        <th>عنوان</th>
+                                        <th class="fit">دانلود</th>
                                     </tr>
-                                <?php } ?>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                    <?php foreach ($request_attachment as $item) { ?>
+                                        <tr>
+                                            <td><?php echo $item['AttachTitle']; ?></td>
+                                            <td class="fit">
+                                                <a target="_blank" href="<?php echo $item['AttachUrl']; ?>">
+                                                    <button class="btn btn-success">دانلود</button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="d-flex align-items-center mb-3 bg bg-success alert">اطلاعات ملک</h5>
+
+                            <div class="mt-3">
+                                <table class="table table-bordered table-hover table-stripped">
+                                    <tbody>
+                                        <tr>
+                                            <td>شناسه ملک</td>
+                                            <td class="fit"><?php echo $request_property_info['PropertyID']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>تاریخ ثبت</td>
+                                            <td class="fit"><?php echo $request_property_info['PropertyRegisterDate']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>نوع ملک</td>
+                                            <td class="fit"><?php  foreach ($enum['REQ_TYPE'] as $key => $value) { if ($key == $request_property_info['PropertyType']){ echo $value; } }  ?></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>کاربری</td>
+                                            <td class="fit"><?php  foreach ($enum['USE_TYPE'] as $key => $value) { if ($key == $request_property_info['PropertyUseType']){ echo $value; } }  ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>نوع سند</td>
+                                            <td class="fit"><?php  foreach ($enum['DOC_TYPE'] as $key => $value) { if ($key == $request_property_info['PropertyDocType']){ echo $value; } }  ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>دلیل استفاده</td>
+                                            <td class="fit"><?php echo $request_property_info['PropertyUseReason']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>شناسه یکتا</td>
+                                            <td class="fit"><?php echo $request_property_info['PropertyUUID']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>رمز تصدیق</td>
+                                            <td class="fit"><?php echo $request_property_info['PropertyPassword']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>مساحت عرصه</td>
+                                            <td class="fit"><?php echo $request_property_info['PropertyAreaSupply']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>مساحت اعیان</td>
+                                            <td class="fit"><?php echo $request_property_info['PropertyAreaNobility']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>پلاک ثبتی (اصلی- فرعی)</td>
+                                            <td class="fit"><?php echo $request_property_info['PropertyRegistrationPlate']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>مفروز از مجزی از</td>
+                                            <td class="fit"><?php  foreach ($enum['YES_NO'] as $key => $value) { if ($key == $request_property_info['PropertySeparate']){ echo $value; } }  ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>قطعه</td>
+                                            <td class="fit"><?php echo $request_property_info['PropertyPiece']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>بخش ثبتی</td>
+                                            <td class="fit"><?php echo $request_property_info['PropertyRegistrationDepartment']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>ناحیه</td>
+                                            <td class="fit"><?php echo $request_property_info['PropertyDistrict']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>بلوک</td>
+                                            <td class="fit"><?php echo $request_property_info['PropertyBlock']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>طبقه</td>
+                                            <td class="fit"><?php echo $request_property_info['PropertyFloor']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>سمت</td>
+                                            <td class="fit"><?php echo $request_property_info['PropertySide']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>سال ساخت</td>
+                                            <td class="fit"><?php echo $request_property_info['PropertyBuildYear']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>کد پستی</td>
+                                            <td class="fit"><?php echo $request_property_info['PropertyPostalCode']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>آدرس</td>
+                                            <td class="fit"><?php echo $request_property_info['PropertyAddress']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>پهنه کاربری</td>
+                                            <td class="fit"><?php echo $request_property_info['PropertyUseTypeSide']; ?></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="d-flex align-items-center mb-3 bg bg-success alert">اطلاعات مالک</h5>
+                            <div class="mt-3">
+                                <table class="table table-bordered table-hover table-stripped">
+                                    <tbody>
+                                    <tr>
+                                        <td>شناسه ملی مالک</td>
+                                        <td class="fit"><?php echo $request_owner_info['OwnerNationalCode']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>نام مالک(شرکت - موسسه اعتباری)</td>
+                                        <td class="fit"><?php echo $request_owner_info['OwnerName']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>رابطه با بانک</td>
+                                        <td class="fit"><?php  foreach ($enum['BANK_RELATION'] as $key => $value) { if ($key == $request_owner_info['OwnerBankRelation']){ echo $value; } }  ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>نوع شرکت شرکت تضامني</td>
+                                        <td class="fit"><?php  foreach ($enum['COMPANY_TYPE'] as $key => $value) { if ($key == $request_owner_info['OwnerCompanyType']){ echo $value; } }  ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>نوع شخص وابسته</td>
+                                        <td class="fit"><?php  foreach ($enum['PERSON_RELATION_TYPE'] as $key => $value) { if ($key == $request_owner_info['OwnerTypeDependentPerson']){ echo $value; } }  ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>درصد مالیکت موسسه اعتباری بر شخص وابسته</td>
+                                        <td class="fit"><?php echo $request_owner_info['OwnerOwnershipPercentage']; ?></td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
-                    </div>
-
-                </div>
-
-            </div>
-            <div class="tab-pane fade" id="primaryprofile" role="tabpanel">
-
-
-                <div class="row">
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">شناسه ملک</span>
-                            <input type="text"
-                                <?php setInputValue($request['PropertyID']); ?>
-                                   id="inputPropertyID" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">تاریخ ثبت</span>
-                            <input type="text" <?php setInputValue($request['PropertyRegisterDate']); ?>
-                                   id="inputPropertyRegisterDate" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">نوع ملک</span>
-                            <select class="form-select" id="inputPropertyType" data-placeholder="یک مورد راانتخاب کنید">
-                                <option></option>
-                                <?php foreach ($enum['REQ_TYPE'] as $key => $value) { ?>
-                                    <option <?php setOptionSelected($key, $request['PropertyType']); ?>
-                                        value="<?php echo $key; ?>">
-                                        <?php echo $value; ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">وضعیت خاص</span>
-                            <input type="text"
-                                <?php setInputValue($request['PropertySpecialStatus']); ?>
-                                   id="inputPropertySpecialStatus" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">کاربری</span>
-                            <select class="form-select" id="inputPropertyUseType" data-placeholder="یک مورد راانتخاب کنید">
-                                <option></option>
-                                <?php foreach ($enum['USE_TYPE'] as $key => $value) { ?>
-                                    <option <?php setOptionSelected($key, $request['PropertyUseType']); ?>
-                                        value="<?php echo $key; ?>">
-                                        <?php echo $value; ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">نوع سند</span>
-                            <select class="form-select" id="inputPropertyDocType" data-placeholder="یک مورد راانتخاب کنید">
-                                <option></option>
-                                <?php foreach ($enum['DOC_TYPE'] as $key => $value) { ?>
-                                    <option <?php setOptionSelected($key, $request['PropertyDocType']); ?>
-                                        value="<?php echo $key; ?>">
-                                        <?php echo $value; ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">دلیل استفاده</span>
-                            <input type="text"
-                                <?php setInputValue($request['PropertyUseReason']); ?>
-                                   id="inputPropertyUseReason" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">شناسه یکتا</span>
-                            <input type="text"
-                                <?php setInputValue($request['PropertyUUID']); ?>
-                                   id="inputPropertyUUID" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">رمز تصدیق</span>
-                            <input type="text"
-                                <?php setInputValue($request['PropertyPassword']); ?>
-                                   id="inputPropertyPassword" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">مساحت عرصه</span>
-                            <input type="text"
-                                <?php setInputValue($request['PropertyAreaSupply']); ?>
-                                   id="inputPropertyAreaSupply" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">مساحت اعیان</span>
-                            <input type="text"
-                                <?php setInputValue($request['PropertyAreaNobility']); ?>
-                                   id="inputPropertyAreaNobility" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">پلاک ثبتی (اصلی- فرعی)</span>
-                            <input type="text"
-                                <?php setInputValue($request['PropertyRegistrationPlate']); ?>
-                                   id="inputPropertyRegistrationPlate" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">مفروز از مجزی از</span>
-                            <select class="form-select" id="inputPropertySeparate" data-placeholder="یک مورد راانتخاب کنید">
-                                <option></option>
-                                <?php foreach ($enum['YES_NO'] as $key => $value) { ?>
-                                    <option <?php setOptionSelected($key, $request['PropertySeparate']); ?>
-                                        value="<?php echo $key; ?>">
-                                        <?php echo $value; ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">قطعه</span>
-                            <input type="text"
-                                <?php setInputValue($request['PropertyPiece']); ?>
-                                   id="inputPropertyPiece" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">بخش ثبتی</span>
-                            <input type="text"
-                                <?php setInputValue($request['PropertyRegistrationDepartment']); ?>
-                                   id="inputPropertyRegistrationDepartment" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">ناحیه</span>
-                            <input type="text"
-                                <?php setInputValue($request['PropertyDistrict']); ?>
-                                   id="inputPropertyDistrict" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">بلوک</span>
-                            <input type="text"
-                                <?php setInputValue($request['PropertyBlock']); ?>
-                                   id="inputPropertyBlock" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">طبقه</span>
-                            <input type="text"
-                                <?php setInputValue($request['PropertyFloor']); ?>
-                                   id="inputPropertyFloor" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">سمت</span>
-                            <input type="text"
-                                <?php setInputValue($request['PropertySide']); ?>
-                                   id="inputPropertySide" class="form-control">
-                        </div>
-                    </div>
-                </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="d-flex align-items-center mb-3 bg bg-success alert">اطلاعات تملک (وارد شده توسط بانک مرکزی)</h5>
+                                <div class="mt-3">
+                                    <table class="table table-bordered table-hover table-stripped">
+                                        <tbody>
+                                        <tr>
+                                            <td>درصد مالکیت مالک بر ملک</td>
+                                            <td class="fit"><?php echo $request_central_bank_info['FinalPropertyPercentageOwnership']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>نحوه تملک</td>
+                                            <td class="fit"><?php  foreach ($enum['PROPERTY_BUY_TYPE'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertyAcquire']){ echo $value; } }  ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>نوع دارایی</td>
+                                            <td class="fit"><?php  foreach ($enum['PROPERTY_TYPE'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertyType']){ echo $value; } }  ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>درصد مالکیت مالک بر ملک</td>
+                                            <td class="fit"><?php echo $request_central_bank_info['FinalPropertyPercentageOwnership']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>مازاد بودن ملک</td>
+                                            <td class="fit"><?php  foreach ($enum['YES_NO'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertySurplus']){ echo $value; } }  ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>تاریخ تملک/خرید تحصیل</td>
+                                            <td class="fit"><?php echo $request_central_bank_info['FinalPropertyBuyDate']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>مستثنی بودن ملک</td>
+                                            <td class="fit"><?php  foreach ($enum['YES_NO'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertyExcluded']){ echo $value; } }  ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>منشا ایجاد استثنا</td>
+                                            <td class="fit"><?php echo $request_central_bank_info['FinalPropertyExcludeReason']; ?></td>
+                                        </tr>
+                                        <tr>
+                                        <td>بلامعارض بودن</td>
+                                        <td class="fit"><?php  foreach ($enum['YES_NO'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertyUnopposed']){ echo $value; } }  ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>پرونده حقوقی دارد</td>
+                                            <td class="fit"><?php  foreach ($enum['YES_NO'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertyHasLegal']){ echo $value; } }  ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>تاریخ آخرین حکم</td>
+                                            <td class="fit"><?php echo $request_central_bank_info['FinalPropertyOrderDate']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>نتیجه حکم صادره</td>
+                                            <td class="fit"><?php  foreach ($enum['PROPERTY_JUDGE_RESULT'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertyVote']){ echo $value; } }  ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>ارزش برآوردي خروج منافع درصورت حکم عليه</td>
+                                            <td class="fit"><?php echo $request_central_bank_info['FinalPropertyWithdrawBenefit']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>قطعی یا وکالتی بودن سند</td>
+                                            <td class="fit"><?php  foreach ($enum['PROPERTY_DOC_EXACT'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertyDocFinalStatus']){ echo $value; } }  ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>سرفصل خلاصه دفترکل طبقه بندی شده ملک</td>
+                                            <td class="fit"><?php echo $request_central_bank_info['FinalPropertySummary']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>ارزش دفتری</td>
+                                            <td class="fit"><?php echo $request_central_bank_info['FinalPropertyValue']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>تاریخ آخرین کارشناسی رسمی</td>
+                                            <td class="fit"><?php echo $request_central_bank_info['FinalPropertyValueCheck']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>ارزش آخرین کارشناسی رسمی</td>
+                                            <td class="fit"><?php echo $request_central_bank_info['FinalPropertyCheckValue']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>مرجع کارشناسی</td>
+                                            <td class="fit"><?php echo $request_central_bank_info['FinalPropertySurvey']; ?></td>
+                                        </tr>
 
 
-            </div>
-            <div class="tab-pane fade" id="primarycontact" role="tabpanel">
 
-                <div class="row">
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">شناسه ملی مالک</span>
-                            <input type="text"
-                                <?php setInputValue($request['OwnerNationalCode']); ?>
-                                   id="inputOwnerNationalCode" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">نام مالک(شرکت - موسسه اعتباری)</span>
-                            <input type="text"
-                                <?php setInputValue($request['OwnerName']); ?>
-                                   id="inputOwnerName" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">رابطه با بانک</span>
-                            <input type="text"
-                                <?php setInputValue($request['OwnerBankRelation']); ?>
-                                   id="inputOwnerBankRelation" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">نوع شرکت</span>
-                            <select class="form-select" id="inputOwnerCompanyType" data-placeholder="یک مورد راانتخاب کنید">
-                                <option></option>
-                                <?php foreach ($enum['CompanyType'] as $key => $value) { ?>
-                                    <option <?php setOptionSelected($key, $request['OwnerCompanyType']); ?>
-                                        value="<?php echo $key; ?>">
-                                        <?php echo $value; ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">نوع شخص وابسته</span>
-                            <input type="text"
-                                <?php setInputValue($request['OwnerTypeDependentPerson']); ?>
-                                   id="inputOwnerTypeDependentPerson" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                        <div class="input-group">
-                            <span class="input-group-text">درصد مالیکت موسسه اعتباری بر شخص وابسته</span>
-                            <input type="text"
-                                <?php setInputValue($request['OwnerOwnershipPercentage']); ?>
-                                   id="inputOwnerOwnershipPercentage" class="form-control">
-                        </div>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                     </div>
 
                 </div>
-
-
             </div>
         </div>
     </div>
+
 </div>

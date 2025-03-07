@@ -282,7 +282,7 @@ $ci =& get_instance(); ?>
         }
     </style>
 </head>
-<body class="bg-theme bg-theme7">
+<body class="bg-theme bg-theme2">
 <!--wrapper-->
 <div class="wrapper">
     <!--sidebar wrapper -->

@@ -86,6 +86,9 @@ class Requests extends CI_Controller{
         $data['request'] = $this->ModelRequests->getById($id)[0];
         $data['request_attachment'] = $this->ModelRequests->getAttachmentByReqId($id);
         $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
+        $data['request_property_info'] = $this->ModelRequests->getPropertyInfoById($id)[0];
+        $data['request_owner_info'] = $this->ModelRequests->getPropertyOwnerInfoById($id)[0];
+        $data['request_central_bank_info'] = $this->ModelRequests->getPropertyCentralBankInfoById($id)[0];
 
 
         $this->load->view('admin_panel/static/header', $page);
@@ -128,6 +131,8 @@ class Requests extends CI_Controller{
         $data['request'] = $this->ModelRequests->getById($id)[0];
         $data['request_attachment'] = $this->ModelRequests->getAttachmentByReqId($id);
         $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
+        $data['request_property_info'] = $this->ModelRequests->getPropertyInfoById($id)[0];
+        $data['request_owner_info'] = $this->ModelRequests->getPropertyOwnerInfoById($id)[0];
 
 
         $this->load->view('admin_panel/static/header', $page);
@@ -186,6 +191,9 @@ class Requests extends CI_Controller{
         $data['request'] = $this->ModelRequests->getById($id)[0];
         $data['request_attachment'] = $this->ModelRequests->getAttachmentByReqId($id);
         $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
+        $data['request_property_info'] = $this->ModelRequests->getPropertyInfoById($id)[0];
+        $data['request_owner_info'] = $this->ModelRequests->getPropertyOwnerInfoById($id)[0];
+
         $this->load->view('admin_panel/static/header', $page);
         $this->load->view('admin_panel/requests/central_bank/view/index', $data);
         $this->load->view('admin_panel/requests/central_bank/view/index_css', $data);
@@ -194,7 +202,6 @@ class Requests extends CI_Controller{
     }
     public function doEditCentralBank(){
         $inputs = $this->input->post(NULL, TRUE);
-
         $inputs['inputModifyPersonId'] = $this->loginInfo['PersonId'];
         $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId']; /* For Editing Roles Need create Person Id */
         $result = $this->ModelRequests->doEditCentralBank($inputs);
@@ -207,13 +214,12 @@ class Requests extends CI_Controller{
         $this->ModelLog->doAdd($logArray);
         /* End Log Action */
         if (!$result['success']) {
-            response(get_req_message('DuplicateInfo') , 400);
+            response($result , 400);
         } else {
             response(get_req_message('SuccessAction') , 200);
         }
 
     }
-
 
     public function legal(){
         $page['pageTitle'] = 'درخواست های در مرحله کمیسیون حقوقی';
@@ -241,6 +247,9 @@ class Requests extends CI_Controller{
         $data['request'] = $this->ModelRequests->getById($id)[0];
         $data['request_attachment'] = $this->ModelRequests->getAttachmentByReqId($id);
         $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
+        $data['request_property_info'] = $this->ModelRequests->getPropertyInfoById($id)[0];
+        $data['request_owner_info'] = $this->ModelRequests->getPropertyOwnerInfoById($id)[0];
+        $data['request_central_bank_info'] = $this->ModelRequests->getPropertyCentralBankInfoById($id)[0];
         $this->load->view('admin_panel/static/header', $page);
         $this->load->view('admin_panel/requests/legal/view/index', $data);
         $this->load->view('admin_panel/requests/legal/view/index_css', $data);
@@ -295,6 +304,8 @@ class Requests extends CI_Controller{
         $data['request'] = $this->ModelRequests->getById($id)[0];
         $data['request_attachment'] = $this->ModelRequests->getAttachmentByReqId($id);
         $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
+        $data['request_property_info'] = $this->ModelRequests->getPropertyInfoById($id)[0];
+        $data['request_owner_info'] = $this->ModelRequests->getPropertyOwnerInfoById($id)[0];
         $this->load->view('admin_panel/static/header', $page);
         $this->load->view('admin_panel/requests/economic/view/index', $data);
         $this->load->view('admin_panel/requests/economic/view/index_css', $data);
@@ -349,6 +360,8 @@ class Requests extends CI_Controller{
         $data['request'] = $this->ModelRequests->getById($id)[0];
         $data['request_attachment'] = $this->ModelRequests->getAttachmentByReqId($id);
         $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
+        $data['request_property_info'] = $this->ModelRequests->getPropertyInfoById($id)[0];
+        $data['request_owner_info'] = $this->ModelRequests->getPropertyOwnerInfoById($id)[0];
         $this->load->view('admin_panel/static/header', $page);
         $this->load->view('admin_panel/requests/final/view/index', $data);
         $this->load->view('admin_panel/requests/final/view/index_css', $data);
@@ -403,6 +416,8 @@ class Requests extends CI_Controller{
         $data['request'] = $this->ModelRequests->getById($id)[0];
         $data['request_attachment'] = $this->ModelRequests->getAttachmentByReqId($id);
         $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
+        $data['request_property_info'] = $this->ModelRequests->getPropertyInfoById($id)[0];
+        $data['request_owner_info'] = $this->ModelRequests->getPropertyOwnerInfoById($id)[0];
         $this->load->view('admin_panel/static/header', $page);
         $this->load->view('admin_panel/requests/finished/view/index', $data);
         $this->load->view('admin_panel/requests/finished/view/index_css', $data);

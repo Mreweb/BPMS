@@ -32,7 +32,7 @@
                     <div class="card">
                         <div class="card-body">
                             <?php if ($request['ReqStatus'] == 'CENTRALBANK') { ?>
-                                <div class="row">
+                                <div class="row forms">
                                     <?php if ($request['ReqStatus'] == 'CENTRALBANK') { ?>
                                         <div class="alert alert-success text-white">
                                             لطفا وضعیت درخواست را مشخص کنید
@@ -45,16 +45,16 @@
 
 
                                     <div class="row">
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">درصد مالکیت مالک بر ملک</span>
-                                                <input type="text" id="inputPropertyRegisterDate" class="form-control">
+                                                <input type="text" id="inputFinalPropertyPercentageOwnership" class="form-control">
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">نحوه تملک</span>
-                                                <select class="form-select" id="inputPropertyType"
+                                                <select class="form-select" id="inputFinalPropertyAcquire"
                                                         data-placeholder="یک مورد راانتخاب کنید">
                                                     <option></option>
                                                     <?php foreach ($enum['PROPERTY_BUY_TYPE'] as $key => $value) { ?>
@@ -65,13 +65,13 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">نوع دارایی</span>
-                                                <select class="form-select" id="inputPropertySpecialStatus"
+                                                <select class="form-select" id="inputFinalPropertyType"
                                                         data-placeholder="یک مورد راانتخاب کنید">
                                                     <option></option>
-                                                    <?php foreach ($enum['HOME_SPECIAL_STATUS'] as $key => $value) { ?>
+                                                    <?php foreach ($enum['PROPERTY_TYPE'] as $key => $value) { ?>
                                                         <option value="<?php echo $key; ?>">
                                                             <?php echo $value; ?>
                                                         </option>
@@ -79,16 +79,16 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">تاریخ تملک/خرید تحصیل</span>
-                                                <input type="text" id="inputPropertyRegisterDate" class="form-control">
+                                                <input type="text" id="inputFinalPropertyBuyDate" class="form-control">
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">مازاد بودن ملک</span>
-                                                <select class="form-select" id="inputPropertySpecialStatus"
+                                                <select class="form-select" id="inputFinalPropertySurplus"
                                                         data-placeholder="یک مورد راانتخاب کنید">
                                                     <option></option>
                                                     <?php foreach ($enum['YES_NO'] as $key => $value) { ?>
@@ -99,10 +99,10 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">مستثنی بودن ملک</span>
-                                                <select class="form-select" id="inputPropertySpecialStatus"
+                                                <select class="form-select" id="inputFinalPropertyExcluded"
                                                         data-placeholder="یک مورد راانتخاب کنید">
                                                     <option></option>
                                                     <?php foreach ($enum['YES_NO'] as $key => $value) { ?>
@@ -113,16 +113,16 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">منشا ایجاد استثنا</span>
-                                                <input type="text" id="inputPropertyRegisterDate" class="form-control">
+                                                <input type="text" id="inputFinalPropertyExcludeReason" class="form-control">
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">بلامعارض بودن</span>
-                                                <select class="form-select" id="inputPropertySpecialStatus"
+                                                <select class="form-select" id="inputFinalPropertyUnopposed"
                                                         data-placeholder="یک مورد راانتخاب کنید">
                                                     <option></option>
                                                     <?php foreach ($enum['YES_NO'] as $key => $value) { ?>
@@ -133,10 +133,10 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">پرونده حقوقی دارد</span>
-                                                <select class="form-select" id="inputPropertySpecialStatus"
+                                                <select class="form-select" id="inputFinalPropertyHasLegal"
                                                         data-placeholder="یک مورد راانتخاب کنید">
                                                     <option></option>
                                                     <?php foreach ($enum['YES_NO'] as $key => $value) { ?>
@@ -147,16 +147,16 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">تاریخ آخرین حکم</span>
-                                                <input type="text" id="inputPropertyRegisterDate" class="form-control">
+                                                <input type="text" id="inputFinalPropertyOrderDate" class="form-control">
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">نتیجه حکم صادره</span>
-                                                <select class="form-select" id="inputPropertySpecialStatus"
+                                                <select class="form-select" id="inputFinalPropertyVote"
                                                         data-placeholder="یک مورد راانتخاب کنید">
                                                     <option></option>
                                                     <?php foreach ($enum['PROPERTY_JUDGE_RESULT'] as $key => $value) { ?>
@@ -167,16 +167,16 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="col-12 col-md-12 col-sm-12 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">ارزش برآوردي خروج منافع درصورت حکم عليه</span>
-                                                <input type="text" id="inputPropertyRegisterDate" class="form-control">
+                                                <input type="text" id="inputFinalPropertyWithdrawBenefit" class="form-control">
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">قطعی یا وکالتی بودن سند</span>
-                                                <select class="form-select" id="inputPropertySpecialStatus"
+                                                <select class="form-select" id="inputFinalPropertyDocFinalStatus"
                                                         data-placeholder="یک مورد راانتخاب کنید">
                                                     <option></option>
                                                     <?php foreach ($enum['PROPERTY_DOC_EXACT'] as $key => $value) { ?>
@@ -187,47 +187,46 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">سرفصل خلاصه دفترکل طبقه بندی شده ملک</span>
-                                                <input type="text" id="inputPropertyRegisterDate" class="form-control">
+                                                <input type="text" id="inputFinalPropertySummary" class="form-control">
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">ارزش دفتری</span>
-                                                <input type="text" id="inputPropertyRegisterDate" class="form-control">
+                                                <input type="text" id="inputFinalPropertyValue" class="form-control">
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">تاریخ آخرین کارشناسی رسمی</span>
-                                                <input type="text" id="inputPropertyRegisterDate" class="form-control">
+                                                <input type="text" id="inputFinalPropertyValueCheck" class="form-control">
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">ارزش آخرین کارشناسی رسمی</span>
-                                                <input type="text" id="inputPropertyRegisterDate" class="form-control">
+                                                <input type="text" id="inputFinalPropertyCheckValue" class="form-control">
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">مرجع کارشناسی</span>
-                                                <input type="text" id="inputPropertyRegisterDate" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-8 col-sm-6 mb-2">
-                                            <div class="input-group">
-                                                <span class="input-group-text">توضیحات</span>
-                                                <input type="text" id="inputPropertyRegisterDate" class="form-control">
+                                                <input type="text" id="inputFinalPropertySurvey" class="form-control">
                                             </div>
                                         </div>
 
 
                                     </div>
 
-                                    <div class="col-sm-12 col-md-3 mb-3">
+                                    <div class="col-sm-12 col-md-12 mb-3">
+
+                                        <div class="alert bg-success">
+                                            لطفا وضعیت درخواست را مشخص کنید
+                                        </div>
+
                                         <div class="input-group">
                                             <span class="input-group-text">وضعیت تایید</span>
                                             <select class="form-select" id="inputResult"

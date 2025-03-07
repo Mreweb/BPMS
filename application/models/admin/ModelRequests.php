@@ -236,6 +236,13 @@ class ModelRequests extends CI_Model{
         $this->db->where('RequestId', $id);
         return $this->db->get()->result_array();
     }
+    public function getPropertyCentralBankInfoById($id){
+        $this->db->select('*');
+        $this->db->from('person_requests_property_central_bank_result');
+        $this->db->where('RequestId', $id);
+        return $this->db->get()->result_array();
+    }
+
 
     public function doAdd($inputs){
 
@@ -449,6 +456,13 @@ class ModelRequests extends CI_Model{
 
     public function doEditCentralBank($inputs){
 
+        $request = $this->getById($inputs['inputReqId'])[0];
+        if( $request['ReqStatus'] != 'CENTRALBANK'){
+            $msg = $this->config->item('DBMessages')['ErrorAction'];
+            $msg['content'] = 'درخواست در وضعیت بررسی بانک مرکزی قرار ندارد.';
+            return $msg;
+        }
+
         $status = "LEGAL";
         if ($inputs['inputResult'] == "0") {
             $status = "DRAFT";
@@ -462,6 +476,32 @@ class ModelRequests extends CI_Model{
         $this->db->where('ReqId', $inputs['inputReqId']);
         $this->db->update('person_requests', $userArray);
 
+        if ($inputs['inputResult'] == "1") {
+            $userArray = array(
+                'RequestId' => $inputs['inputReqId'],
+                'FinalPropertyPercentageOwnership' => $inputs['inputFinalPropertyPercentageOwnership'],
+                'FinalPropertyAcquire' => $inputs['inputFinalPropertyAcquire'],
+                'FinalPropertyType' => $inputs['inputFinalPropertyType'],
+                'FinalPropertyBuyDate' => $inputs['inputFinalPropertyBuyDate'],
+                'FinalPropertySurplus' => $inputs['inputFinalPropertySurplus'],
+                'FinalPropertyExcluded' => $inputs['inputFinalPropertyExcluded'],
+                'FinalPropertyExcludeReason' => $inputs['inputFinalPropertyExcludeReason'],
+                'FinalPropertyUnopposed' => $inputs['inputFinalPropertyUnopposed'],
+                'FinalPropertyHasLegal' => $inputs['inputFinalPropertyHasLegal'],
+                'FinalPropertyOrderDate' => $inputs['inputFinalPropertyOrderDate'],
+                'FinalPropertyVote' => $inputs['inputFinalPropertyVote'],
+                'FinalPropertyWithdrawBenefit' => $inputs['inputFinalPropertyWithdrawBenefit'],
+                'FinalPropertyDocFinalStatus' => $inputs['inputFinalPropertyDocFinalStatus'],
+                'FinalPropertySummary' => $inputs['inputFinalPropertySummary'],
+                'FinalPropertyValue' => $inputs['inputFinalPropertyValue'],
+                'FinalPropertyValueCheck' => $inputs['inputFinalPropertyValueCheck'],
+                'FinalPropertyCheckValue' => $inputs['inputFinalPropertyCheckValue'],
+                'FinalPropertySurvey' => $inputs['inputFinalPropertySurvey'],
+                'CreatePersonId' => $inputs['inputCreatePersonId'],
+                'CreateDateTime' => time()
+            );
+            $this->db->insert('person_requests_property_central_bank_result', $userArray);
+        }
         if ($inputs['inputResultDescription'] != "") {
             $userArray = array(
                 'CommentReqId' => $inputs['inputReqId'],

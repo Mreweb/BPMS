@@ -19,5 +19,8 @@
     .comment-list li span.comment{
         background: #fffca7;
     }
+    .input-group-text {
+        min-width: 175px;
+    }
 
 </style>
