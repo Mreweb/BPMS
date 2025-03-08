@@ -193,6 +193,7 @@ class Requests extends CI_Controller{
         $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
         $data['request_property_info'] = $this->ModelRequests->getPropertyInfoById($id)[0];
         $data['request_owner_info'] = $this->ModelRequests->getPropertyOwnerInfoById($id)[0];
+        $data['request_central_bank_info'] = $this->ModelRequests->getPropertyCentralBankInfoById($id)[0];
 
         $this->load->view('admin_panel/static/header', $page);
         $this->load->view('admin_panel/requests/central_bank/view/index', $data);
@@ -306,6 +307,7 @@ class Requests extends CI_Controller{
         $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
         $data['request_property_info'] = $this->ModelRequests->getPropertyInfoById($id)[0];
         $data['request_owner_info'] = $this->ModelRequests->getPropertyOwnerInfoById($id)[0];
+        $data['request_central_bank_info'] = $this->ModelRequests->getPropertyCentralBankInfoById($id)[0];
         $this->load->view('admin_panel/static/header', $page);
         $this->load->view('admin_panel/requests/economic/view/index', $data);
         $this->load->view('admin_panel/requests/economic/view/index_css', $data);
@@ -362,6 +364,7 @@ class Requests extends CI_Controller{
         $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
         $data['request_property_info'] = $this->ModelRequests->getPropertyInfoById($id)[0];
         $data['request_owner_info'] = $this->ModelRequests->getPropertyOwnerInfoById($id)[0];
+        $data['request_central_bank_info'] = $this->ModelRequests->getPropertyCentralBankInfoById($id)[0];
         $this->load->view('admin_panel/static/header', $page);
         $this->load->view('admin_panel/requests/final/view/index', $data);
         $this->load->view('admin_panel/requests/final/view/index_css', $data);
@@ -418,6 +421,7 @@ class Requests extends CI_Controller{
         $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
         $data['request_property_info'] = $this->ModelRequests->getPropertyInfoById($id)[0];
         $data['request_owner_info'] = $this->ModelRequests->getPropertyOwnerInfoById($id)[0];
+        $data['request_central_bank_info'] = $this->ModelRequests->getPropertyCentralBankInfoById($id)[0];
         $this->load->view('admin_panel/static/header', $page);
         $this->load->view('admin_panel/requests/finished/view/index', $data);
         $this->load->view('admin_panel/requests/finished/view/index_css', $data);

@@ -91,10 +91,6 @@
                                             <td>تاریخ ثبت</td>
                                             <td class="fit"><?php echo $request_property_info['PropertyRegisterDate']; ?></td>
                                         </tr>
-                                        <tr>
-                                            <td>نوع ملک</td>
-                                            <td class="fit"><?php  foreach ($enum['REQ_TYPE'] as $key => $value) { if ($key == $request_property_info['PropertyType']){ echo $value; } }  ?></td>
-                                        </tr>
 
                                         <tr>
                                             <td>کاربری</td>
@@ -213,99 +209,101 @@
                                 </table>
                             </div>
                         </div>
-
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="d-flex align-items-center mb-3 bg bg-success alert">اطلاعات تملک (وارد شده توسط بانک مرکزی)</h5>
-                                <div class="mt-3">
-                                    <table class="table table-bordered table-hover table-stripped">
-                                        <tbody>
-                                        <tr>
-                                            <td>درصد مالکیت مالک بر ملک</td>
-                                            <td class="fit"><?php echo $request_central_bank_info['FinalPropertyPercentageOwnership']; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>نحوه تملک</td>
-                                            <td class="fit"><?php  foreach ($enum['PROPERTY_BUY_TYPE'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertyAcquire']){ echo $value; } }  ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>نوع دارایی</td>
-                                            <td class="fit"><?php  foreach ($enum['PROPERTY_TYPE'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertyType']){ echo $value; } }  ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>درصد مالکیت مالک بر ملک</td>
-                                            <td class="fit"><?php echo $request_central_bank_info['FinalPropertyPercentageOwnership']; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>مازاد بودن ملک</td>
-                                            <td class="fit"><?php  foreach ($enum['YES_NO'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertySurplus']){ echo $value; } }  ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>تاریخ تملک/خرید تحصیل</td>
-                                            <td class="fit"><?php echo $request_central_bank_info['FinalPropertyBuyDate']; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>مستثنی بودن ملک</td>
-                                            <td class="fit"><?php  foreach ($enum['YES_NO'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertyExcluded']){ echo $value; } }  ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>منشا ایجاد استثنا</td>
-                                            <td class="fit"><?php echo $request_central_bank_info['FinalPropertyExcludeReason']; ?></td>
-                                        </tr>
-                                        <tr>
-                                        <td>بلامعارض بودن</td>
-                                        <td class="fit"><?php  foreach ($enum['YES_NO'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertyUnopposed']){ echo $value; } }  ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>پرونده حقوقی دارد</td>
-                                            <td class="fit"><?php  foreach ($enum['YES_NO'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertyHasLegal']){ echo $value; } }  ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>تاریخ آخرین حکم</td>
-                                            <td class="fit"><?php echo $request_central_bank_info['FinalPropertyOrderDate']; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>نتیجه حکم صادره</td>
-                                            <td class="fit"><?php  foreach ($enum['PROPERTY_JUDGE_RESULT'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertyVote']){ echo $value; } }  ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>ارزش برآوردي خروج منافع درصورت حکم عليه</td>
-                                            <td class="fit"><?php echo $request_central_bank_info['FinalPropertyWithdrawBenefit']; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>قطعی یا وکالتی بودن سند</td>
-                                            <td class="fit"><?php  foreach ($enum['PROPERTY_DOC_EXACT'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertyDocFinalStatus']){ echo $value; } }  ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>سرفصل خلاصه دفترکل طبقه بندی شده ملک</td>
-                                            <td class="fit"><?php echo $request_central_bank_info['FinalPropertySummary']; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>ارزش دفتری</td>
-                                            <td class="fit"><?php echo $request_central_bank_info['FinalPropertyValue']; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>تاریخ آخرین کارشناسی رسمی</td>
-                                            <td class="fit"><?php echo $request_central_bank_info['FinalPropertyValueCheck']; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>ارزش آخرین کارشناسی رسمی</td>
-                                            <td class="fit"><?php echo $request_central_bank_info['FinalPropertyCheckValue']; ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>مرجع کارشناسی</td>
-                                            <td class="fit"><?php echo $request_central_bank_info['FinalPropertySurvey']; ?></td>
-                                        </tr>
-
-
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
                     </div>
 
-                </div>
+                    <?php if(!empty($request_central_bank_info)){ ?>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="d-flex align-items-center mb-3 bg bg-success alert">اطلاعات تملک (وارد شده توسط بانک مرکزی)</h5>
+                            <div class="mt-3">
+                                <table class="table table-bordered table-hover table-stripped">
+                                    <tbody>
+                                    <tr>
+                                        <td>درصد مالکیت مالک بر ملک</td>
+                                        <td class="fit"><?php echo $request_central_bank_info['FinalPropertyPercentageOwnership']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>نحوه تملک</td>
+                                        <td class="fit"><?php  foreach ($enum['PROPERTY_BUY_TYPE'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertyAcquire']){ echo $value; } }  ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>نوع دارایی</td>
+                                        <td class="fit"><?php  foreach ($enum['PROPERTY_TYPE'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertyType']){ echo $value; } }  ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>درصد مالکیت مالک بر ملک</td>
+                                        <td class="fit"><?php echo $request_central_bank_info['FinalPropertyPercentageOwnership']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>مازاد بودن ملک</td>
+                                        <td class="fit"><?php  foreach ($enum['YES_NO'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertySurplus']){ echo $value; } }  ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>تاریخ تملک/خرید تحصیل</td>
+                                        <td class="fit"><?php echo $request_central_bank_info['FinalPropertyBuyDate']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>مستثنی بودن ملک</td>
+                                        <td class="fit"><?php  foreach ($enum['YES_NO'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertyExcluded']){ echo $value; } }  ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>منشا ایجاد استثنا</td>
+                                        <td class="fit"><?php echo $request_central_bank_info['FinalPropertyExcludeReason']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>بلامعارض بودن</td>
+                                        <td class="fit"><?php  foreach ($enum['YES_NO'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertyUnopposed']){ echo $value; } }  ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>پرونده حقوقی دارد</td>
+                                        <td class="fit"><?php  foreach ($enum['YES_NO'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertyHasLegal']){ echo $value; } }  ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>تاریخ آخرین حکم</td>
+                                        <td class="fit"><?php echo $request_central_bank_info['FinalPropertyOrderDate']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>نتیجه حکم صادره</td>
+                                        <td class="fit"><?php  foreach ($enum['PROPERTY_JUDGE_RESULT'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertyVote']){ echo $value; } }  ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>ارزش برآوردي خروج منافع درصورت حکم عليه</td>
+                                        <td class="fit"><?php echo $request_central_bank_info['FinalPropertyWithdrawBenefit']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>قطعی یا وکالتی بودن سند</td>
+                                        <td class="fit"><?php  foreach ($enum['PROPERTY_DOC_EXACT'] as $key => $value) { if ($key == $request_central_bank_info['FinalPropertyDocFinalStatus']){ echo $value; } }  ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>سرفصل خلاصه دفترکل طبقه بندی شده ملک</td>
+                                        <td class="fit"><?php echo $request_central_bank_info['FinalPropertySummary']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>ارزش دفتری</td>
+                                        <td class="fit"><?php echo $request_central_bank_info['FinalPropertyValue']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>تاریخ آخرین کارشناسی رسمی</td>
+                                        <td class="fit"><?php echo $request_central_bank_info['FinalPropertyValueCheck']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>ارزش آخرین کارشناسی رسمی</td>
+                                        <td class="fit"><?php echo $request_central_bank_info['FinalPropertyCheckValue']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>مرجع کارشناسی</td>
+                                        <td class="fit"><?php echo $request_central_bank_info['FinalPropertySurvey']; ?></td>
+                                    </tr>
+
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                       </div>
+                    </div>
+                    <?php } ?>
+
             </div>
         </div>
     </div>
