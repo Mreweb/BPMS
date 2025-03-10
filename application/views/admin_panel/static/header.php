@@ -24,6 +24,7 @@ $ci =& get_instance(); ?>
     <link href="<?php echo $_DIR ?>assets/plugins/pagination/simplePagination.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo $_DIR ?>assets/fonts/vazir/Farsi-Digits/Vazirmatn-FD-font-face.css">
     <link rel="stylesheet" href="<?php echo $_DIR ?>assets/css/rtl.css">
+    <link rel="stylesheet" href="<?php echo $_DIR ?>assets/css/light.css">
     <script src="<?php echo $_DIR ?>assets/js/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="<?php echo $_DIR ?>assets/js/bootstrap.bundle.min.js"></script>
@@ -282,7 +283,7 @@ $ci =& get_instance(); ?>
         }
     </style>
 </head>
-<body class="bg-theme bg-theme2">
+<body class="bg-theme bg-theme22">
 <!--wrapper-->
 <div class="wrapper">
     <!--sidebar wrapper -->

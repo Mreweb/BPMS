@@ -37,28 +37,8 @@ class ModelAccount extends CI_Model{
 
         /*send SMS*/
         $code = randomString('nozero', 4);
-        $curl = curl_init();
-        curl_setopt_array($curl,
-            array(
-                CURLOPT_URL => "http://api.ghasedaksms.com/v2/send/verify",
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => "",
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 30,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => "type=1&param1=" . $code . "&receptor=" . $inputs['inputPhone'] . "&template=" . getSMSTemplate(),
-                CURLOPT_HTTPHEADER => array(
-                    "apikey: " . getSMSAPI(),
-                    "cache-control: no-cache",
-                    "content-type: application/x-www-form-urlencoded",
-                )));
-        curl_exec($curl);
-        $err = curl_error($curl);
-        curl_close($curl);
-        if ($err) {
-            response(get_req_message('ErrorAction', "خطا در ارسال پیام تایید"), 400);
-        }
+        sendSMS("bpms-otp", $inputs['inputPhone'],array($code));
+
 
         /* check user exists */
         $this->session->set_userdata('PersonPhone', $inputs['inputPhone']);
@@ -69,68 +49,6 @@ class ModelAccount extends CI_Model{
         if ($query->num_rows() > 0) {
             $result = $query->result_array()[0];
             $this->set_activation_code($result['PersonId'], $code);
-        } else {
-
-            /* if user not exists then register user */
-            if(isset($inputs['inputFirstName'])) {
-                $userArray = array(
-                    'PersonPhone' => $inputs['inputPhone'],
-                    'PersonFirstName' => $inputs['inputFirstName'],
-                    'PersonLastName' => $inputs['inputLastName'],
-                    'Username' => $inputs['inputPhone'],
-                    'Password' => md5($inputs['inputPhone']),
-                    'ActivationCode' => $code,
-                    'CreateDateTime' => time(),
-                    'ModifyDatetime' => time()
-                );
-            } else{
-                $userArray = array(
-                    'PersonPhone' => $inputs['inputPhone'],
-                    'Username' => $inputs['inputPhone'],
-                    'Password' => md5($inputs['inputPhone']),
-                    'ActivationCode' => $code,
-                    'CreateDateTime' => time(),
-                    'ModifyDatetime' => time()
-                );
-            }
-            $this->db->insert('person', $userArray);
-            $personId = $this->db->insert_id();
-
-            /*add balance with zero money */
-            $userArray = array(
-                'PersonId' => $personId,
-                'AccountBalance' => 0,
-                'CreateDateTime' => time(),
-                'CreatePersonId' => $personId
-            );
-            $this->db->insert('person_account_balance', $userArray);
-
-            /* add user role */
-            $userArray = array(
-                'PersonId' => $personId,
-                'Role' => 'User',
-                'CreateDateTime' => time(),
-                'CreatePersonId' => $personId
-            );
-            $this->db->insert('person_roles', $userArray);
-
-            /* add user legal info */
-            if(isset($inputs['inputLegalCompanyCode'])) {
-                $userArray = array(
-                    'PersonId' => $personId,
-                    'LegalOrganizationName' => '',
-                    'LegalFinanceCode' => '',
-                    'LegalCompanyCode' => $inputs['inputLegalCompanyCode'],
-                    'LegalRegisterNumber' => '',
-                    'LegalPhone' => '',
-                    'LegalProvinceId' => '',
-                    'CreateDateTime' => time(),
-                    'CreatePersonId' => $personId
-                );
-                $this->db->insert('person_legal_info', $userArray);
-            }
-
-
         }
         response(get_req_message('SuccessAction', "کد تایید به شماره همرا شما ارسال شد."), 200);
     }

@@ -180,6 +180,25 @@ function getSMSTemplate(){
     $ci =& get_instance();
     return $ci->config->item('SMSTemplate');
 }
+function sendSMS($method , $to , $inputs){
+
+    $to = '09120572107';
+    if(sizeof($inputs) == 1){
+        $url = 'http://api.kavenegar.com/v1/'.getSMSAPI().'/verify/lookup.json?receptor='.$to.'&token='.$inputs[0].'&template='.$method.'&type=sms';
+    }
+    if(sizeof($inputs) == 2){
+        $url = 'http://api.kavenegar.com/v1/'.getSMSAPI().'/verify/lookup.json?receptor='.$to.'&token='.$inputs[0].'&token2='.$inputs[1].'&template='.$method.'&type=sms';
+    }
+    if(sizeof($inputs) == 3){
+        $url = 'http://api.kavenegar.com/v1/'.getSMSAPI().'/verify/lookup.json?receptor='.$to.'&token='.$inputs[0].'&token2='.$inputs[1].'&token3='.$inputs[2].'&template='.$method.'&type=sms';
+    }
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HEADER, false);
+    curl_exec($curl);
+    curl_close($curl);
+}
 function response($array, $code = null){
     if($code != null){
         http_response_code($code);
@@ -226,23 +245,6 @@ function getVisitorInfo(){
     $data['Platform'] = $ci->agent->platform();
     $data['FullUserAgentString'] = $_SERVER['HTTP_USER_AGENT'];
     return $data;
-}
-function sendSMS($method, $to, $inputs){
-    if (sizeof($inputs) == 1) {
-        $url = 'http://api.kavenegar.com/v1/' . getSMSAPI() . '/verify/lookup.json?receptor=' . $to . '&token=' . $inputs[0] . '&template=' . $method . '&type=sms';
-    }
-    if (sizeof($inputs) == 2) {
-        $url = 'http://api.kavenegar.com/v1/' . getSMSAPI() . '/verify/lookup.json?receptor=' . $to . '&token=' . $inputs[0] . '&token2=' . $inputs[1] . '&template=' . $method . '&type=sms';
-    }
-    if (sizeof($inputs) == 3) {
-        $url = 'http://api.kavenegar.com/v1/' . getSMSAPI() . '/verify/lookup.json?receptor=' . $to . '&token=' . $inputs[0] . '&token2=' . $inputs[1] . '&token3=' . $inputs[2] . '&template=' . $method . '&type=sms';
-    }
-    $curl = curl_init();
-    curl_setopt($curl, CURLOPT_URL, $url);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_HEADER, false);
-    curl_exec($curl);
-    curl_close($curl);
 }
 function getLoginInfo(){
     $ci =&  get_instance();

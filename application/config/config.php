@@ -55,7 +55,7 @@ $config['defaultPageTitle'] = '';
 $config['defaultPageSize'] = 10;
 $config['upload_path']= './uploads/';
 $config['404_image']= $config['base_url'].('assets/ui/assets/img/404.jpg');
-$config['SMSAPI']= 'QUiRP61z2Q5BcNd0d9zRjj947LWIZ5VQfAUS0EwOloI';
+$config['SMSAPI']= '656B43504E624150746A2B526B485A6A79684E464E4C49385679646B783157596861584370582B514746303D';
 $config['SMSTemplate']= 'ticketverify';
 
 /* Enums */
