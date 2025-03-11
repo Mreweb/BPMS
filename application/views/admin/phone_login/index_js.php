@@ -41,6 +41,7 @@
                             $(".verify-code").show();
                             $(".verify-button").show();
                             $(".verify-code input").focus();
+                            $("#inputCaptcha").val('');
                         }
                         $(".recaptcha").click();
                     }

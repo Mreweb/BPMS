@@ -82,6 +82,14 @@ $config['DBMessages'] = array(
     )
 );
 $config['API'] = array();
+$config['SMSTemplate']  = array(
+    'bpms-otp' => 'bpms-otp',
+    'bpms-success-order' => 'bpms-success-order',
+    'bpms-check-order' => 'bpms-check-order',
+    'bpms-add-user' => 'bpms-add-user',
+    'bpms-change-order' => 'bpms-change-order',
+    'bpms-add-order' => 'bpms-add-order'
+);
 $config['ENUM'] = array(
     'APP_Name' => 'سامانه پذیرش دارایی ها',
     'ACTIVE_USER' => array(

@@ -69,9 +69,6 @@
                     <?php include APPPATH.'views/request_detail.php';?>
                 </div>
 
-                <div class="container py-2">
-                    <?php include APPPATH.'views/request_comment.php';?>
-                </div>
             </div>
         </div>
     </div>

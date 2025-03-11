@@ -1,14 +1,18 @@
 <?php
 
-function pipeEnum($enumName, $k , $class=null)
+function pipeEnum($enumName, $k , $class=null ,$return = false)
 {
     $ci =& get_instance();
     foreach ($ci->config->item('ENUM')[$enumName] as $key => $value) {
         if ($key == $k) {
-            if($class == null){
-                echo $value;
+            if($return){
+                return $value;
             } else{
-                echo "<span class='".$class."'>".$value."</span>";
+                if($class == null){
+                    echo $value;
+                } else{
+                    echo "<span class='".$class."'>".$value."</span>";
+                }
             }
         }
     }
@@ -181,8 +185,14 @@ function getSMSTemplate(){
     return $ci->config->item('SMSTemplate');
 }
 function sendSMS($method , $to , $inputs){
+    //$to = '09120572107';
 
-    $to = '09120572107';
+    for($i = 0; $i < count($inputs); $i++){
+        if(!is_numeric($inputs[$i])){
+            $inputs[$i] = str_ireplace(" ","_",$inputs[$i]);
+        }
+    }
+
     if(sizeof($inputs) == 1){
         $url = 'http://api.kavenegar.com/v1/'.getSMSAPI().'/verify/lookup.json?receptor='.$to.'&token='.$inputs[0].'&template='.$method.'&type=sms';
     }
@@ -196,7 +206,7 @@ function sendSMS($method , $to , $inputs){
     curl_setopt($curl, CURLOPT_URL, $url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HEADER, false);
-    curl_exec($curl);
+    $result = curl_exec($curl);
     curl_close($curl);
 }
 function response($array, $code = null){
@@ -249,6 +259,38 @@ function getVisitorInfo(){
 function getLoginInfo(){
     $ci =&  get_instance();
     return $ci->session->userdata('AdminLoginInfo')[0];
+}
+function getPersonInfoById($personId){
+    $ci =&  get_instance();
+    $ci->db->select('*');
+    $ci->db->from('person');
+    $ci->db->where(array('PersonId' => $personId));
+    $data = $ci->db->get()->result_array()[0];
+    $ci->db->reset_query();
+
+    $ci->db->reset_query();
+
+    $ci->db->select('*');
+    $ci->db->from('person_roles');
+    $ci->db->where(array('PersonId' => $personId));
+    $data['roles'] = $ci->db->get()->result_array();
+
+    $ci->db->reset_query();
+
+    $ci->db->select('*');
+    $ci->db->from('person_legal_info');
+    $ci->db->where(array('PersonId' => $personId));
+    $data['legal_info'] = $ci->db->get()->result_array();
+    return $data;
+}
+function getPersonInfoByRequestId($reqId){
+    $ci =&  get_instance();
+    $ci->db->select('*');
+    $ci->db->from('person');
+    $ci->db->join('person_requests' , 'person_requests.PersonId=person.PersonId');
+    $ci->db->where(array('person_requests.ReqId' => $reqId));
+    $data = $ci->db->get()->result_array()[0];
+    return $data;
 }
 function getLoginRoles(){
     $ci =&  get_instance();

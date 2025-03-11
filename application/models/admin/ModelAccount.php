@@ -2,8 +2,7 @@
 
 class ModelAccount extends CI_Model{
 
-    function __construct()
-    {
+    function __construct(){
         parent::__construct();
     }
     public function do_login_user($inputs){
@@ -37,7 +36,7 @@ class ModelAccount extends CI_Model{
 
         /*send SMS*/
         $code = randomString('nozero', 4);
-        sendSMS("bpms-otp", $inputs['inputPhone'],array($code));
+        sendSMS($this->config->item('SMSTemplate')['bpms-otp'], $inputs['inputPhone'],array($code));
 
 
         /* check user exists */

@@ -340,12 +340,16 @@ class ModelRequests extends CI_Model{
             return $this->config->item('DBMessages')['SuccessAction'];
         }
 
+        if($status == 'CENTRALBANK') {
+            $person = getPersonInfoById($inputs['inputCreatePersonId']);
+            sendSMS($this->config->item('SMSTemplate')['bpms-add-order'], $person['PersonPhone'], array($inputs['inputReqId']));
+        }
+
         return $this->config->item('DBMessages')['ErrorAction'];
 
 
 
     }
-
     public function doEdit($inputs){
 
         $this->db->select('*');
@@ -449,14 +453,25 @@ class ModelRequests extends CI_Model{
             );
             $this->db->insert('person_requests_property_owner_info', $userArray);
 
-
         }
+
+
+        if($status == 'CENTRALBANK') {
+            $person = getPersonInfoById($inputs['inputModifyPersonId']);
+            sendSMS($this->config->item('SMSTemplate')['bpms-add-order'], $person['PersonPhone'], array($inputs['inputReqId']));
+        }
+
         return $this->config->item('DBMessages')['SuccessAction'];
     }
 
     public function doEditCentralBank($inputs){
 
         $request = $this->getById($inputs['inputReqId'])[0];
+
+
+
+
+
         if( $request['ReqStatus'] != 'CENTRALBANK'){
             $msg = $this->config->item('DBMessages')['ErrorAction'];
             $msg['content'] = 'درخواست در وضعیت بررسی بانک مرکزی قرار ندارد.';
@@ -473,9 +488,11 @@ class ModelRequests extends CI_Model{
         $userArray = array(
             'ReqStatus' => $status
         );
+
+
+
         $this->db->where('ReqId', $inputs['inputReqId']);
         $this->db->update('person_requests', $userArray);
-
         if ($inputs['inputResult'] == "1") {
             $userArray = array(
                 'RequestId' => $inputs['inputReqId'],
@@ -514,10 +531,14 @@ class ModelRequests extends CI_Model{
             $this->db->insert('person_requests_comments', $userArray);
         }
 
+        $person = getPersonInfoById($request['ReqPersonId']);
+        sendSMS($this->config->item('SMSTemplate')['bpms-change-order'], $person['PersonPhone'], array($inputs['inputReqId'] , pipeEnum('REQ_STATUS', $status , null,true) ) );
+
         return $this->config->item('DBMessages')['SuccessAction'];
     }
 
     public function doEditLegal($inputs){
+        $request = $this->getById($inputs['inputReqId'])[0];
 
         $status = "LEGAL";
         if ($inputs['inputResult'] == "0") {
@@ -544,11 +565,14 @@ class ModelRequests extends CI_Model{
             $this->db->insert('person_requests_comments', $userArray);
         }
 
+        $person = getPersonInfoById($request['ReqPersonId']);
+        sendSMS($this->config->item('SMSTemplate')['bpms-change-order'], $person['PersonPhone'], array($inputs['inputReqId'] , pipeEnum('REQ_STATUS', $status , null,true) ) );
         return $this->config->item('DBMessages')['SuccessAction'];
     }
 
     public function doEditEconimic($inputs)
     {
+        $request = $this->getById($inputs['inputReqId'])[0];
 
         $status = "LEGAL";
         if ($inputs['inputResult'] == "0") {
@@ -575,10 +599,14 @@ class ModelRequests extends CI_Model{
             $this->db->insert('person_requests_comments', $userArray);
         }
 
+        $person = getPersonInfoById($request['ReqPersonId']);
+        sendSMS($this->config->item('SMSTemplate')['bpms-change-order'], $person['PersonPhone'], array($inputs['inputReqId'] , pipeEnum('REQ_STATUS', $status , null,true) ) );
+
         return $this->config->item('DBMessages')['SuccessAction'];
     }
 
     public function doEditFinal($inputs){
+        $request = $this->getById($inputs['inputReqId'])[0];
 
         $userArray = array(
             'ReqStatus' => $inputs['inputResult']
@@ -598,6 +626,8 @@ class ModelRequests extends CI_Model{
             $this->db->insert('person_requests_comments', $userArray);
         }
 
+        $person = getPersonInfoById($request['ReqPersonId']);
+        sendSMS($this->config->item('SMSTemplate')['bpms-change-order'], $person['PersonPhone'], array($inputs['inputReqId'] , pipeEnum('REQ_STATUS', $inputs['inputResult'] , null,true) ) );
         return $this->config->item('DBMessages')['SuccessAction'];
     }
 

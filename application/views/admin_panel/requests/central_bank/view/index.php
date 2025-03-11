@@ -35,7 +35,7 @@
                                 <div class="row forms">
                                     <?php if ($request['ReqStatus'] == 'CENTRALBANK') { ?>
                                         <div class="alert alert-success text-white">
-                                            لطفا وضعیت درخواست را مشخص کنید
+                                            لطفا بعد از تکمیل اطلاعات تملک، وضعیت درخواست را مشخص کنید.
                                         </div>
                                     <?php } else { ?>
                                         <div class="alert alert-danger text-white">
@@ -259,9 +259,6 @@
                 </div>
                 <div class="col-12 mx-auto">
                     <?php include APPPATH.'views/request_detail.php';?>
-                </div>
-                <div class="container py-2">
-                    <?php include APPPATH.'views/request_comment.php';?>
                 </div>
             </div>
         </div>

@@ -37,6 +37,7 @@ class MyRequests extends CI_Controller{
     }
 
     public function Add(){
+        
         $page['pageTitle'] = 'افزودن درخواست پذیرش';
         $data['loginInfo'] = $this->loginInfo;
         $data['enum'] = $this->enum;
