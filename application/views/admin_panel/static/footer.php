@@ -29,6 +29,11 @@
             <li id="theme4"></li>
             <li id="theme5"></li>
             <li id="theme6"></li>
+            <li id="theme22" style="
+    background: #fff;
+    background-size: 100% 100%;
+    background-position: center;
+    transition: background .3s;"></li>
         </ul>
         <hr>
         <p class="mb-0">رنگ های گرادیانت</p>

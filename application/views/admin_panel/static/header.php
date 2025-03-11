@@ -37,6 +37,7 @@ $ci =& get_instance(); ?>
     <script src="<?php echo $_DIR ?>assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
     <script src="<?php echo $_DIR ?>assets/plugins/apexcharts-bundle/js/apexcharts.min.js"></script>
     <script src="<?php echo $_DIR ?>assets/plugins/pagination/jquery.simplePagination.js"></script>
+
     <!-- IZI-->
     <link href="<?php echo $_DIR ?>assets/plugins/izi/izi.min.css" rel="stylesheet"/>
     <script src="<?php echo $_DIR ?>assets/plugins/izi/izi.min.js"></script>
@@ -63,10 +64,29 @@ $ci =& get_instance(); ?>
     <script src="<?php echo $_DIR ?>assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
 
     <!--app JS-->
-    <script src="<?php echo $_DIR ?>assets/js/app.js"></script>
+     <script src="<?php echo $_DIR ?>assets/js/app.js"></script>
+
 
     <script>
+        function setTheme(theme=null){
+
+            localStorage.setItem("theme",'bg-theme '+theme);
+            $('body').attr('class', 'bg-theme '+theme);
+
+            $.ajax({
+                type: 'post',
+                url: main_url + 'GetCaptcha/setColor/'+theme,
+                data: {},
+                success: function (data) {
+                }
+            });
+        }
+
+
         $(document).ready(function () {
+
+
+
             $.ajaxSetup({
                 error: function (data, status, error) {
                     $result = data.responseText;
@@ -108,7 +128,6 @@ $ci =& get_instance(); ?>
                 new PerfectScrollbar('.customers-list');
             } catch (e) {
             }
-
             jalaliDatepicker.startWatch({
                 showTodayBtn: true,
                 showEmptyBtn: true,
@@ -129,17 +148,22 @@ $ci =& get_instance(); ?>
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
                 placeholder: $(this).data('placeholder'),
             });
-
             $(document).on('click', '.indicator-button', function () {
                 $(this).toggleClass('active');
             });
 
-        });
+            $(document).on('click', '.switcher li', function () {
+                setTheme($(this).attr('id'));
+                $('body').attr('class', 'bg-theme bg-'+$(this).attr('id'));
+            });
 
+
+
+
+        });
         function noComma($input) {
             return $input.replace(/,/g, '');
         }
-
         function notify($title, $type, $time = 50000, $position = 'topRight') {
             iziToast.show({
                 theme: 'light',
@@ -154,24 +178,19 @@ $ci =& get_instance(); ?>
                 position: $position
             });
         }
-
         function toggleLoader() {
             $(".pace").toggleClass(' pace-inactive');
         }
-
         function showLoader() {
             $(".pace").removeClass(' pace-inactive');
         }
-
         function hideLoader() {
             $(".pace").addClass(' pace-inactive');
         }
-
         const base_url = "<?php echo base_url('Admin/Dashboard/') ?>";
         const main_url = "<?php echo base_url() ?>";
         const items = <?php echo $ci->config->item('defaultPageSize'); ?>;
         const itemsOnPage = <?php echo $ci->config->item('defaultPageSize'); ?>;
-
         function copyToClipboard(text) {
             var aux = document.createElement("input");
             aux.setAttribute("value", text);
@@ -180,7 +199,6 @@ $ci =& get_instance(); ?>
             document.execCommand("copy");
             document.body.removeChild(aux);
         }
-
         function numberWithCommas(x) {
             return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
         }
@@ -283,7 +301,7 @@ $ci =& get_instance(); ?>
         }
     </style>
 </head>
-<body class="bg-theme bg-theme22">
+<body class="bg-theme bg-<?php if(isset($_COOKIE['theme'])){ echo $_COOKIE['theme']; } else { echo 'bg-theme22'; } ?>">
 <!--wrapper-->
 <div class="wrapper">
     <!--sidebar wrapper -->

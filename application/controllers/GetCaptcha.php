@@ -72,6 +72,11 @@ class GetCaptcha extends CI_Controller{
         $y = intval(($yi + $yr) / 2);
         return array($x, $y);
     }
+
+    public function setColor($color){
+        setcookie('theme', $color, time()+86000, '/');
+    }
+
 }
 
 ?>
