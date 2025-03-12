@@ -53,9 +53,9 @@
                             <th class="fit">کاربری</th>
                             <th class="fit">ارزش گذاری رسمی</th>
                             <th class="fit">وضعیت</th>
-                            <th class="fit">ناشر</th>
-                            <th class="fit">کد ملی ناشر</th>
-                            <th class="fit">تلفن ناشر</th>
+                            <th class="fit">نام و نام خانوادگی</th>
+                            <th class="fit">کد ملی</th>
+                            <th class="fit">تلفن</th>
                             <th class="fit">تاریخ ثبت</th>
                             <th class="fit">ویرایش</th>
                         </tr>

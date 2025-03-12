@@ -112,6 +112,10 @@ body.bg-theme22  .card b,
 body.bg-theme22  .card div {
   color:#000 ;
 }
+
+body.bg-theme22  .card .nav-link.active .tab-title{
+  color:#fff ;
+}
 body.bg-theme22  .bg-success {
   color:#fff !important;
 }
@@ -119,6 +123,12 @@ body.bg-theme22 .dark-theme .current {
   background: #222;
   color: #FFF;
 }
+
+body.bg-theme22  .alert-dismissible .text-white {
+  color: #FFF !important;
+}
+
+
 body.bg-theme22 .list-group ,
 body.bg-theme22 .list-group li ,
 body.bg-theme22 .list-group li * ,

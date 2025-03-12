@@ -110,7 +110,7 @@
                                                         class="form-control money">
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2 d-none">
                                             <div class="input-group">
                                                 <span class="input-group-text">کد ملی نماینده</span>
                                                 <input
@@ -120,7 +120,7 @@
                                                         class="form-control">
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2 d-none">
                                             <div class="input-group">
                                                 <span class="input-group-text">کد ملی بازارگردان</span>
                                                 <input

@@ -15,6 +15,13 @@ class Home extends CI_Controller {
     }
 
 	public function index(){
+
+
+        if($this->loginRoles[0] == 'PUBLISHER'){
+            redirect(base_url('Admin/Dashboard/MyRequests'));
+            die();
+        }
+
         $data['pageTitle'] = 'پیشخوان';
         $personId = $this->loginInfo['PersonId'];
         $this->loginRoles = getLoginRoles();
