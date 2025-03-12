@@ -299,6 +299,9 @@ $ci =& get_instance(); ?>
         td.warning {
             background-color: rgba(208, 181, 9, 0.4);
         }
+        .switcher-btn .bx{
+            color:#000;
+        }
     </style>
 </head>
 <body class="bg-theme bg-<?php if(isset($_COOKIE['theme'])){ echo $_COOKIE['theme']; } else { echo 'bg-theme22'; } ?>">

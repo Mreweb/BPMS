@@ -138,4 +138,7 @@ body.bg-theme22 .border-end {
 body.bg-theme22 .text-white {
   color: rgb(var(--dark)) !important;
 }
+body.bg-theme22 .alert.text-white {
+  color: #fff !important;
+}
 
