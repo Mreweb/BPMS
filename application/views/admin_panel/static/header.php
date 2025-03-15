@@ -131,9 +131,9 @@ $ci =& get_instance(); ?>
             jalaliDatepicker.startWatch({
                 showTodayBtn: true,
                 showEmptyBtn: true,
-                time: true,
+                time: false,
                 separatorChars: {
-                    'date': '-'
+                    'date': '/'
                 },
                 topSpace: 10,
                 bottomSpace: 30,
@@ -304,7 +304,7 @@ $ci =& get_instance(); ?>
         }
     </style>
 </head>
-<body class="bg-theme bg-<?php if(isset($_COOKIE['theme'])){ echo $_COOKIE['theme']; } else { echo 'bg-theme22'; } ?>">
+<body class="bg-theme bg-<?php if(isset($_COOKIE['theme'])){ echo $_COOKIE['theme']; } else { echo 'theme22'; } ?>">
 <!--wrapper-->
 <div class="wrapper">
     <!--sidebar wrapper -->
@@ -400,37 +400,7 @@ $ci =& get_instance(); ?>
             </li>
         <?php } ?>
 
-        <?php if (getLoginRoles()[0] == 'ADMIN' || getLoginRoles()[0] == 'LEGAL') { ?>
-            <li>
-                <a href="<?php echo base_url('Admin/Dashboard/Requests/legal'); ?>">
-                    <div class="parent-icon"><i class="bx bx-category"></i></div>
-                    <div class="menu-title">کارتابل حقوقی</div>
-                </a>
-            </li>
-        <?php } ?>
 
-        <?php if (getLoginRoles()[0] == 'ADMIN' || getLoginRoles()[0] == 'ECONOMIC') { ?>
-            <li>
-                <a href="<?php echo base_url('Admin/Dashboard/Requests/economic'); ?>">
-                    <div class="parent-icon"><i class="bx bx-category"></i></div>
-                    <div class="menu-title">کارتابل اقتصادی</div>
-                </a>
-            </li>
-        <?php } ?>
-        <?php if (getLoginRoles()[0] == 'ADMIN' || getLoginRoles()[0] == 'MANAGER') { ?>
-            <li>
-                <a href="<?php echo base_url('Admin/Dashboard/Requests/final'); ?>">
-                    <div class="parent-icon"><i class="bx bx-category"></i></div>
-                    <div class="menu-title">کارتابل نهایی</div>
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo base_url('Admin/Dashboard/Requests/finished'); ?>">
-                    <div class="parent-icon"><i class="bx bx-category"></i></div>
-                    <div class="menu-title">درخواست های نهایی شده</div>
-                </a>
-            </li>
-        <?php } ?>
 
         </ul>
         <!--end navigation-->

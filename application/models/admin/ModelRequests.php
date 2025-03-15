@@ -6,7 +6,7 @@ class ModelRequests extends CI_Model{
         $limit = $inputs['pageIndex'];
         $start = ($limit - 1) * $this->config->item('defaultPageSize');
         $end = $this->config->item('defaultPageSize');
-        $this->db->select('*');
+        $this->db->select('* , person_requests.CreateDateTime as RequestCreateDateTime');
         $this->db->from('person_requests');
         $this->db->join('person' , 'person.PersonId = person_requests.ReqPersonId');
         if ($inputs['inputTitle'] != '') {
@@ -15,11 +15,18 @@ class ModelRequests extends CI_Model{
         if ($inputs['inputNationalCode'] != '') {
             $this->db->like('PersonNationalCode', $inputs['inputNationalCode']);
         }
-        if ($inputs['inputPhone'] != '') {
-            $this->db->like('PersonPhone', $inputs['inputPhone']);
+        if ($inputs['inputName'] != '') {
+            $this->db->like('PersonFirstName', $inputs['inputName']);
+            $this->db->or_like('PersonLastName', $inputs['inputName']);
         }
         if ($inputs['inputReqStatus'] != '') {
             $this->db->where('ReqStatus', $inputs['inputReqStatus']);
+        }
+        if ($inputs['inputFromDate'] != '') {
+            $this->db->where('person_requests.CreateDateTime >=', makeTimeFromDate($inputs['inputFromDate']));
+        }
+        if ($inputs['inputToDate'] != '') {
+            $this->db->where('person_requests.CreateDateTime <=', makeTimeFromDate($inputs['inputToDate']));
         }
         $this->db->order_by('ReqId', 'DESC');
 

@@ -26,7 +26,7 @@ body.bg-theme22  .form-select,
 body.bg-theme22  .form-control {
   color: #000;
   background-color: #fff;
-  border: 1px solid #000;
+  border: 1px solid #cacaca;
   border-radius: 0;
 }
 body.bg-theme22  .table-striped>tbody>tr:nth-of-type(odd)>* {
@@ -152,3 +152,6 @@ body.bg-theme22 .alert.text-white {
   color: #fff !important;
 }
 
+body .badge {
+  color:#fff !important;
+}

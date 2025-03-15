@@ -14,17 +14,11 @@ foreach ($data as $item) { ?>
             <td class="fit">
                 <?php echo pipeEnum('REQ_TYPE', $item['ReqType'], 'badge bg-success'); ?>
             </td>
-            <td class="fit">
-                <?php echo pipeEnum('USE_TYPE', $item['ReqUseType'], 'badge bg-success'); ?>
-            </td>
             <td>
                 <?php echo $item['ReqPrice']; ?>
             </td>
             <td class="fit">
                 <?php echo pipeEnum('REQ_STATUS', $item['ReqStatus'], getRequestsStatusClass( $item['ReqStatus'])); ?>
-            </td>
-            <td class="fit">
-                <?php echo pipeEnum('HAS_NOT', $item['ReqContractStatus'], getHasNotClass( $item['ReqContractStatus'])); ?>
             </td>
             <td class="fit">
                 <?php echo $item['PersonFirstName']." " .$item['PersonLastName']; ?>
@@ -36,8 +30,8 @@ foreach ($data as $item) { ?>
                 <?php echo $item['PersonPhone']; ?>
             </td>
             <td class="fit">
-                <?php echo convertDate($item['CreateDateTime']); ?><br>
-                <?php echo convertTime($item['CreateDateTime']); ?>
+                <?php echo convertDate($item['RequestCreateDateTime']); ?><br>
+                <?php echo convertTime($item['RequestCreateDateTime']); ?>
             </td>
             <td class="fit">
                 <a href=" <?php echo base_url('Admin/Dashboard/Requests/Edit/'.$item['ReqId']); ?>" class="edit btn btn-default">
