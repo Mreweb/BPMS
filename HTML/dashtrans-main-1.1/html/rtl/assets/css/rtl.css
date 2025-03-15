@@ -1,0 +1,23 @@
+body {
+  font-family: Vazirmatn FD, Roboto, sans-serif;
+  direction: rtl;
+  text-align: right;
+}
+.switcher-wrapper {
+  left: -280px;
+  right: unset;
+  border-right: 0 solid #d2d2d2;
+  border-left: unset;
+}
+.switcher-btn {
+  border-top-right-radius: 10px;
+  border-top-left-radius: unset;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: unset;
+  left: 100%;
+  right: unset;
+}
+.switcher-wrapper.switcher-toggled {
+  left: 0;
+  right: unset;
+}

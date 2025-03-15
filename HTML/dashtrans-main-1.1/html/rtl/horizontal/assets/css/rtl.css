@@ -1,0 +1,296 @@
+body {
+  font-family: Vazirmatn FD, Roboto, sans-serif;
+  direction: rtl;
+  text-align: right;
+  font-size: 12px;
+}
+.btn {
+  --bs-btn-font-size: 0.9rem;
+}
+.primary-menu .navbar .navbar-nav .dropend a.dropdown-toggle:after {
+  content: "\e9af";
+}
+.page-footer,
+.product-discount,
+.chip,
+.invoice table .qty,
+.invoice table .total,
+.invoice table .unit,
+.invoice table tfoot td,
+.invoice table tfoot tr:last-child td,
+.chat-msg,
+.dropdown-large .msg-footer,
+.dropdown-large .msg-name,
+.dropdown-large .cart-product-title,
+.dropdown-large .cart-product-price,
+.dropdown-menu {
+  font-size: 13px;
+}
+.primary-menu .navbar .navbar-nav a.nav-link,
+.primary-menu .navbar .navbar-nav .dropdown-menu .dropdown-item,
+.page-breadcrumb .breadcrumb li.breadcrumb-item,
+.fm-menu .list-group a,
+.contacts-social a,
+.customers-contacts a,
+.invoice main .notices .notice,
+.invoice table th,
+.invoice table td h3,
+.invoice table .no,
+.chat-title,
+.compose-mail-title,
+.pricing-table .card ul li.list-group-item,
+.user-info .user-name,
+.dropdown-large .msg-header .msg-header-title,
+.dropdown-large .cart-product-cancel {
+  font-size: 14px;
+}
+.dropdown-large .notify,
+.product-show,
+.breadcrumb-title,
+.order-actions a,
+.invoice main .thanks,
+.chat-footer-menu a,
+.chat-top-header-menu a,
+.error-social a,
+.pricing-table .card .card-price,
+.search-show {
+  font-size: 16px;
+}
+.logo-text,
+.toggle-icon,
+.user-plus,
+.topbar .navbar .navbar-nav .nav-link {
+  font-size: 18px;
+}
+.fm-file-box,
+.chat-toggle-btn,
+.email-toggle-btn {
+  font-size: 20px;
+}
+.page-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+  content: "\ea5a";
+}
+.h1,
+h1 {
+  font-size: 1.375rem;
+}
+.h2,
+h2 {
+  font-size: 1.125rem;
+}
+.h3,
+h3 {
+  font-size: 1.025rem;
+}
+.h4,
+h4 {
+  font-size: 0.929rem;
+}
+.h5,
+h5,
+.input-group-lg > .btn,
+.input-group-lg > .form-control,
+.input-group-lg > .form-select,
+.input-group-lg > .input-group-text {
+  font-size: 0.9rem;
+}
+.h6,
+h6 {
+  font-size: 0.85rem;
+}
+.btn-login i {
+  transform: rotateY(180deg);
+}
+.color-white {
+  color: rgb(255 255 255) !important;
+}
+.apexcharts-tooltip {
+  background: #f3f3f3;
+  color: black;
+}
+.apexcharts-tooltip-series-group {
+  text-align: right !important;
+  justify-content: right !important;
+}
+.apexcharts-tooltip-marker {
+  margin-left: 10px !important;
+  margin-right: unset !important;
+}
+.apexcharts-menu {
+  color: black;
+  font-family: Vazirmatn FD;
+}
+.apexcharts-toolbar {
+  right: auto !important;
+  left: 10px !important;
+}
+.apexcharts-title-text,
+.apexcharts-subtitle-text {
+  position: absolute !important;
+  left: auto !important;
+  right: 10px !important;
+  text-anchor: start;
+}
+.apexcharts-yaxis-label {
+  text-anchor: start !important;
+}
+.apexcharts-zoom-icon,
+.apexcharts-zoomin-icon,
+.apexcharts-zoomout-icon,
+.apexcharts-reset-icon,
+.apexcharts-pan-icon,
+.apexcharts-selection-icon,
+.apexcharts-menu-icon,
+.apexcharts-toolbar-custom-icon,
+.apexcharts-menu-item {
+  font-family: Vazirmatn FD;
+}
+.apexcharts-legend-marker {
+  margin-left: 3px;
+  margin-right: unset;
+}
+.highcharts-container {
+  font-family: Vazirmatn FD;
+}
+.highcharts-contextmenu {
+  direction: rtl;
+  text-align: right;
+}
+.highcharts-tooltip {
+  text-align: right;
+  direction: rtl !important;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  transform: rotateY(180deg);
+}
+.lobibox,
+.lobibox-notify {
+  font-family: Vazirmatn FD, "Open Sans", Arial, Helvetica, sans-serif;
+}
+.bs-popover-auto[data-popper-placement^="left"] > .popover-arrow::before,
+.bs-popover-start > .popover-arrow::before {
+  right: 0;
+  left: unset;
+}
+.bs-popover-auto[data-popper-placement^="left"] > .popover-arrow::after,
+.bs-popover-start > .popover-arrow::after {
+  right: var(--bs-popover-border-width);
+  left: unset;
+  transform: rotateY(180deg);
+}
+.bs-popover-auto[data-popper-placement^="left"] > .popover-arrow,
+.bs-popover-start > .popover-arrow {
+  right: calc(
+    -1 * (var(--bs-popover-arrow-height)) - var(--bs-popover-border-width)
+  );
+  left: unset;
+}
+.popover-header {
+  color: black;
+}
+
+.bs-popover-auto[data-popper-placement^="right"] > .popover-arrow::before,
+.bs-popover-start > .popover-arrow::before {
+  left: 0;
+  right: unset;
+}
+.bs-popover-auto[data-popper-placement^="right"] > .popover-arrow::after,
+.bs-popover-start > .popover-arrow::after {
+  left: var(--bs-popover-border-width);
+  right: unset;
+  transform: rotateY(180deg);
+}
+.bs-popover-auto[data-popper-placement^="right"] > .popover-arrow,
+.bs-popover-start > .popover-arrow {
+  left: calc(
+    -1 * (var(--bs-popover-arrow-height)) - var(--bs-popover-border-width)
+  );
+  right: unset;
+}
+.bs-tooltip-auto[data-popper-placement^="left"] .tooltip-arrow,
+.bs-tooltip-start .tooltip-arrow {
+  right: 0;
+  left: unset;
+}
+.bs-tooltip-auto[data-popper-placement^="left"] .tooltip-arrow::before,
+.bs-tooltip-start .tooltip-arrow::before {
+  left: -1px;
+  right: unset;
+  transform: rotateY(180deg);
+}
+.bs-tooltip-auto[data-popper-placement^="right"] .tooltip-arrow,
+.bs-tooltip-start .tooltip-arrow {
+  right: unset;
+  left: 0;
+}
+.bs-tooltip-auto[data-popper-placement^="right"] .tooltip-arrow::before,
+.bs-tooltip-start .tooltip-arrow::before {
+  right: -1px;
+  left: unset;
+  transform: rotateY(180deg);
+}
+.progress-bar-animated {
+  animation: 10s linear 5s infinite progress-bar-stripes !important;
+  -webkit-animation: 10s linear 5s infinite progress-bar-stripes !important;
+}
+.spinner-border {
+  border-left-color: unset;
+  border: var(--bs-spinner-border-width) solid currentcolor;
+  border-right-color: transparent;
+}
+.imageuploadify .imageuploadify-images-list span.imageuploadify-message {
+  font-size: 18px;
+}
+.product-discount {
+  direction: ltr;
+}
+.error-pages-btns {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  justify-content: space-between;
+}
+/* jdp-container {
+  right: 24px !important;
+  left: auto !important;
+} */
+jdp-container .jdp-time,
+jdp-container .jdp-time select {
+  background: rgba(36, 41, 44, 0.849) !important;
+  background-color: rgba(36, 41, 44, 0.849) !important;
+}
+.select2-container--bootstrap4
+  .select2-selection--single
+  .select2-selection__arrow {
+  left: 3px;
+  right: unset;
+}
+.apexcharts-tooltip-text {
+  font-family: Vazirmatn FD !important;
+}
+.pricing-table .card .card-title {
+  letter-spacing: 0;
+}
+.fc-event-main-frame {
+  direction: rtl;
+  text-align: right;
+}
+.fc-direction-ltr .fc-daygrid-event.fc-event-end,
+.fc-direction-rtl .fc-daygrid-event.fc-event-start {
+  direction: rtl;
+  text-align: right;
+}
+.fc-theme-standard .fc-popover {
+  background: #292626c0;
+  background-color: #292626c0;
+}
+.fc-theme-standard .fc-list-day-cushion {
+  background: #292626c0;
+  background-color: #292626c0;
+}
+.fc-list-event:hover,
+.fc .fc-list-event:hover td {
+  background: #292626c0;
+  background-color: #292626c0;
+}
