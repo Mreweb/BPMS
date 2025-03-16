@@ -57,6 +57,16 @@
                                     </a>
                                 </li>
                                 <li class="nav-item" role="presentation">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#primaryprofileOwner" role="tab"
+                                       aria-selected="false" tabindex="-1">
+                                        <div class="d-flex align-items-center">
+                                            <div class="tab-icon"><i class="bx bx-user-pin font-18 me-1"></i>
+                                            </div>
+                                            <div class="tab-title">اطلاعات تملک</div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item" role="presentation">
                                     <a class="nav-link" data-bs-toggle="tab" href="#primarysave" role="tab"
                                        aria-selected="false" tabindex="-1">
                                         <div class="d-flex align-items-center">
@@ -475,6 +485,225 @@
                                     </div>
 
                                 </div>
+                                <div class="tab-pane fade" id="primaryprofileOwner" role="tabpanel">
+                                    <style>
+                                        #primaryprofileOwner .input-group-text {
+                                            min-width: 200px;
+                                        }
+                                    </style>
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">درصد مالکیت مالک بر ملک</span>
+                                                <input type="text"
+                                                       <?php  setInputValue($request_central_bank_info['FinalPropertyPercentageOwnership']); ?>
+                                                       id="inputFinalPropertyPercentageOwnership" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">نحوه تملک</span>
+                                                <select class="form-select" id="inputFinalPropertyAcquire"
+                                                        data-placeholder="یک مورد راانتخاب کنید">
+                                                    <option></option>
+                                                    <?php foreach ($enum['PROPERTY_BUY_TYPE'] as $key => $value) { ?>
+                                                        <option
+                                                                <?php setOptionSelected($key ,$request_central_bank_info['FinalPropertyAcquire'] ); ?>
+                                                                value="<?php echo $key; ?>">
+                                                            <?php echo $value; ?>
+                                                        </option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">نوع دارایی</span>
+                                                <select class="form-select" id="inputFinalPropertyType"
+                                                        data-placeholder="یک مورد راانتخاب کنید">
+                                                    <option></option>
+                                                    <?php foreach ($enum['PROPERTY_TYPE'] as $key => $value) { ?>
+                                                        <option
+                                                            <?php setOptionSelected($key ,$request_central_bank_info['FinalPropertyType'] ); ?>
+                                                                value="<?php echo $key; ?>">
+                                                            <?php echo $value; ?>
+                                                        </option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">تاریخ تملک/خرید تحصیل</span>
+                                                <input type="text"
+                                                       <?php setInputValue($request_central_bank_info['FinalPropertyBuyDate']); ?>
+                                                       id="inputFinalPropertyBuyDate" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">مازاد بودن ملک</span>
+                                                <select class="form-select" id="inputFinalPropertySurplus"
+                                                        data-placeholder="یک مورد راانتخاب کنید">
+                                                    <option></option>
+                                                    <?php foreach ($enum['YES_NO'] as $key => $value) { ?>
+                                                        <option
+                                                            <?php setOptionSelected($key ,$request_central_bank_info['FinalPropertySurplus'] ); ?>
+                                                                value="<?php echo $key; ?>">
+                                                            <?php echo $value; ?>
+                                                        </option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">مستثنی بودن ملک</span>
+                                                <select class="form-select" id="inputFinalPropertyExcluded"
+                                                        data-placeholder="یک مورد راانتخاب کنید">
+                                                    <option></option>
+                                                    <?php foreach ($enum['YES_NO'] as $key => $value) { ?>
+                                                        <option
+                                                            <?php setOptionSelected($key ,$request_central_bank_info['FinalPropertyExcluded'] ); ?>
+                                                                value="<?php echo $key; ?>">
+                                                            <?php echo $value; ?>
+                                                        </option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">منشا ایجاد استثنا</span>
+                                                <input type="text"
+                                                    <?php  setInputValue($request_central_bank_info['FinalPropertyExcludeReason']); ?>
+                                                       id="inputFinalPropertyExcludeReason" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">بلامعارض بودن</span>
+                                                <select class="form-select" id="inputFinalPropertyUnopposed"
+                                                        data-placeholder="یک مورد راانتخاب کنید">
+                                                    <option></option>
+                                                    <?php foreach ($enum['YES_NO'] as $key => $value) { ?>
+                                                        <option
+                                                            <?php setOptionSelected($key ,$request_central_bank_info['FinalPropertyUnopposed'] ); ?>
+                                                                value="<?php echo $key; ?>">
+                                                            <?php echo $value; ?>
+                                                        </option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">پرونده حقوقی دارد</span>
+                                                <select class="form-select" id="inputFinalPropertyHasLegal"
+                                                        data-placeholder="یک مورد راانتخاب کنید">
+                                                    <option></option>
+                                                    <?php foreach ($enum['YES_NO'] as $key => $value) { ?>
+                                                        <option
+                                                            <?php setOptionSelected($key ,$request_central_bank_info['FinalPropertyHasLegal'] ); ?>
+                                                                value="<?php echo $key; ?>">
+                                                            <?php echo $value; ?>
+                                                        </option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">تاریخ آخرین حکم</span>
+                                                <input type="text"
+                                                    <?php  setInputValue($request_central_bank_info['FinalPropertyOrderDate']); ?>
+                                                       id="inputFinalPropertyOrderDate" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">نتیجه حکم صادره</span>
+                                                <select class="form-select" id="inputFinalPropertyVote"
+                                                        data-placeholder="یک مورد راانتخاب کنید">
+                                                    <option></option>
+                                                    <?php foreach ($enum['PROPERTY_JUDGE_RESULT'] as $key => $value) { ?>
+                                                        <option
+                                                            <?php setOptionSelected($key ,$request_central_bank_info['FinalPropertyVote'] ); ?>
+                                                                value="<?php echo $key; ?>">
+                                                            <?php echo $value; ?>
+                                                        </option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-12 col-sm-12 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">ارزش برآوردي خروج منافع درصورت حکم عليه</span>
+                                                <input type="text"
+                                                    <?php  setInputValue($request_central_bank_info['FinalPropertyWithdrawBenefit']); ?>
+                                                       id="inputFinalPropertyWithdrawBenefit" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">قطعی یا وکالتی بودن سند</span>
+                                                <select class="form-select" id="inputFinalPropertyDocFinalStatus"
+                                                        data-placeholder="یک مورد راانتخاب کنید">
+                                                    <option></option>
+                                                    <?php foreach ($enum['PROPERTY_DOC_EXACT'] as $key => $value) { ?>
+                                                        <option
+                                                            <?php setOptionSelected($key ,$request_central_bank_info['FinalPropertyDocFinalStatus'] ); ?>
+                                                                value="<?php echo $key; ?>">
+                                                            <?php echo $value; ?>
+                                                        </option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">سرفصل خلاصه دفترکل طبقه بندی شده ملک</span>
+                                                <input type="text"
+                                                       <?php  setInputValue($request_central_bank_info['FinalPropertySummary']); ?>
+                                                       id="inputFinalPropertySummary" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">ارزش دفتری</span>
+                                                <input type="text"
+                                                       <?php  setInputValue($request_central_bank_info['FinalPropertyValue']); ?>
+                                                       id="inputFinalPropertyValue" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">تاریخ آخرین کارشناسی رسمی</span>
+                                                <input type="text"
+                                                       <?php  setInputValue($request_central_bank_info['FinalPropertyValueCheck']); ?>
+                                                       id="inputFinalPropertyValueCheck" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">ارزش آخرین کارشناسی رسمی</span>
+                                                <input type="text"
+                                                       <?php  setInputValue($request_central_bank_info['FinalPropertyCheckValue']); ?>
+                                                       id="inputFinalPropertyCheckValue" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">مرجع کارشناسی</span>
+                                                <input type="text"
+                                                       <?php  setInputValue($request_central_bank_info['FinalPropertySurvey']); ?>
+                                                       id="inputFinalPropertySurvey" class="form-control">
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
                                 <div class="tab-pane fade" id="primarysave" role="tabpanel">
                                     <div class="col-12 text-start mb-2">
                                         <div class="alert border-0 alert-dismissible fade show py-2">
@@ -502,7 +731,6 @@
                                         <?php } ?>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>

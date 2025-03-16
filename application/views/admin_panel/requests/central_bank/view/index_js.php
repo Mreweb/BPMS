@@ -29,7 +29,7 @@
             
             $sendData = {
                 'inputReqId': $inputReqId,
-                'inputFinalPropertyPercentageOwnership': $inputFinalPropertyPercentageOwnership,
+                /*'inputFinalPropertyPercentageOwnership': $inputFinalPropertyPercentageOwnership,
                 'inputFinalPropertyAcquire': $inputFinalPropertyAcquire,
                 'inputFinalPropertyType': $inputFinalPropertyType,
                 'inputFinalPropertyBuyDate': $inputFinalPropertyBuyDate,
@@ -46,7 +46,7 @@
                 'inputFinalPropertyValue': $inputFinalPropertyValue,
                 'inputFinalPropertyValueCheck': $inputFinalPropertyValueCheck,
                 'inputFinalPropertyCheckValue': $inputFinalPropertyCheckValue,
-                'inputFinalPropertySurvey': $inputFinalPropertySurvey,
+                'inputFinalPropertySurvey': $inputFinalPropertySurvey,*/
                 'inputResult': $inputResult,
                 'inputResultDescription': $inputResultDescription
             };

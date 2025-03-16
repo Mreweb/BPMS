@@ -44,7 +44,7 @@
                                     <?php } ?>
 
 
-                                    <div class="row">
+                                    <div class="row d-none">
                                         <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">درصد مالکیت مالک بر ملک</span>

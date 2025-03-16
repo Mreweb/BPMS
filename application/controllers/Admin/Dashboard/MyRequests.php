@@ -17,7 +17,6 @@ class MyRequests extends CI_Controller{
         //checkPersonAccess($this->loginRoles, 'Admin');
     }
 
-
     public function index(){
         $page['pageTitle'] = 'فهرست درخواست های من';
         $data['loginInfo'] = $this->loginInfo;
@@ -84,10 +83,12 @@ class MyRequests extends CI_Controller{
         if($data['request']['ReqPersonId'] != $this->loginInfo['PersonId']){
             redirect(base_url('Admin/Dashboard/Home?msg=دسترسی به این درخواست محدود شده است'));
         }
+        $data['request'] = $this->ModelRequests->getById($id)[0];
         $data['request_attachment'] = $this->ModelRequests->getAttachmentByReqId($id);
         $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
         $data['request_property_info'] = $this->ModelRequests->getPropertyInfoById($id)[0];
         $data['request_owner_info'] = $this->ModelRequests->getPropertyOwnerInfoById($id)[0];
+        $data['request_central_bank_info'] = $this->ModelRequests->getPropertyCentralBankInfoById($id)[0];
 
 
 
@@ -130,5 +131,6 @@ class MyRequests extends CI_Controller{
         }
 
     }
+
 
 }

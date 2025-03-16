@@ -91,7 +91,7 @@ $config['SMSTemplate']  = array(
     'bpms-add-order' => 'bpms-add-order'
 );
 $config['ENUM'] = array(
-    'APP_Name' => 'سامانه پذیرش دارایی ها',
+    'APP_Name' => 'سامانه املاک و مستندات شبکه بانکی',
     'ACTIVE_USER' => array(
         '0' => 'غیرفعال',
         '1' => 'فعال'
@@ -137,8 +137,8 @@ $config['ENUM'] = array(
         'PROPERTY_DEED' => 'سند ملک',
         'VALUATION_REPORT' => 'گزارش ارزش گذاری',
         'PROJECT_DESIGN_DOCUMENTATION' => 'مستندات طراحی پروژه',
-        'REPRESENTATIVE_INTRODUCTION_LETTER' => 'نامه معرفی نماینده',
-        'MARKET_MANAGER_INTRODUCTION_LETTER' => 'نامه معرفی بازارگردان',
+        /*'REPRESENTATIVE_INTRODUCTION_LETTER' => 'نامه معرفی نماینده',
+        'MARKET_MANAGER_INTRODUCTION_LETTER' => 'نامه معرفی بازارگردان',*/
         'WHITE_PAPER' => 'سپیدنامه',
         'OTHER' => 'سایر',
     ),
@@ -164,13 +164,15 @@ $config['ENUM'] = array(
         '1' => 'آپارتمان',
         '2' => 'زمين',
         '3' => 'ویلایی',
-        '4' => 'ساير',
+        '4' => 'در حال ساخت',
+        '5' => 'ساير',
     ),
     'PROPERTY_SPECIAL_STATUS' => array(
         '1' => 'طلق',
         '2' => 'وقفی',
         '3' => 'دولتی',
-        '4' => 'سایر',
+        '4' => 'بلامعارض بودن',
+        '5' => 'سایر'
     ),
     'PROPERTY_BUY_TYPE' => array(
         '1' => 'خرید',

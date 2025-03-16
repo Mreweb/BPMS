@@ -164,7 +164,6 @@ class Requests extends CI_Controller{
 
     }
 
-
     public function centralBank(){
         $page['pageTitle'] = 'درخواست های در مرحله کمیسیون حقوقی';
         $data['loginInfo'] = $this->loginInfo;

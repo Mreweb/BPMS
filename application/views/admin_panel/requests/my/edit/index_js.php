@@ -48,6 +48,29 @@
             $inputOwnerTypeDependentPerson = $.trim($("#inputOwnerTypeDependentPerson").val());
             $inputOwnerOwnershipPercentage = $.trim($("#inputOwnerOwnershipPercentage").val());
 
+
+            /* Final Property Info  */
+            $inputFinalPropertyPercentageOwnership = $.trim($("#inputFinalPropertyPercentageOwnership").val());
+            $inputFinalPropertyAcquire = $.trim($("#inputFinalPropertyAcquire").val());
+            $inputFinalPropertyType = $.trim($("#inputFinalPropertyType").val());
+            $inputFinalPropertyBuyDate = $.trim($("#inputFinalPropertyBuyDate").val());
+            $inputFinalPropertySurplus = $.trim($("#inputFinalPropertySurplus").val());
+            $inputFinalPropertyExcluded = $.trim($("#inputFinalPropertyExcluded").val());
+            $inputFinalPropertyExcludeReason  = $.trim($("#inputFinalPropertyExcludeReason").val());
+            $inputFinalPropertyUnopposed  = $.trim($("#inputFinalPropertyUnopposed").val());
+            $inputFinalPropertyHasLegal = $.trim($("#inputFinalPropertyHasLegal").val());
+            $inputFinalPropertyOrderDate = $.trim($("#inputFinalPropertyOrderDate").val());
+            $inputFinalPropertyVote  = $.trim($("#inputFinalPropertyVote").val());
+            $inputFinalPropertyWithdrawBenefit = $.trim($("#inputFinalPropertyWithdrawBenefit").val());
+            $inputFinalPropertyDocFinalStatus  = $.trim($("#inputFinalPropertyDocFinalStatus").val());
+            $inputFinalPropertySummary = $.trim($("#inputFinalPropertySummary").val());
+            $inputFinalPropertyValue = $.trim($("#inputFinalPropertyValue").val());
+            $inputFinalPropertyValueCheck  = $.trim($("#inputFinalPropertyValueCheck").val());
+            $inputFinalPropertyCheckValue = $.trim($("#inputFinalPropertyCheckValue").val());
+            $inputFinalPropertySurvey = $.trim($("#inputFinalPropertySurvey").val());
+
+
+
             $(".uploaded-files tbody tr").each(function(){
                 $attach = {
                     'type' : $(this).data('type'),
@@ -102,6 +125,28 @@
                 'inputOwnerCompanyType': $inputOwnerCompanyType,
                 'inputOwnerTypeDependentPerson': $inputOwnerTypeDependentPerson,
                 'inputOwnerOwnershipPercentage': $inputOwnerOwnershipPercentage,
+
+
+
+                /* Final Property Info  */
+                'inputFinalPropertyPercentageOwnership': $inputFinalPropertyPercentageOwnership,
+                'inputFinalPropertyAcquire': $inputFinalPropertyAcquire,
+                'inputFinalPropertyType': $inputFinalPropertyType,
+                'inputFinalPropertyBuyDate': $inputFinalPropertyBuyDate,
+                'inputFinalPropertySurplus': $inputFinalPropertySurplus,
+                'inputFinalPropertyExcluded': $inputFinalPropertyExcluded,
+                'inputFinalPropertyExcludeReason': $inputFinalPropertyExcludeReason,
+                'inputFinalPropertyUnopposed': $inputFinalPropertyUnopposed,
+                'inputFinalPropertyHasLegal': $inputFinalPropertyHasLegal,
+                'inputFinalPropertyOrderDate': $inputFinalPropertyOrderDate,
+                'inputFinalPropertyVote': $inputFinalPropertyVote,
+                'inputFinalPropertyWithdrawBenefit': $inputFinalPropertyWithdrawBenefit,
+                'inputFinalPropertyDocFinalStatus': $inputFinalPropertyDocFinalStatus,
+                'inputFinalPropertySummary': $inputFinalPropertySummary,
+                'inputFinalPropertyValue': $inputFinalPropertyValue,
+                'inputFinalPropertyValueCheck': $inputFinalPropertyValueCheck,
+                'inputFinalPropertyCheckValue': $inputFinalPropertyCheckValue,
+                'inputFinalPropertySurvey': $inputFinalPropertySurvey,
 
             };
 
