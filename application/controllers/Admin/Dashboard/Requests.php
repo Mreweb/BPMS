@@ -14,10 +14,13 @@ class Requests extends CI_Controller{
         $this->loginInfo = getLoginInfo();
         $this->loginRoles = getLoginRoles();
         $this->enum = $this->config->item('ENUM');
-        //checkPersonAccess($this->loginRoles, 'Admin');
+        checkPersonAccess($this->loginRoles, array('Admin','CENTRALBANK') );
     }
 
+
     public function index(){
+
+        checkPersonAccess($this->loginRoles, array('Admin') );
         $page['pageTitle'] = 'فهرست درخواست های من';
         $data['loginInfo'] = $this->loginInfo;
         $data['enum'] = $this->enum;
@@ -27,6 +30,8 @@ class Requests extends CI_Controller{
         $this->load->view('admin_panel/static/footer');
     }
     public function doPagination(){
+
+        checkPersonAccess($this->loginRoles, array('Admin') );
         $inputs = $this->input->post(NULL, TRUE);
         $data = $this->ModelRequests->doPagination($inputs);
         $data['htmlResult'] = $this->load->view('admin_panel/requests/pagination', $data, TRUE);
@@ -35,6 +40,8 @@ class Requests extends CI_Controller{
     }
 
     public function Add(){
+
+        checkPersonAccess($this->loginRoles, array('Admin') );
         $page['pageTitle'] = 'افزودن درخواست پذیرش';
         $data['loginInfo'] = $this->loginInfo;
         $data['enum'] = $this->enum;
@@ -45,6 +52,8 @@ class Requests extends CI_Controller{
         $this->load->view('admin_panel/static/footer');
     }
     public function doAdd(){
+
+        checkPersonAccess($this->loginRoles, array('Admin') );
         $inputs = $this->input->post(NULL, TRUE);
 
         //$inputs = secureInput($inputs);
@@ -76,6 +85,8 @@ class Requests extends CI_Controller{
 
     public function Edit($id){
 
+
+        checkPersonAccess($this->loginRoles, array('Admin') );
         if(!is_numeric($id)){
             invalidUrlParameterInput();
         }
@@ -98,6 +109,8 @@ class Requests extends CI_Controller{
         $this->load->view('admin_panel/static/footer');
     }
     public function doEdit(){
+
+        checkPersonAccess($this->loginRoles, array('Admin') );
         $inputs = $this->input->post(NULL, TRUE);
 
         $inputs['inputModifyPersonId'] = $this->loginInfo['PersonId'];
@@ -121,6 +134,8 @@ class Requests extends CI_Controller{
 
     public function publishProposal($id){
 
+
+        checkPersonAccess($this->loginRoles, array('Admin') );
         if(!is_numeric($id)){
             invalidUrlParameterInput();
         }
@@ -142,6 +157,8 @@ class Requests extends CI_Controller{
         $this->load->view('admin_panel/static/footer');
     }
     public function doPublishProposal(){
+
+        checkPersonAccess($this->loginRoles, array('Admin') );
         $inputs = $this->input->post(NULL, TRUE);
         $data['proposalId'] = $inputs['inputReqId'];
         $data['proposalName'] = $inputs['inputProposalTitle'];
@@ -165,6 +182,7 @@ class Requests extends CI_Controller{
     }
 
     public function centralBank(){
+        checkPersonAccess($this->loginRoles, array('Admin','CENTRALBANK') );
         $page['pageTitle'] = 'درخواست های در مرحله کمیسیون حقوقی';
         $data['loginInfo'] = $this->loginInfo;
         $data['enum'] = $this->enum;
@@ -174,6 +192,7 @@ class Requests extends CI_Controller{
         $this->load->view('admin_panel/static/footer');
     }
     public function doStepCentralBankPagination(){
+        checkPersonAccess($this->loginRoles, array('Admin','CENTRALBANK') );
         $inputs = $this->input->post(NULL, TRUE);
         $data = $this->ModelRequests->doStepCentralBankPagination($inputs);
         $data['htmlResult'] = $this->load->view('admin_panel/requests/central_bank/pagination', $data, TRUE);
@@ -181,6 +200,7 @@ class Requests extends CI_Controller{
         echo json_encode($data);
     }
     public function EditCentralBank($id){
+        checkPersonAccess($this->loginRoles, array('Admin','CENTRALBANK') );
         if(!is_numeric($id)){
             invalidUrlParameterInput();
         }
@@ -201,6 +221,7 @@ class Requests extends CI_Controller{
         $this->load->view('admin_panel/static/footer');
     }
     public function doEditCentralBank(){
+        checkPersonAccess($this->loginRoles, array('Admin','CENTRALBANK') );
         $inputs = $this->input->post(NULL, TRUE);
         $inputs['inputModifyPersonId'] = $this->loginInfo['PersonId'];
         $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId']; /* For Editing Roles Need create Person Id */

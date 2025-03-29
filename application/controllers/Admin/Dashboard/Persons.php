@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Persons extends CI_Controller{
 
+
     private $loginInfo;
     private $loginRoles;
     private $enum;

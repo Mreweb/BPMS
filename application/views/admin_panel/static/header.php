@@ -204,6 +204,9 @@ $ci =& get_instance(); ?>
         }
     </script>
     <style>
+        .logo-text, .toggle-icon, .user-plus, .topbar .navbar .navbar-nav .nav-link {
+            font-size: 15px;
+        }
         .jconfirm .jconfirm-box {
             color: #000;
         }

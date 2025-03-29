@@ -14,7 +14,7 @@ class MyRequests extends CI_Controller{
         $this->loginInfo = getLoginInfo();
         $this->loginRoles = getLoginRoles();
         $this->enum = $this->config->item('ENUM');
-        //checkPersonAccess($this->loginRoles, 'Admin');
+        checkPersonAccess($this->loginRoles, 'PUBLISHER');
     }
 
     public function index(){

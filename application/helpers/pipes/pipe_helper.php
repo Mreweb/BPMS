@@ -120,8 +120,7 @@ function convertTime($input, $isHtml = false){
         return "";
     }
 }
-function makeTimeFromDate($input , $split="/")
-{
+function makeTimeFromDate($input , $split="-"){
     if ($input !== NULL) {
         $input = explode($split, $input);
         return jDateTime::mktime(0, 0, 0, $input[1], $input[2], $input[0]);
@@ -297,15 +296,27 @@ function getLoginRoles(){
     return $ci->session->userdata('AdminRoles');
 }
 function checkPersonAccess($roles , $role){
+    return true;
     $hasAccess = false;
-    foreach ($roles as $item) {
-        if($item == $role){
-            $hasAccess = true;
-            break;
+    if(is_array($role)) {
+        foreach($role as $r){
+            foreach ($roles as $item) {
+                if($item == $r){
+                    $hasAccess = true;
+                    break;
+                }
+            }
+        }
+    } else{
+        foreach ($roles as $item) {
+            if($item == $role){
+                $hasAccess = true;
+                break;
+            }
         }
     }
     if(!$hasAccess){
-        redirect(base_url('PageAccess'));
+        redirect(base_url('PageAccess'),'auto',401);
         die();
     }
 }
@@ -435,6 +446,17 @@ function makeSafeInput($string) {
     $string=str_ireplace("1=1","",$string);
     $string=str_ireplace("delete","",$string);
     return $string;
+}
+
+function getNextDayByDate($date , $dayCount = 1){
+    $time = $date;
+    $time += $time + ($dayCount*24*60*60);
+    return $time;
+}
+function getPrevDayByDate($date , $dayCount = 1){
+    $time = $date;
+    $time = $time - ($dayCount*24*60*60);
+    return $time;
 }
 
 ?>

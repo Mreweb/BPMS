@@ -78,8 +78,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="Web3" />
     <orderEntry type="module" module-name="BPMSDAO" />
     <orderEntry type="module" module-name="DashTrans" />
+    <orderEntry type="module" module-name="KoofaPrintCharts" />
   </component>
 </module>

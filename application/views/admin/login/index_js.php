@@ -36,6 +36,7 @@
                             zindex: 2030,
                             position: 'topLeft'
                         });
+                        $(".recaptcha").click();
                         if ($result['success']) {
                             setTimeout(function () {
                                 window.location.href = "<?php echo base_url('Admin/Dashboard/Home');  ?>";
