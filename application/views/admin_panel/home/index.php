@@ -9,14 +9,11 @@
 <div class="page-wrapper">
     <div class="page-content">
         <div class="row">
-
             <?php if (isset($_GET['msg'])) { ?>
                 <div class="alert bg-danger text-white">
                     <?php echo strip_tags($_GET['msg']); ?>
                 </div>
             <?php } ?>
-
-
             <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
                 <div class="col">
                     <div class="card radius-10">
@@ -24,12 +21,12 @@
                             <div class="d-flex align-items-center">
                                 <div>
                                     <p class="mb-0">درخواست</p>
-                                    <h4 class="my-1">480</h4>
-                                    <p class="mb-0 font-13">
-                                        <i class="bx bxs-up-arrow align-middle"></i>
-                                        105
-                                        از هفته قبل
-                                    </p>
+                                    <h4 class="my-1"><?php echo number_format($Stats['TotalReq']) ?></h4>
+<!--                                    <p class="mb-0 font-13">-->
+<!--                                        <i class="bx bxs-up-arrow align-middle"></i>-->
+<!--                                        105-->
+<!--                                        از هفته قبل-->
+<!--                                    </p>-->
                                 </div>
                                 <div class="widgets-icons ms-auto"><i class="bx bxs-wallet"></i>
                                 </div>
@@ -43,11 +40,11 @@
                             <div class="d-flex align-items-center">
                                 <div>
                                     <p class="mb-0">ثبت نام</p>
-                                    <h4 class="my-1">8.4K</h4>
-                                    <p class="mb-0 font-13"><i class="bx bxs-up-arrow align-middle"></i>
-                                        2100
-                                        از هفته قبل
-                                    </p>
+                                    <h4 class="my-1"><?php echo number_format($Stats['PersonCount']) ?></h4>
+<!--                                    <p class="mb-0 font-13"><i class="bx bxs-up-arrow align-middle"></i>-->
+<!--                                        2100-->
+<!--                                        از هفته قبل-->
+<!--                                    </p>-->
                                 </div>
                                 <div class="widgets-icons ms-auto"><i class="bx bxs-group"></i>
                                 </div>
@@ -61,11 +58,11 @@
                             <div class="d-flex align-items-center">
                                 <div>
                                     <p class="mb-0">تایید شده</p>
-                                    <h4 class="my-1">210</h4>
-                                    <p class="mb-0 font-13">
-                                        <i class="bx bxs-down-arrow align-middle"></i>
-                                        22 از هفته قبل
-                                    </p>
+                                    <h4 class="my-1"><?php echo number_format($Stats['LEGAL']) ?></h4>
+<!--                                    <p class="mb-0 font-13">-->
+<!--                                        <i class="bx bxs-down-arrow align-middle"></i>-->
+<!--                                        22 از هفته قبل-->
+<!--                                    </p>-->
                                 </div>
                                 <div class="widgets-icons ms-auto"><i class="bx bxs-binoculars"></i>
                                 </div>
@@ -79,10 +76,10 @@
                             <div class="d-flex align-items-center">
                                 <div>
                                     <p class="mb-0">در انتظار بررسی</p>
-                                    <h4 class="my-1">305</h4>
-                                    <p class="mb-0 font-13"><i class="bx bxs-down-arrow align-middle"></i>
-                                        22 از هفته قبل
-                                    </p>
+                                    <h4 class="my-1"><?php echo number_format($Stats['CENTRALBANK']) ?></h4>
+<!--                                    <p class="mb-0 font-13"><i class="bx bxs-down-arrow align-middle"></i>-->
+<!--                                        22 از هفته قبل-->
+<!--                                    </p>-->
                                 </div>
                                 <div class="widgets-icons ms-auto"><i class="bx bx-line-chart-down"></i>
                                 </div>
@@ -91,9 +88,7 @@
                     </div>
                 </div>
             </div>
-
-
-            <div class="row">
+            <div  class="row">
                 <div class="col-lg-6 col-12">
                     <div class="card radius-10">
                         <div class="card-header">
@@ -104,7 +99,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-6 col-12">
                     <div class="card radius-10">
                         <div class="card-header">
@@ -115,7 +109,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-12 col-12">
                     <div class="card radius-10">
                         <div class="card-header">
@@ -126,21 +119,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-12">
+                <div class="col-lg-12 col-12">
 
                     <div class="card radius-10">
                         <div class="card-header">
                             <h2>نسبت درخواست ها به تایید شده ها</h2>
                         </div>
                         <div class="card-body">
-                            <div id="chart-40" class="chart"></div>
+                            <div id="chart-40" style="height: 300px" class="chart"></div>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-lg-6 col-12">
+                <div class="col-lg-12 col-12 d-lg-block d-none">
                     <div class="card radius-10">
-                        <div class="card-body text-center">
+                        <div class="card-body text-center table-responsive">
                             <style>
                                 .path-city{
                                     stroke: #fff;
@@ -173,7 +165,7 @@
                                 </thead>
                                 <tbody></tbody>
                             </table>
-                            <svg id="iran-map" style="overflow: hidden; position: relative;" height="500" version="1.1" width="550" xmlns="http://www.w3.org/2000/svg">
+                            <svg id="iran-map" style="overflow: hidden; position: relative;max-width: 100%;width: 515px;height: 470px;"  version="1.1" xmlns="http://www.w3.org/2000/svg">
 
                                 <a  xlink:href="#" data-count="10,2,5,3" xlink:title="آذربایجان غربی">
                                     <path class="path-city path-city-g1"  d="M82.7,37.8C82.2,37.8,81.5,38,80.4,38.3C76.9,39.2,76.1,39.8,74.6,42.7C73.4,45.1,75.5,46.5,73.7,48.9C72,51.1,70.6,49.7,70.6,53.3C70.6,55.5,70.6,57.7,70.6,60C70.6,62.2,68.2,64.1,67,65.3C65.2,67.1,60.1,65.5,59,64.4C57.3,62.7,53.8,63.7,52.3,64C50.2,64.4,50.1,63.3,47,62.7C43.8,62.1,45.2,66.7,45.7,67.6C47,70.2,47.7,72.4,48.4,75.1C49.3,78.5,47,79.5,49.7,82.2C51.5,84,56,82.7,55,86.6C54.3,89.4,51.7,88.2,52.8,92.4C53.3,94.5,50.6,96.1,50.6,99.1C50.6,101.8,51.9,102.8,51.9,106.2C51.9,107.5,56.3,109.2,57.2,111.1C57.4,111.5,56.4,114.5,55.9,115.5C55.8,116.2,55.6,117,55.5,117.7C55.1,119.8,54.8,123.1,55.1,124.4C55.7,126.8,57.3,125.9,57.3,129.3C57.3,131.9,57.9,134.5,56,136.4C54.5,137.9,54.8,140.4,54.2,142.6C53.5,145.3,54.5,146.9,56.4,147.9C59.3,149.3,61.8,146.4,64.4,147.5C66.8,148.5,65.6,152.1,64.8,153.7C64.2,154.9,61.2,156,60.4,156.8C58.7,158.5,59.3,160.8,58.2,163C57.1,165.2,55.9,167.1,53.8,169.2C52.4,170.6,51.2,172.3,50.2,173.6C48.3,176.2,47.3,176.7,46.7,179.4C46.1,181.8,45.8,183.8,45.8,186.1C45.8,189.3,50.6,188.2,52.9,188.8C56.3,189.7,55.2,190.2,56.4,192.8C57.2,194.3,59.8,194.1,60.8,195.5C62.4,197.7,66,196.7,67.9,198.6C69.3,200,68.1,203.3,67,204.4C66.1,205.3,64.9,205.6,64.3,206.2C63.4,207.1,67.7,212.8,67.9,213.3C68.4,215.2,67.4,219.1,66.1,220.4C64,222.5,65.2,225.2,67.4,225.7C69.8,226.3,70.8,226.4,71.4,228.8C71.7,230,75.6,231.7,76.3,232.4C78.7,234.8,78.8,235.9,79.4,239.1C79.7,240.6,76.1,242.7,76.7,245.8C77.3,249,76.6,248.8,75.8,252C75,255.1,74.2,254.1,78,256C80.6,257.3,82.4,257.4,82.4,260.4C82.4,262.6,80.3,263.8,81.1,266.6C82,270.1,81.5,270.6,78.9,273.3C76.7,275.5,79.6,278.6,81.6,278.6C82.1,278.6,82.5,278.9,82.9,279C87.3,279,88.1,282.6,90.5,284.3C92.5,285.8,91.5,290,90.1,291.4C88.8,292.7,87,297.7,86.5,299.4C86.2,300.6,89.2,300.8,89.2,302.1C89.2,305.5,90.5,306.5,91.9,309.2C93.2,311.7,96.7,311,98.6,309.6C100.7,308,102.6,312.8,103.5,314C104.5,315.4,102.2,319.4,102.2,321.1C102.2,323,104.9,323.2,104.9,326.4C104.9,329.3,101.9,330,105.3,331.7C108,333.1,105,337.5,104.4,338.4C102.6,340.9,103.1,343.3,106.2,343.3C108.8,343.3,111.2,341.5,114.6,341.5C116.2,341.5,117.4,341.8,118.2,342.4C118.9,339.9,119.7,337.7,120.5,336C125,326.2,125.9,328.8,125.9,328.8C125.9,328.8,125.9,324.4,132.2,322.6C138.5,320.8,141.1,322.6,146.5,321.7C151.9,320.8,148.3,312.8,152.8,309.2C154.2,308.1,155.3,307.7,156.4,307.6C158.7,307.6,160.7,309.5,164.4,310.1C169.8,311,181.3,314.6,192.1,311.9C202.8,309.2,201,309.2,205.5,316.4C210,323.5,219.8,320.9,225.2,322.7C230.6,324.5,229.6,312,235.9,310.2C236.2,310.1,236.4,310.1,236.7,310C236.5,309.2,236.1,308.1,235.9,307.5C233.8,299.8,228.5,297.1,228.8,291.6C225,291,222.1,290.6,220.8,290.6C213.7,290.6,210.1,295.1,207.4,288.8C204.7,282.6,211.8,278.1,208.3,273.6C204.7,269.1,206.5,265.6,201.2,265.6C195.8,265.6,198.5,257.6,194,262C189.5,266.5,191.3,262.9,186,263.8C180.6,264.7,183.3,272.7,178,271.8C172.6,270.9,176.2,276.3,171.7,271.8C167.2,267.3,164.6,259.3,156.5,256.6C148.4,253.9,143.1,246.8,137.7,245C132.3,243.2,123.4,240.5,121.6,235.2C119.8,229.9,119.8,224.5,119.8,219.1C119.8,213.7,116.2,209.3,114.5,203.9C112.8,198.5,113.6,177.1,113.6,171.8C113.6,166.5,103.8,159.3,105.6,154.8C107.4,150.3,119,142.3,121.7,137.9C124.4,133.4,126.2,136.1,124.4,128.1C122.6,120.1,121.7,118.3,127.1,111.1C128,109.9,130.3,107.3,133.1,104.3C132.6,103.9,132.2,103.6,131.9,103.5C129.2,102.1,129.2,100.3,129.2,97.3C129.2,93.3,126.9,92.3,126.1,89.3C125.2,85.8,120.5,86.3,118.1,84.9C117.3,84.4,116.2,83.9,115.4,83.6C114.7,83,113.9,82.4,113.2,81.8C111.6,80.6,111.4,75.9,110.9,74.2C110.5,72.8,107.9,69.8,106.9,68.9C104.6,66.6,102.4,65.8,102.4,62.2C102.4,59.8,101.6,57.9,101.1,56C100.4,53.4,98.8,51.5,98,50.7C96.3,49,93.9,48.2,91.8,45.4C89.9,42.9,88.1,42.2,86,40.1C84.6,38.7,84.3,38,83.4,37.9C83,37.8,82.9,37.8,82.7,37.8ZM229.1,288.8C229,289,228.9,289.3,228.8,289.5C228.9,289.2,229,289,229.1,288.8Z" stroke-width="5.2631578947368425" stroke-opacity="1" transform="matrix(0.38,0,0,0.38,0,0)">
@@ -315,12 +307,9 @@
                                     </path>
                                 </a>
                             </svg>
-
-
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
         <!--end row-->
@@ -340,8 +329,14 @@
         });
 
         var options = {
+
             chart: {
-                type: 'bar'
+                type: 'bar',
+                width: "100%",
+                height: 400,
+                toolbar: {
+                    show: false
+                }
             },
             title: {
                 text: undefined,
@@ -359,35 +354,63 @@
             },
             series: [{
                 name: 'درخواست',
-                data: [30, 40, 45, 50, 49, 60, 70, 91, 125,200,40,231]
+                data: [<?php foreach ($LastYearSale as $item){ echo $item['Total'].","; } ?>]
             }],
             xaxis: {
-                categories: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر","دی","بهمن","اسفند"]
-            }
+                categories: [<?php foreach ($LastYearSale as $item){ echo "'".$item['Date']."',"; } ?>]
+            },
+            yaxis: {
+                labels: {
+                    formatter: (value) => {
+                        return value.toFixed(0)
+                    },
+                }
+            },
+            responsive: [
+                {
+                    breakpoint: 1000,
+                    options: {
+                        plotOptions: {
+                            bar: {
+                                horizontal: false
+                            }
+                        },
+                        legend: {
+                            position: "bottom"
+                        }
+                    }
+                }
+            ]
         }
         var chart = new ApexCharts(document.querySelector("#chart-10"), options);
         chart.render();
 
         var options = {
             series: [
+                <?php foreach ($TYPE as $key => $value) { ?>
                 {
-                    name: "زمین",
-                    data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
+                    name: "<?php echo $value; ?>",
+                    data: [<?php foreach ($LastYearType as $item){ if($item['Key'] == $key){ echo $item['Total'].","; } } ?>]
                 },
-                {
-                    name: "ملک",
-                    data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51, 32, 35]
-                },
-                {
-                    name: 'ملک نیمه ساخته',
-                    data: [87, 57, 74, 99, 75, 38, 62, 47, 82, 56, 45, 47]
-                }
+                <?php } ?>
             ],
             chart: {
-                type: 'line'
+                type: 'line',
+                width: "100%",
+                height: 400,
+                toolbar: {
+                    show: false
+                }
             },
             xaxis: {
-                categories: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر","دی","بهمن","اسفند"]
+                categories: [<?php foreach ($LastYearSale as $item){ echo "'".$item['Date']."',"; } ?>]
+            },
+            yaxis: {
+                labels: {
+                    formatter: (value) => {
+                        return value.toFixed(0)
+                    },
+                }
             },
 
         };
@@ -408,14 +431,17 @@
                     data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
                 }],
             chart: {
-                height: '400',
-                type: 'bar'
+                type: 'bar',
+                width: "100%",
+                height: 400,
+                toolbar: {
+                    show: false
+                }
             },
             xaxis: {
                 categories: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر"]
             }
         };
-
         var chart = new ApexCharts(document.querySelector("#chart-30"), options);
         chart.render();
 
@@ -425,15 +451,20 @@
                 {
                     name: 'درخواست',
                     type: 'column',
-                    data: [440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160]
+                    data: [<?php foreach ($LastYearSale as $item){ echo $item['Total'].","; } ?>]
                 }, {
                     name: 'تایید شده',
                     type: 'line',
-                    data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16]
+                    data: [<?php foreach ($LastYearStatus as $item){ if($item['Key'] == 'ACCEPT'){ echo $item['Total'].","; } } ?>]
                 }
             ],
             chart: {
                 type: 'line',
+                width: "100%",
+                height: 400,
+                toolbar: {
+                    show: false
+                }
             },
             stroke: {
                 width: [0, 4]
@@ -442,16 +473,27 @@
                 enabled: true,
                 enabledOnSeries: [1]
             },
-            labels: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر","دی","بهمن","اسفند"],
+            labels: [<?php foreach ($LastYearSale as $item){ echo "'".$item['Date']."',"; } ?>],
+
             yaxis: [{
                 title: {
                     text: 'درخواست',
                 },
+                labels: {
+                    formatter: (value) => {
+                        return value.toFixed(0)
+                    }
+                }
 
             }, {
                 opposite: true,
                 title: {
                     text: 'تایید شده'
+                },
+                labels: {
+                    formatter: (value) => {
+                        return value.toFixed(0)
+                    }
                 }
             }]
         };
