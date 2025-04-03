@@ -50,21 +50,13 @@ class MyRequests extends CI_Controller{
 
         $inputs = $this->input->post(NULL, TRUE);
         $inputs = secureInput($inputs);
-
         $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId'];
         $result = $this->ModelRequests->doAdd($inputs);
-
-        /* Log Action */
-        $logArray = getVisitorInfo();
-        $logArray['Action'] = $this->router->fetch_class() . "_" . $this->router->fetch_method();
-        $logArray['Description'] = json_encode($inputs);
-        $logArray['LogPersonId'] = $this->loginInfo['PersonId'];
-        $this->ModelLog->doAdd($logArray);
-        /* End Log Action */
 
         if (!$result['success']) {
             response(get_req_message('DuplicateInfo') , 400);
         } else {
+            logAction($inputs,$this->loginInfo['PersonId']);
             response(get_req_message('SuccessAction') , 200);
         }
     }
@@ -105,7 +97,6 @@ class MyRequests extends CI_Controller{
 
         $data['request'] = $this->ModelRequests->getById($inputs['inputReqId'])[0];
 
-
         if(isset($_GET['draft']) && $_GET['draft']){
             if($data['request']['ReqStatus'] != 'DRAFT' ){
                 response(get_req_message('ErrorAction' , 'درخواست در مرحله بررسی است و قابل ویرایش نیست.') , 400);
@@ -117,16 +108,10 @@ class MyRequests extends CI_Controller{
         $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId']; /* For Editing Roles Need create Person Id */
         $result = $this->ModelRequests->doEdit($inputs);
 
-        /* Log Action */
-        $logArray = getVisitorInfo();
-        $logArray['Action'] = $this->router->fetch_class() . "_" . $this->router->fetch_method();
-        $logArray['Description'] = json_encode($inputs);
-        $logArray['LogPersonId'] = $this->loginInfo['PersonId'];
-        $this->ModelLog->doAdd($logArray);
-        /* End Log Action */
         if (!$result['success']) {
             response(get_req_message('DuplicateInfo') , 400);
         } else {
+            logAction($inputs,$this->loginInfo['PersonId']);
             response(get_req_message('SuccessAction') , 200);
         }
 

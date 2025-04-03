@@ -345,8 +345,6 @@ class ModelRequests extends CI_Model{
             );
             $this->db->insert('person_requests_property_owner_info', $userArray);
 
-
-
             $userArray = array(
                 'RequestId' => $reqId,
                 'FinalPropertyPercentageOwnership' => $inputs['inputFinalPropertyPercentageOwnership'],
@@ -372,13 +370,12 @@ class ModelRequests extends CI_Model{
             );
             $this->db->insert('person_requests_property_central_bank_result', $userArray);
 
-
             return $this->config->item('DBMessages')['SuccessAction'];
         }
 
         if($status == 'CENTRALBANK') {
             $person = getPersonInfoById($inputs['inputCreatePersonId']);
-            sendSMS($this->config->item('SMSTemplate')['bpms-add-order'], $person['PersonPhone'], array($inputs['inputReqId']));
+            sendSMS($this->config->item('SMSTemplate')['bpms-add-order'], $person['PersonPhone'], array($reqId));
         }
 
         return $this->config->item('DBMessages')['ErrorAction'];

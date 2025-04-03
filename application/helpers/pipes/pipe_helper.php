@@ -184,14 +184,14 @@ function getSMSTemplate(){
     return $ci->config->item('SMSTemplate');
 }
 function sendSMS($method , $to , $inputs){
-    //$to = '09120572107';
 
+    $to = '09120572107';
     for($i = 0; $i < count($inputs); $i++){
         if(!is_numeric($inputs[$i])){
             $inputs[$i] = str_ireplace(" ","_",$inputs[$i]);
         }
     }
-
+    $url="";
     if(sizeof($inputs) == 1){
         $url = 'http://api.kavenegar.com/v1/'.getSMSAPI().'/verify/lookup.json?receptor='.$to.'&token='.$inputs[0].'&template='.$method.'&type=sms';
     }
@@ -347,16 +347,20 @@ function setSelectData($input, $currentValue = NULL)
         echo "</option>";
     }
 }
-function logAction(){
-
+function logAction($inputs,$id){
+    $ci =& get_instance();
+    $logArray = getVisitorInfo();
+    $logArray['Action'] = $ci->router->fetch_class() . "_" . $ci->router->fetch_method();
+    $logArray['Description'] = json_encode($inputs);
+    $logArray['LogPersonId'] = $id;
+    $ci->ModelLog->doAdd($logArray);
 }
 function isRecordExists($data){
     if(empty($data) || sizeof($data) == 0){
         echo "<tr><td colspan='100'>موردی یافت نشد</td></tr>";
     }
 }
-function make_request($url, $qs = null)
-{
+function make_request($url, $qs = null){
     $ci =& get_instance();
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);

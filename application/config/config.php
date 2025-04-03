@@ -117,11 +117,12 @@ $config['ENUM'] = array(
     'REQ_STATUS' => array(
         'DRAFT' => 'ثبت اولیه',
         'CENTRALBANK' => 'بررسی بانک مرکزی',
+        'CENTRALBANKACCEPT' => 'ثبت به عنوان مازاد',
         'LEGAL' => 'ثبت به عنوان مازاد',
-        /*'ECONOMIC' => 'بررسی کمیسیون اقتصادی',
+        'ECONOMIC' => 'بررسی کمیسیون اقتصادی',
         'FINAL_ACCEPT' => 'بررسی نهایی ارشد',
         'REJECT' => 'عدم تایید',
-        'ACCEPT' => 'تایید و پذیرش'*/
+        'ACCEPT' => 'تایید و پذیرش'
     ),
     'REQ_TYPE' => array(
         'EARTH' => 'زمین',
@@ -210,10 +211,10 @@ $config['ENUM'] = array(
     ),
     'ROLES' => array(
         'ADMIN' => 'ادمین',
-        /*'MANAGER' => 'ارشد',
+        'MANAGER' => 'ارشد',
         'ECONOMIC' => 'اقتصادی',
-        'LEGAL' => 'حقوقی',*/
-        'PUBLISHER' => 'بانک',
+        'LEGAL' => 'حقوقی',
+        'PUBLISHER' => 'بانک/ناشر',
         'CENTRALBANK' => 'بانک مرکزی'
     ),
     'TRANSLATES' => array(
