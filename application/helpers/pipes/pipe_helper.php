@@ -25,6 +25,8 @@ function getRequestsStatusClass($status){
             return 'badge bg-primary';
         case 'CENTRALBANK':
             return 'badge bg-primary';
+        case 'CENTRALBANKACCEPT':
+            return 'badge bg-primary';
         case 'ECONOMIC':
             return 'badge bg-warning';
         case 'FINAL_ACCEPT':

@@ -542,7 +542,7 @@ class ModelRequests extends CI_Model{
             $status = "DRAFT";
         }
         if ($inputs['inputResult'] == "1") {
-            $status = "LEGAL";
+            $status = "CENTRALBANKACCEPT";
         }
         $userArray = array(
             'ReqStatus' => $status

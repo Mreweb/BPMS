@@ -30,6 +30,7 @@ class Home extends CI_Controller {
         $currentDate = time();
         $dateFromMidNight = convertDate($currentDate);
         $currentDate = makeTimeFromDate($dateFromMidNight);
+        $currentDate += 86400;
         $data['LastYearSale'] = array();
         $data['LastYearType'] = array();
         for ($i = 0; $i < 12; $i++) {

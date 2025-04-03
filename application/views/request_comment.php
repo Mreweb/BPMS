@@ -1,5 +1,5 @@
 <?php if (!empty($request_comments)) { ?>
-    <h2 class="font-weight-light text-center text-white py-3">تاریخچه عملیات</h2>
+    <h2 class="font-weight-light text-center text-white py-3">تاریخچه پردازش درخواست</h2>
     <?php $index = 0; foreach ($request_comments as $request_comment) { ?>
 
         <?php if ($index % 2 == 0) { ?>
