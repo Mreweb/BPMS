@@ -64,18 +64,18 @@ $ci =& get_instance(); ?>
     <script src="<?php echo $_DIR ?>assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
 
     <!--app JS-->
-     <script src="<?php echo $_DIR ?>assets/js/app.js"></script>
+    <script src="<?php echo $_DIR ?>assets/js/app.js"></script>
 
 
     <script>
-        function setTheme(theme=null){
+        function setTheme(theme = null) {
 
-            localStorage.setItem("theme",'bg-theme '+theme);
-            $('body').attr('class', 'bg-theme '+theme);
+            localStorage.setItem("theme", 'bg-theme ' + theme);
+            $('body').attr('class', 'bg-theme ' + theme);
 
             $.ajax({
                 type: 'post',
-                url: main_url + 'GetCaptcha/setColor/'+theme,
+                url: main_url + 'GetCaptcha/setColor/' + theme,
                 data: {},
                 success: function (data) {
                 }
@@ -84,7 +84,6 @@ $ci =& get_instance(); ?>
 
 
         $(document).ready(function () {
-
 
 
             $.ajaxSetup({
@@ -154,16 +153,16 @@ $ci =& get_instance(); ?>
 
             $(document).on('click', '.switcher li', function () {
                 setTheme($(this).attr('id'));
-                $('body').attr('class', 'bg-theme bg-'+$(this).attr('id'));
+                $('body').attr('class', 'bg-theme bg-' + $(this).attr('id'));
             });
 
 
-
-
         });
+
         function noComma($input) {
             return $input.replace(/,/g, '');
         }
+
         function notify($title, $type, $time = 50000, $position = 'topRight') {
             iziToast.show({
                 theme: 'light',
@@ -178,19 +177,24 @@ $ci =& get_instance(); ?>
                 position: $position
             });
         }
+
         function toggleLoader() {
             $(".pace").toggleClass(' pace-inactive');
         }
+
         function showLoader() {
             $(".pace").removeClass(' pace-inactive');
         }
+
         function hideLoader() {
             $(".pace").addClass(' pace-inactive');
         }
+
         const base_url = "<?php echo base_url('Admin/Dashboard/') ?>";
         const main_url = "<?php echo base_url() ?>";
         const items = <?php echo $ci->config->item('defaultPageSize'); ?>;
         const itemsOnPage = <?php echo $ci->config->item('defaultPageSize'); ?>;
+
         function copyToClipboard(text) {
             var aux = document.createElement("input");
             aux.setAttribute("value", text);
@@ -199,6 +203,7 @@ $ci =& get_instance(); ?>
             document.execCommand("copy");
             document.body.removeChild(aux);
         }
+
         function numberWithCommas(x) {
             return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
         }
@@ -207,6 +212,7 @@ $ci =& get_instance(); ?>
         .logo-text, .toggle-icon, .user-plus, .topbar .navbar .navbar-nav .nav-link {
             font-size: 15px;
         }
+
         .jconfirm .jconfirm-box {
             color: #000;
         }
@@ -302,12 +308,17 @@ $ci =& get_instance(); ?>
         td.warning {
             background-color: rgba(208, 181, 9, 0.4);
         }
-        .switcher-btn .bx{
-            color:#000;
+
+        .switcher-btn .bx {
+            color: #000;
         }
     </style>
 </head>
-<body class="bg-theme bg-<?php if(isset($_COOKIE['theme'])){ echo $_COOKIE['theme']; } else { echo 'theme22'; } ?>">
+<body class="bg-theme bg-<?php if (isset($_COOKIE['theme'])) {
+    echo $_COOKIE['theme'];
+} else {
+    echo 'theme22';
+} ?>">
 <!--wrapper-->
 <div class="wrapper">
     <!--sidebar wrapper -->
@@ -366,9 +377,9 @@ $ci =& get_instance(); ?>
                             فهرست
                         </a>
                     </li>
-                    </li>
-                </ul>
             </li>
+        </ul>
+        </li>
         <?php } ?>
 
         <?php if (getLoginRoles()[0] == 'PUBLISHER' || getLoginRoles()[0] == 'ADMIN') { ?>
@@ -403,7 +414,37 @@ $ci =& get_instance(); ?>
             </li>
         <?php } ?>
 
+        <?php if (getLoginRoles()[0] == 'ADMIN' || getLoginRoles()[0] == 'LEGAL') { ?>
+            <li>
+                <a href="<?php echo base_url('Admin/Dashboard/Requests/legal'); ?>">
+                    <div class="parent-icon"><i class="bx bx-category"></i></div>
+                    <div class="menu-title">کارتابل حقوقی</div>
+                </a>
+            </li>
+        <?php } ?>
 
+        <?php if (getLoginRoles()[0] == 'ADMIN' || getLoginRoles()[0] == 'ECONOMIC') { ?>
+            <li>
+                <a href="<?php echo base_url('Admin/Dashboard/Requests/economic'); ?>">
+                    <div class="parent-icon"><i class="bx bx-category"></i></div>
+                    <div class="menu-title">کارتابل اقتصادی</div>
+                </a>
+            </li>
+        <?php } ?>
+        <?php if (getLoginRoles()[0] == 'ADMIN' || getLoginRoles()[0] == 'MANAGER') { ?>
+            <li>
+                <a href="<?php echo base_url('Admin/Dashboard/Requests/final'); ?>">
+                    <div class="parent-icon"><i class="bx bx-category"></i></div>
+                    <div class="menu-title">کارتابل نهایی</div>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo base_url('Admin/Dashboard/Requests/finished'); ?>">
+                    <div class="parent-icon"><i class="bx bx-category"></i></div>
+                    <div class="menu-title">درخواست های نهایی شده</div>
+                </a>
+            </li>
+        <?php } ?>
 
         </ul>
         <!--end navigation-->
