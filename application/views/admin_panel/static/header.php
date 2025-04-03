@@ -366,9 +366,9 @@ $ci =& get_instance(); ?>
                             فهرست
                         </a>
                     </li>
+                    </li>
+                </ul>
             </li>
-        </ul>
-        </li>
         <?php } ?>
 
         <?php if (getLoginRoles()[0] == 'PUBLISHER' || getLoginRoles()[0] == 'ADMIN') { ?>
