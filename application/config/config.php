@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 $config['base_url'] = 'http://localhost:8080/BPMS/';
+$config['node_url'] = 'http://localhost:3000/';
+$config['blockchain_url'] = 'https://testnet.bscscan.com/';
 //$config['base_url'] = 'http://paziresh.dgval.ir:5055/';
 $config['index_page'] = '';
 $config['uri_protocol']	= 'REQUEST_URI';
@@ -118,9 +120,9 @@ $config['ENUM'] = array(
         'DRAFT' => 'ثبت اولیه',
         'CENTRALBANK' => 'بررسی بانک مرکزی',
         'CENTRALBANKACCEPT' => 'ثبت به عنوان مازاد',
-        'LEGAL' => 'ثبت به عنوان مازاد',
-        'ECONOMIC' => 'بررسی کمیسیون اقتصادی',
-        'FINAL_ACCEPT' => 'بررسی نهایی ارشد',
+        'LEGAL' => 'کمیسیون حقوقی',
+        'ECONOMIC' => ' کمیسیون اقتصادی',
+        'FINAL_ACCEPT' => ' نهایی ارشد',
         'REJECT' => 'عدم تایید',
         'ACCEPT' => 'تایید و پذیرش'
     ),

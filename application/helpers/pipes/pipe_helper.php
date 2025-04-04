@@ -75,6 +75,10 @@ function FaToEn($input)
 {
     return strtr($input, array('۰' => '0', '۱' => '1', '۲' => '2', '۳' => '3', '۴' => '4', '۵' => '5', '۶' => '6', '۷' => '7', '۸' => '8', '۹' => '9'));
 }
+function blockChainUrl(){
+    $ci =& get_instance();
+    return $ci->config->item('blockchain_url');
+}
 function convertDate($input, $isHtml = false , $format='Y/m/d'){
     if ($input != NULL) {
         if (!$isHtml) {
@@ -453,7 +457,6 @@ function makeSafeInput($string) {
     $string=str_ireplace("delete","",$string);
     return $string;
 }
-
 function getNextDayByDate($date , $dayCount = 1){
     $time = $date;
     $time += $time + ($dayCount*24*60*60);

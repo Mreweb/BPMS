@@ -40,12 +40,18 @@ foreach ($data as $item) { ?>
                     </button>
                 </a>
             </td>
-<!--            <td class="fit">-->
-<!--                <a href=" --><?php //echo base_url('Admin/Dashboard/Requests/publishProposal/'.$item['ReqId']); ?><!--" class="edit btn btn-default">-->
-<!--                    <button class="btn btn-success btn-sm">-->
-<!--                        <i class="bx bxs-edit"></i>-->
-<!--                    </button>-->
-<!--                </a>-->
-<!--            </td>-->
+            <td class="fit">
+                <?php echo pipeEnum('YES_NO', $item['ReqContractStatus'], getHasNotClass( $item['ReqContractStatus'])); ?>
+            </td>
+            <td class="fit">
+                <?php echo pipeEnum('YES_NO', $item['ReqProposalStatus'], getHasNotClass( $item['ReqProposalStatus'])); ?>
+            </td>
+            <td class="fit">
+                <a href=" <?php echo base_url('Admin/Dashboard/Requests/publishProposal/'.$item['ReqId']); ?>" class="edit btn btn-default">
+                    <button class="btn btn-success btn-sm">
+                        <i class="bx bxs-edit"></i>
+                    </button>
+                </a>
+            </td>
         </tr>
 <?php } } ?>

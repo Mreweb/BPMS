@@ -25,6 +25,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
+                                <input type="hidden" id="inputReqId" <?php setInputValue($request['ReqId']); ?> />
                                 <div class="alert alert-success text-white">
                                     لطفا وضعیت درخواست را مشخص کنید
                                 </div>

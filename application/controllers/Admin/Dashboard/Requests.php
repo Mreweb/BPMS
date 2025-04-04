@@ -11,6 +11,7 @@ class Requests extends CI_Controller{
         parent::__construct();
         $this->load->helper('admin/admin_login');
         $this->load->model('admin/ModelRequests');
+        $this->load->model('admin/ModelProposal');
         $this->loginInfo = getLoginInfo();
         $this->loginRoles = getLoginRoles();
         $this->enum = $this->config->item('ENUM');
@@ -134,7 +135,6 @@ class Requests extends CI_Controller{
 
     public function publishProposal($id){
 
-
         checkPersonAccess($this->loginRoles, array('Admin') );
         if(!is_numeric($id)){
             invalidUrlParameterInput();
@@ -148,7 +148,7 @@ class Requests extends CI_Controller{
         $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
         $data['request_property_info'] = $this->ModelRequests->getPropertyInfoById($id)[0];
         $data['request_owner_info'] = $this->ModelRequests->getPropertyOwnerInfoById($id)[0];
-
+        $data['request_transactions'] = $this->ModelProposal->getRequestTransactions($id);
 
         $this->load->view('admin_panel/static/header', $page);
         $this->load->view('admin_panel/requests/publish_proposal/index', $data);
@@ -156,28 +156,40 @@ class Requests extends CI_Controller{
         $this->load->view('admin_panel/requests/publish_proposal/index_js', $data);
         $this->load->view('admin_panel/static/footer');
     }
+    public function doDeployContract(){
+
+        checkPersonAccess($this->loginRoles, array('Admin') );
+
+
+        $inputs = $this->input->post(NULL, TRUE);
+        $inputs['inputModifyPersonId'] = $this->loginInfo['PersonId'];
+        $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId'];
+        $result = $this->ModelProposal->doDeployContract($inputs);
+
+        if (!$result['success']) {
+            logAction($inputs,$this->loginInfo['PersonId']);
+            response($result , 400);
+        } else {
+            response($result , 200);
+        }
+
+    }
     public function doPublishProposal(){
 
         checkPersonAccess($this->loginRoles, array('Admin') );
-        $inputs = $this->input->post(NULL, TRUE);
-        $data['proposalId'] = $inputs['inputReqId'];
-        $data['proposalName'] = $inputs['inputProposalTitle'];
-        $this->load->view('admin_panel/requests/publish_proposal/publish', $data );
 
-        /*$inputs = $this->input->post(NULL, TRUE);
+
+        $inputs = $this->input->post(NULL, TRUE);
         $inputs['inputModifyPersonId'] = $this->loginInfo['PersonId'];
         $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId'];
-        $result = $this->ModelRequests->doPublishProposal($inputs);
-        $logArray = getVisitorInfo();
-        $logArray['Action'] = $this->router->fetch_class() . "_" . $this->router->fetch_method();
-        $logArray['Description'] = json_encode($inputs);
-        $logArray['LogPersonId'] = $this->loginInfo['PersonId'];
-        $this->ModelLog->doAdd($logArray);
+        $result = $this->ModelProposal->doPublishProposal($inputs);
+
         if (!$result['success']) {
-            response(get_req_message('DuplicateInfo') , 400);
+            logAction($inputs,$this->loginInfo['PersonId']);
+            response($result , 400);
         } else {
-            response(get_req_message('SuccessAction') , 200);
-        }*/
+            response($result , 200);
+        }
 
     }
 
