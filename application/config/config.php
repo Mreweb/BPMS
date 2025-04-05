@@ -60,6 +60,8 @@ $config['404_image']= $config['base_url'].('assets/ui/assets/img/404.jpg');
 $config['SMSAPI']= '656B43504E624150746A2B526B485A6A79684E464E4C49385679646B783157596861584370582B514746303D';
 $config['SMSTemplate']= 'ticketverify';
 
+$config['CENTRALBANKVERSION'] = TRUE;
+$config['ISBLOCKCHAIN'] = TRUE;
 
 $config['SMSTemplate']= 'ticketverify';
 /* Enums */
@@ -119,8 +121,8 @@ $config['ENUM'] = array(
     'REQ_STATUS' => array(
         'DRAFT' => 'ثبت اولیه',
         'CENTRALBANK' => 'بررسی بانک مرکزی',
-        'CENTRALBANKACCEPT' => 'ثبت به عنوان مازاد',
-        'LEGAL' => 'کمیسیون حقوقی',
+        'CENTRALBANKACCEPT' => 'تایید شده',
+        'LEGAL' => 'تایید شده',
         'ECONOMIC' => ' کمیسیون اقتصادی',
         'FINAL_ACCEPT' => ' نهایی ارشد',
         'REJECT' => 'عدم تایید',

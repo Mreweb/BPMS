@@ -414,36 +414,37 @@ $ci =& get_instance(); ?>
             </li>
         <?php } ?>
 
-        <?php if (getLoginRoles()[0] == 'ADMIN' || getLoginRoles()[0] == 'LEGAL') { ?>
-            <li>
-                <a href="<?php echo base_url('Admin/Dashboard/Requests/legal'); ?>">
-                    <div class="parent-icon"><i class="bx bx-category"></i></div>
-                    <div class="menu-title">کارتابل حقوقی</div>
-                </a>
-            </li>
-        <?php } ?>
-
-        <?php if (getLoginRoles()[0] == 'ADMIN' || getLoginRoles()[0] == 'ECONOMIC') { ?>
-            <li>
-                <a href="<?php echo base_url('Admin/Dashboard/Requests/economic'); ?>">
-                    <div class="parent-icon"><i class="bx bx-category"></i></div>
-                    <div class="menu-title">کارتابل اقتصادی</div>
-                </a>
-            </li>
-        <?php } ?>
-        <?php if (getLoginRoles()[0] == 'ADMIN' || getLoginRoles()[0] == 'MANAGER') { ?>
-            <li>
-                <a href="<?php echo base_url('Admin/Dashboard/Requests/final'); ?>">
-                    <div class="parent-icon"><i class="bx bx-category"></i></div>
-                    <div class="menu-title">کارتابل نهایی</div>
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo base_url('Admin/Dashboard/Requests/finished'); ?>">
-                    <div class="parent-icon"><i class="bx bx-category"></i></div>
-                    <div class="menu-title">درخواست های نهایی شده</div>
-                </a>
-            </li>
+        <?php if(!$this->config->item('CENTRALBANKVERSION')){ ?>
+            <?php if (getLoginRoles()[0] == 'ADMIN' || getLoginRoles()[0] == 'LEGAL') { ?>
+                <li>
+                    <a href="<?php echo base_url('Admin/Dashboard/Requests/legal'); ?>">
+                        <div class="parent-icon"><i class="bx bx-category"></i></div>
+                        <div class="menu-title">کارتابل حقوقی</div>
+                    </a>
+                </li>
+            <?php } ?>
+            <?php if (getLoginRoles()[0] == 'ADMIN' || getLoginRoles()[0] == 'ECONOMIC') { ?>
+                <li>
+                    <a href="<?php echo base_url('Admin/Dashboard/Requests/economic'); ?>">
+                        <div class="parent-icon"><i class="bx bx-category"></i></div>
+                        <div class="menu-title">کارتابل اقتصادی</div>
+                    </a>
+                </li>
+            <?php } ?>
+            <?php if (getLoginRoles()[0] == 'ADMIN' || getLoginRoles()[0] == 'MANAGER') { ?>
+                <li>
+                    <a href="<?php echo base_url('Admin/Dashboard/Requests/final'); ?>">
+                        <div class="parent-icon"><i class="bx bx-category"></i></div>
+                        <div class="menu-title">کارتابل نهایی</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('Admin/Dashboard/Requests/finished'); ?>">
+                        <div class="parent-icon"><i class="bx bx-category"></i></div>
+                        <div class="menu-title">درخواست های نهایی شده</div>
+                    </a>
+                </li>
+            <?php } ?>
         <?php } ?>
 
         </ul>

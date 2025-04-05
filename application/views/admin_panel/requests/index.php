@@ -87,9 +87,12 @@
                             <th class="fit">تلفن</th>
                             <th class="fit">تاریخ ثبت</th>
                             <th class="fit">ویرایش</th>
+
+                            <?php if(!$this->config->item('ISBLOCKCHAIN')){ ?>
                             <th class="fit">قراردادهوشمند</th>
                             <th class="fit">پروپوزال</th>
                             <th class="fit">مدیریت قراردادهوشمند</th>
+                            <?php } ?>
                         </tr>
                         </thead>
                         <tbody class="table-rows"></tbody>

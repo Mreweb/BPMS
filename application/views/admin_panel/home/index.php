@@ -109,6 +109,8 @@
                         </div>
                     </div>
                 </div>
+
+                <?php if(!$this->config->item('CENTRALBANKVERSION')){ ?>
                 <div class="col-lg-12 col-12">
                     <div class="card radius-10">
                         <div class="card-header">
@@ -119,6 +121,7 @@
                         </div>
                     </div>
                 </div>
+                <?php } ?>
                 <div class="col-lg-12 col-12">
 
                     <div class="card radius-10">
