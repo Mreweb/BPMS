@@ -4,6 +4,7 @@
             e.preventDefault();
             $this = $(this);
             $attachments = [];
+            $attachmentsImages = [];
 
 
             /*Request Info*/
@@ -13,6 +14,8 @@
             $inputMarketMakerNationalCode = $.trim($("#inputMarketMakerNationalCode").val());
             $inputPrice = $.trim($("#inputPrice").val());
             $inputDescription = $.trim($("#inputDescription").val());
+            $inputProvince = $.trim($("#inputProvince").val());
+            $inputCity = $.trim($("#inputCity").val());
 
             /*Request Property Info*/
             $inputPropertyID = $.trim($("#inputPropertyID").val());
@@ -68,6 +71,11 @@
             $inputFinalPropertyCheckValue = $.trim($("#inputFinalPropertyCheckValue").val());
             $inputFinalPropertySurvey = $.trim($("#inputFinalPropertySurvey").val());
 
+            /*Request Property Owner Info*/
+            $inputPropertyGoogleMap = $.trim($("#inputPropertyGoogleMap").val());
+            $inputPropertyNeshan = $.trim($("#inputPropertyNeshan").val());
+            $inputPropertyBalad = $.trim($("#inputPropertyBalad").val());
+
 
             $(".uploaded-files tbody tr").each(function(){
                 $attach = {
@@ -77,6 +85,15 @@
                 };
                 $attachments.push($attach);
             });
+
+
+            $(".uploaded-image-files tr").each(function(){
+                $attach = {
+                    'src'  : $(this).data('src')
+                };
+                $attachmentsImages.push($attach);
+            });
+
 
             $sendData = {
 
@@ -113,6 +130,7 @@
                 'inputPrice': $inputPrice,
                 'inputDescription': $inputDescription,
                 'inputAttachments': $attachments,
+                'inputAttachmentImages': $attachmentsImages,
 
 
                 /* Property Owner Info */
@@ -123,6 +141,16 @@
                 'inputOwnerTypeDependentPerson': $inputOwnerTypeDependentPerson,
                 'inputOwnerOwnershipPercentage': $inputOwnerOwnershipPercentage,
 
+
+
+                /* Property Owner Info */
+                'inputPropertyGoogleMap': $inputPropertyGoogleMap,
+                'inputPropertyNeshan': $inputPropertyNeshan,
+                'inputPropertyBalad': $inputPropertyBalad,
+
+                /* Property Province */
+                'inputProvince': $inputProvince,
+                'inputCity': $inputCity,
 
                 /* Final Property Info  */
                 'inputFinalPropertyPercentageOwnership': $inputFinalPropertyPercentageOwnership,
@@ -184,7 +212,7 @@
                                     $result = data;
                                     notify($result['content'], $result['type']);
                                     toggleLoader();
-                                    window.history.back();
+                                    //window.history.back();
                                 }
                             });
                         }
@@ -304,5 +332,90 @@
             }
         });
         $('.alert-form select').change();
+
+        function readImageURL(input , name) {
+            toggleLoader();
+            if (input.files && input.files[0] && input.files[0].name.match(/\.(jpg|JPG|JPEG|jpeg|png|PNG|gif|pdf|word|zip|docx|doc|xlsx|xls|rar)$/)) {
+                $FileSize = input.files[0].size / 1024 / 1024;
+                if ($FileSize < 20) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            var file = e.target.result;
+                        };
+                        reader.readAsDataURL(input.files[0]);
+                        var file_data = input.files[0];
+                        var form_data = new FormData();
+                        form_data.append('file',file_data);
+                        $.ajax({
+                            url: base_url + '/Home/uploadFile',
+                            dataType: 'text',
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            data: form_data,
+                            type: 'post',
+                            success: function (data) {
+                                $result = JSON.parse(data);
+                                if($result['success']) {
+                                    $inputAttachmentSource = $result['fileSrc'];
+                                    notify('بارگذاری فایل با موفقیت انجام شد', 'green');
+
+                                    $(".uploaded-image-files tbody").append("<tr data-src='" + $inputAttachmentSource + "'><td><img width='100' height='100' src='" + $inputAttachmentSource   + "' /></td><td  class='fit'><button class='btn btn-danger btn-sm remove-file'>X</button></td></tr>");
+                                    $(".uploaded-image-files table").show();
+                                    $("#file-image").val('');
+                                } else{
+                                    notify($result['content'], 'red');
+                                    $("#file-image").val('');
+                                }
+                                toggleLoader();
+                            },
+                            error: function (data) {
+                                $("#file").val('');
+                            }
+                        });
+                    }
+                }
+                else {
+                    toggleLoader();
+                    notify("فایل شما باید کمتر از هشت مگابایت باشد", "red");
+                }
+            }
+            else {
+                toggleLoader();
+                notify("فرمت فایل نامعتبر است", "red");
+            }
+        }
+        $("#file-image").change(function () {
+            readImageURL(this)
+        });
+
+        $('#inputProvince').change(function () {
+            toggleLoader();
+            $("#inputCity").html('');
+            $stateId = $(this).val();
+            $.ajax({
+                type: 'post',
+                url: "<?php echo base_url(); ?>" + 'Country/getCityByProvinceId/' + $stateId,
+                success: function (data) {
+                    toggleLoader();
+                    $result = jQuery.parseJSON(data);
+                    for (let i = 0; i < $result.length; i++) {
+                        $("#inputCity").append('<option value="' + $result[i].CityId + '">' + $result[i].CityName + '</option>');
+                    }
+                    cutSelectOptionLongText();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    iziToast.show({
+                        title: 'خطای ارتباط با سرور.دقایقی دیگر تلاش کنید',
+                        color: 'red',
+                        zindex: 9060,
+                        position: 'topLeft'
+                    });
+                    toggleLoader();
+                }
+            });
+        });
+
     });
 </script>

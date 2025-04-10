@@ -1,9 +1,10 @@
 <?php
 
 class ModelCountry extends CI_Model{
-       function __construct(){
+    function __construct(){
         parent::__construct();
     }
+
     public function getProvinceList()
     {
         $this->db->select('*');
@@ -34,8 +35,7 @@ class ModelCountry extends CI_Model{
         );
         return $arr;
     }
-    public function getCityByProvinceId($stateId)
-    {
+    public function getCityByProvinceId($stateId){
         $this->db->select('*');
         $this->db->from('city');
         $this->db->where(array('CityProvinceId' => $stateId));
@@ -50,6 +50,7 @@ class ModelCountry extends CI_Model{
         );
         return $arr;
     }
+
 }
 
 ?>

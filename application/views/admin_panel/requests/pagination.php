@@ -40,7 +40,7 @@ foreach ($data as $item) { ?>
                     </button>
                 </a>
             </td>
-        <?php if(!$this->config->item('ISBLOCKCHAIN')){ ?>
+        <?php if($this->config->item('ISBLOCKCHAIN')){ ?>
             <td class="fit">
                 <?php echo pipeEnum('YES_NO', $item['ReqContractStatus'], getHasNotClass( $item['ReqContractStatus'])); ?>
             </td>

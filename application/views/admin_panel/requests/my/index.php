@@ -50,7 +50,6 @@
                             <th class="fit">شناسه</th>
                             <th>عنوان</th>
                             <th class="fit">نوع</th>
-                            <th class="fit">کاربری</th>
                             <th class="fit">ارزش گذاری رسمی</th>
                             <th class="fit">وضعیت</th>
                             <th class="fit">نام و نام خانوادگی</th>

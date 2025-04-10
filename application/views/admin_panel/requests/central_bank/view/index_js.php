@@ -4,7 +4,6 @@
             e.preventDefault();
             toggleLoader();
 
-
             $inputReqId = $.trim($("#inputReqId").val());
             $inputFinalPropertyPercentageOwnership = $.trim($("#inputFinalPropertyPercentageOwnership").val());
             $inputFinalPropertyAcquire = $.trim($("#inputFinalPropertyAcquire").val());
@@ -24,8 +23,13 @@
             $inputFinalPropertyValueCheck  = $.trim($("#inputFinalPropertyValueCheck").val());
             $inputFinalPropertyCheckValue = $.trim($("#inputFinalPropertyCheckValue").val());
             $inputFinalPropertySurvey = $.trim($("#inputFinalPropertySurvey").val());
-             $inputResult = $.trim($("#inputResult").val());
+            $inputResult = $.trim($("#inputResult").val());
             $inputResultDescription= $.trim($("#inputResultDescription").val());
+
+            if($inputResultDescription == ""){
+                notify('ثبت توضیحات اجباری است', 'red');
+                return;
+            }
             
             $sendData = {
                 'inputReqId': $inputReqId,

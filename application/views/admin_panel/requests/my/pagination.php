@@ -12,10 +12,9 @@ foreach ($data as $item) { ?>
                 <?php echo $item['ReqTitle']; ?>
             </td>
             <td class="fit">
-                <?php echo pipeEnum('REQ_TYPE', $item['ReqType'], 'badge bg-success'); ?>
-            </td>
-            <td class="fit">
-                <?php echo pipeEnum('USE_TYPE', $item['ReqUseType'], 'badge bg-success'); ?>
+                <?php
+                echo pipeEnum('PROPERTY_TYPE', $item['ReqType'], 'badge bg-success');
+                ?>
             </td>
             <td>
                 <?php echo $item['ReqPrice']; ?>
@@ -33,8 +32,8 @@ foreach ($data as $item) { ?>
                 <?php echo $item['PersonPhone']; ?>
             </td>
             <td class="fit">
-                <?php echo convertDate($item['CreateDateTime']); ?><br>
-                <?php echo convertTime($item['CreateDateTime']); ?>
+                <?php echo convertDate($item['RequestCreateDateTime']); ?><br>
+                <?php echo convertTime($item['RequestCreateDateTime']); ?>
             </td>
             <td class="fit">
                 <a href=" <?php echo base_url('Admin/Dashboard/MyRequests/Edit/'.$item['ReqId']); ?>" class="edit btn btn-default">

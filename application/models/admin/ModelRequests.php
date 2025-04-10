@@ -1,16 +1,17 @@
 <?php
 
-class ModelRequests extends CI_Model
-{
+class ModelRequests extends CI_Model{
 
-    public function doPagination($inputs)
-    {
+    public function doPagination($inputs){
         $limit = $inputs['pageIndex'];
         $start = ($limit - 1) * $this->config->item('defaultPageSize');
         $end = $this->config->item('defaultPageSize');
         $this->db->select('* , person_requests.CreateDateTime as RequestCreateDateTime');
         $this->db->from('person_requests');
         $this->db->join('person', 'person.PersonId = person_requests.ReqPersonId');
+        if ($inputs['inputReqId'] != '') {
+            $this->db->like('ReqId', $inputs['inputReqId']);
+        }
         if ($inputs['inputTitle'] != '') {
             $this->db->like('ReqTitle', $inputs['inputTitle']);
         }
@@ -45,13 +46,12 @@ class ModelRequests extends CI_Model
         }
         return $result;
     }
-
     public function doMyPagination($inputs)
     {
         $limit = $inputs['pageIndex'];
         $start = ($limit - 1) * $this->config->item('defaultPageSize');
         $end = $this->config->item('defaultPageSize');
-        $this->db->select('*');
+        $this->db->select('* , person_requests.CreateDateTime as RequestCreateDateTime');
         $this->db->from('person_requests');
         $this->db->join('person', 'person.PersonId = person_requests.ReqPersonId');
         $this->db->where('ReqPersonId', $inputs['inputPersonId']);
@@ -73,7 +73,6 @@ class ModelRequests extends CI_Model
         }
         return $result;
     }
-
     public function doStepCentralBankPagination($inputs)
     {
         $limit = $inputs['pageIndex'];
@@ -100,7 +99,6 @@ class ModelRequests extends CI_Model
         }
         return $result;
     }
-
     public function doStepLegalPagination($inputs)
     {
         $limit = $inputs['pageIndex'];
@@ -127,7 +125,6 @@ class ModelRequests extends CI_Model
         }
         return $result;
     }
-
     public function doStepEconimicPagination($inputs)
     {
         $limit = $inputs['pageIndex'];
@@ -154,7 +151,6 @@ class ModelRequests extends CI_Model
         }
         return $result;
     }
-
     public function doStepFinalPagination($inputs)
     {
         $limit = $inputs['pageIndex'];
@@ -181,7 +177,6 @@ class ModelRequests extends CI_Model
         }
         return $result;
     }
-
     public function doStepFinishedPagination($inputs)
     {
         $limit = $inputs['pageIndex'];
@@ -219,12 +214,17 @@ class ModelRequests extends CI_Model
         $this->db->where('ReqId', $id);
         return $this->db->get()->result_array();
     }
-
     public function getAttachmentByReqId($id)
     {
         $this->db->select('*');
         $this->db->from('person_requests_attachments');
         $this->db->where('AttachReqId', $id);
+        return $this->db->get()->result_array();
+    }
+    public function getImagesByReqId($id){
+        $this->db->select('*');
+        $this->db->from('person_requests_property_photos');
+        $this->db->where('ReqId', $id);
         return $this->db->get()->result_array();
     }
 
@@ -235,15 +235,12 @@ class ModelRequests extends CI_Model
         $this->db->where('AttachId', $id);
         return $this->db->get()->result_array();
     }
-
-    public function getPropertyInfoById($id)
-    {
+    public function getPropertyInfoById($id){
         $this->db->select('*');
         $this->db->from('person_requests_property_info');
         $this->db->where('RequestId', $id);
         return $this->db->get()->result_array();
     }
-
     public function getPropertyOwnerInfoById($id)
     {
         $this->db->select('*');
@@ -251,7 +248,6 @@ class ModelRequests extends CI_Model
         $this->db->where('RequestId', $id);
         return $this->db->get()->result_array();
     }
-
     public function getPropertyCentralBankInfoById($id)
     {
         $this->db->select('*');
@@ -259,10 +255,14 @@ class ModelRequests extends CI_Model
         $this->db->where('RequestId', $id);
         return $this->db->get()->result_array();
     }
+    public function getPropertyLocationsById($id){
+        $this->db->select('*');
+        $this->db->from('person_requests_property_locations');
+        $this->db->where('ReqId', $id);
+        return $this->db->get()->result_array();
+    }
 
-
-    public function doAdd($inputs)
-    {
+    public function doAdd($inputs){
 
         $this->db->select('*');
         $this->db->from('person_requests');
@@ -285,6 +285,8 @@ class ModelRequests extends CI_Model
             'ReqType' => $inputs['inputReqType'],
             'ReqAgentNationalCode' => $inputs['inputAgentNationalCode'],
             'ReqMarketMakerNationalCode' => $inputs['inputMarketMakerNationalCode'],
+            'ReqProvinceId' => $inputs['inputProvince'],
+            'ReqCityId' => $inputs['inputCity'],
             'ReqPrice' => $inputs['inputPrice'],
             'ReqStatus' => $status,
             'CreateDatetime' => time(),
@@ -310,12 +312,24 @@ class ModelRequests extends CI_Model
                 }
             }
 
+            foreach ($inputs['inputAttachmentImages'] as $inputAttachment) {
+                if ($inputAttachment['src'] != "") {
+                    $userArray = array(
+                        'ReqId' => $reqId,
+                        'Image' => $inputAttachment['src'],
+                        'CreateDatetime' => time(),
+                        'CreatePersonId' => $inputs['inputCreatePersonId']
+                    );
+                    $this->db->insert('person_requests_property_photos', $userArray);
+                }
+            }
+
+
             /* Add Request Property Info*/
             $userArray = array(
                 'RequestId' => $reqId,
                 'PropertyID' => $inputs['inputPropertyID'],
                 'PropertyRegisterDate' => $inputs['inputPropertyRegisterDate'],
-                'PropertyType' => $inputs['inputPropertyType'],
                 'PropertySpecialStatus' => $inputs['inputPropertySpecialStatus'],
                 'PropertyUseType' => $inputs['inputPropertyUseType'],
                 'PropertyDocType' => $inputs['inputPropertyDocType'],
@@ -355,6 +369,19 @@ class ModelRequests extends CI_Model
             );
             $this->db->insert('person_requests_property_owner_info', $userArray);
 
+
+            /* Add Request Property Locations*/
+
+            $userArray = array(
+                'ReqId' => $reqId,
+                'Google' => $inputs['inputPropertyGoogleMap'],
+                'Neshan' => $inputs['inputPropertyNeshan'],
+                'Balad' => $inputs['inputPropertyBalad'],
+                'CreateDatetime' => time(),
+                'CreatePersonId' => $inputs['inputCreatePersonId']
+            );
+            $this->db->insert('person_requests_property_locations', $userArray);
+
             $userArray = array(
                 'RequestId' => $reqId,
                 'FinalPropertyPercentageOwnership' => $inputs['inputFinalPropertyPercentageOwnership'],
@@ -392,9 +419,7 @@ class ModelRequests extends CI_Model
 
 
     }
-
-    public function doEdit($inputs)
-    {
+    public function doEdit($inputs){
 
         $this->db->select('*');
         $this->db->from('person_requests');
@@ -418,6 +443,8 @@ class ModelRequests extends CI_Model
                 'ReqType' => $inputs['inputReqType'],
                 'ReqAgentNationalCode' => $inputs['inputAgentNationalCode'],
                 'ReqMarketMakerNationalCode' => $inputs['inputMarketMakerNationalCode'],
+                'ReqProvinceId' => $inputs['inputProvince'],
+                'ReqCityId' => $inputs['inputCity'],
                 'ReqPrice' => $inputs['inputPrice'],
                 'ReqStatus' => $status,
                 'ModifyDateTime' => time(),
@@ -445,6 +472,22 @@ class ModelRequests extends CI_Model
             }
 
 
+            $this->db->delete('person_requests_property_photos', array(
+                'ReqId' => $inputs['inputReqId']
+            ));
+            foreach ($inputs['inputAttachmentImages'] as $inputAttachment) {
+                if ($inputAttachment['src'] != "") {
+                    $userArray = array(
+                        'ReqId' => $inputs['inputReqId'],
+                        'Image' => $inputAttachment['src'],
+                        'CreateDatetime' => time(),
+                        'CreatePersonId' => $inputs['inputCreatePersonId']
+                    );
+                    $this->db->insert('person_requests_property_photos', $userArray);
+                }
+            }
+
+
             /* Add Request Property Info*/
             $this->db->delete('person_requests_property_info', array(
                 'RequestId' => $inputs['inputReqId']
@@ -453,7 +496,6 @@ class ModelRequests extends CI_Model
                 'RequestId' => $inputs['inputReqId'],
                 'PropertyID' => $inputs['inputPropertyID'],
                 'PropertyRegisterDate' => $inputs['inputPropertyRegisterDate'],
-                'PropertyType' => $inputs['inputPropertyType'],
                 'PropertySpecialStatus' => $inputs['inputPropertySpecialStatus'],
                 'PropertyUseType' => $inputs['inputPropertyUseType'],
                 'PropertyDocType' => $inputs['inputPropertyDocType'],
@@ -495,6 +537,16 @@ class ModelRequests extends CI_Model
                 'CreatePersonId' => $inputs['inputCreatePersonId']
             );
             $this->db->insert('person_requests_property_owner_info', $userArray);
+
+            $this->db->where('ReqId' , $inputs['inputReqId']);
+            $userArray = array(
+                'Google' => $inputs['inputPropertyGoogleMap'],
+                'Neshan' => $inputs['inputPropertyNeshan'],
+                'Balad' => $inputs['inputPropertyBalad'],
+                'ModifyDateTime' => time(),
+                'ModifyPersonId' => $inputs['inputModifyPersonId']
+            );
+            $this->db->update('person_requests_property_locations', $userArray);
 
 
             $this->db->delete('person_requests_property_central_bank_result', array(
@@ -587,6 +639,7 @@ class ModelRequests extends CI_Model
             );
             $this->db->insert('person_requests_property_central_bank_result', $userArray);*/
         }
+
         if ($inputs['inputResultDescription'] != "") {
             $userArray = array(
                 'CommentReqId' => $inputs['inputReqId'],
@@ -604,9 +657,7 @@ class ModelRequests extends CI_Model
 
         return $this->config->item('DBMessages')['SuccessAction'];
     }
-
-    public function doEditLegal($inputs)
-    {
+    public function doEditLegal($inputs){
         $request = $this->getById($inputs['inputReqId'])[0];
 
         $status = "LEGAL";
@@ -679,7 +730,6 @@ class ModelRequests extends CI_Model
 
         return $this->config->item('DBMessages')['SuccessAction'];
     }
-
     public function doEditEconimic($inputs)
     {
         $request = $this->getById($inputs['inputReqId'])[0];
@@ -712,6 +762,7 @@ class ModelRequests extends CI_Model
         $proposalId = $request['ReqProposalId'];
         $contractAddress = $request['ReqContractAddress'];
         $nodeUrl = $this->config->item('node_url');
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $nodeUrl . 'voteProposal/' . $proposalId . '/' . $inputs['inputResult'] . '/' . $contractAddress,
@@ -730,6 +781,9 @@ class ModelRequests extends CI_Model
         $response = curl_exec($curl);
         curl_close($curl);
         $transactionHash = json_decode($response, true);
+
+
+
         if (isset($transactionHash['transactionHash']) && startsWith($transactionHash['transactionHash'], "0x") && (strlen($transactionHash['transactionHash']) == 66)) {
 
             $userArray = array(
@@ -754,7 +808,6 @@ class ModelRequests extends CI_Model
 
         return $this->config->item('DBMessages')['SuccessAction'];
     }
-
     public function doEditFinal($inputs)
     {
         $request = $this->getById($inputs['inputReqId'])[0];
@@ -825,7 +878,6 @@ class ModelRequests extends CI_Model
         sendSMS($this->config->item('SMSTemplate')['bpms-change-order'], $person['PersonPhone'], array($inputs['inputReqId'], pipeEnum('REQ_STATUS', $inputs['inputResult'], null, true)));
         return $this->config->item('DBMessages')['SuccessAction'];
     }
-
     public function getCommentsById($id)
     {
         $this->db->select('*');

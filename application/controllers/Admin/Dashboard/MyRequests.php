@@ -11,6 +11,7 @@ class MyRequests extends CI_Controller{
         parent::__construct();
         $this->load->helper('admin/admin_login');
         $this->load->model('admin/ModelRequests');
+        $this->load->model('admin/ModelCountry');
         $this->loginInfo = getLoginInfo();
         $this->loginRoles = getLoginRoles();
         $this->enum = $this->config->item('ENUM');
@@ -70,17 +71,21 @@ class MyRequests extends CI_Controller{
         $page['pageTitle'] = 'ویرایش درخواست';
         $data['loginInfo'] = $this->loginInfo;
         $data['enum'] = $this->enum;
+        $data['provinceList'] = $this->ModelCountry->getProvinceList();
         $data['request'] = $this->ModelRequests->getById($id)[0];
-
+        $data['request_property_cities'] = $this->ModelCountry->getCityByProvinceId($data['request']['ReqProvinceId']);
         if($data['request']['ReqPersonId'] != $this->loginInfo['PersonId']){
             redirect(base_url('Admin/Dashboard/Home?msg=دسترسی به این درخواست محدود شده است'));
         }
         $data['request'] = $this->ModelRequests->getById($id)[0];
         $data['request_attachment'] = $this->ModelRequests->getAttachmentByReqId($id);
+        $data['request_attachment_images'] = $this->ModelRequests->getImagesByReqId($id);
         $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
         $data['request_property_info'] = $this->ModelRequests->getPropertyInfoById($id)[0];
         $data['request_owner_info'] = $this->ModelRequests->getPropertyOwnerInfoById($id)[0];
         $data['request_central_bank_info'] = $this->ModelRequests->getPropertyCentralBankInfoById($id)[0];
+        $data['request_property_locations'] = $this->ModelRequests->getPropertyLocationsById($id)[0];
+
 
 
 

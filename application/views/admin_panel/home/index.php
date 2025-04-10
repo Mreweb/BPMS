@@ -111,16 +111,16 @@
                 </div>
 
                 <?php if(!$this->config->item('CENTRALBANKVERSION')){ ?>
-                <div class="col-lg-12 col-12">
-                    <div class="card radius-10">
-                        <div class="card-header">
-                            <h2>درخواست های پردازش شده توسط کمیسیون ها</h2>
-                        </div>
-                        <div class="card-body">
-                            <div id="chart-30" class="chart"></div>
+                    <div class="col-lg-12 col-12 d-none">
+                        <div class="card radius-10">
+                            <div class="card-header">
+                                <h2>درخواست های پردازش شده توسط کمیسیون ها</h2>
+                            </div>
+                            <div class="card-body">
+                                <div id="chart-30" class="chart"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
                 <?php } ?>
                 <div class="col-lg-12 col-12">
 

@@ -18,7 +18,7 @@
             </div>
             <div class="ms-auto">
                 <div class="btn-group">
-                    <a href="<?php echo base_url('Admin/Dashboard/Requests/add'); ?>">
+                    <a href="<?php echo base_url('Admin/Dashboard/MyRequests/add'); ?>">
                         <button type="button" class="btn btn-success">درخواست جدید</button>
                     </a>
                 </div>
@@ -31,6 +31,10 @@
 
                 <div class="row Page-Search-Form ">
                     <div class="col-sm-12 col-md-10 row">
+                        <div class="col-sm-12 col-md-2 mb-3">
+                            شماره:
+                            <input type="text" id="inputReqId" class="form-control">
+                        </div>
                         <div class="col-sm-12 col-md-2 mb-3">
                             عنوان:
                             <input type="text" id="inputTitle" class="form-control">
@@ -88,7 +92,7 @@
                             <th class="fit">تاریخ ثبت</th>
                             <th class="fit">ویرایش</th>
 
-                            <?php if(!$this->config->item('ISBLOCKCHAIN')){ ?>
+                            <?php if($this->config->item('ISBLOCKCHAIN')){ ?>
                             <th class="fit">قراردادهوشمند</th>
                             <th class="fit">پروپوزال</th>
                             <th class="fit">مدیریت قراردادهوشمند</th>

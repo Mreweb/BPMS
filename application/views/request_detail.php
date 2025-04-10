@@ -62,7 +62,7 @@
                                     <thead>
                                     <tr>
                                         <th>عنوان</th>
-                                        <th class="fit">دانلود</th>
+                                        <th class="fit">دریافت فایل</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -71,7 +71,7 @@
                                             <td><?php echo $item['AttachTitle']; ?></td>
                                             <td class="fit">
                                                 <a target="_blank" href="<?php echo $item['AttachUrl']; ?>">
-                                                    <button class="btn btn-success">دانلود</button>
+                                                    <button class="btn btn-success">دریافت فایل</button>
                                                 </a>
                                             </td>
                                         </tr>
@@ -81,6 +81,81 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="d-flex align-items-center mb-3 bg bg-success alert">تصاویر بارگذاری شده</h5>
+
+                            <div class="mt-3">
+                                <table class="table table-bordered table-hover table-stripped">
+                                    <thead>
+                                    <tr>
+                                        <th>عنوان</th>
+                                        <th class="fit">دریافت فایل</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php foreach ($request_attachment_images as $item) { ?>
+                                        <tr>
+                                            <td><img width="100" height="100" src="<?php echo $item['Image']; ?>" /></td>
+                                            <td class="fit">
+                                                <a target="_blank" href="<?php echo $item['Image']; ?>">
+                                                    <button class="btn btn-success">دریافت فایل</button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="d-flex align-items-center mb-3 bg bg-success alert">لوکیشن</h5>
+
+                            <div class="mt-3">
+                                <table class="table table-bordered table-hover table-stripped">
+                                    <thead>
+                                    <tr>
+                                        <th>عنوان</th>
+                                        <th class="fit">مشاهده</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>گوگل مپ</td>
+                                            <td class="fit">
+                                                <a target="_blank" href="<?php echo $request_property_locations['Google']; ?>">
+                                                    <button class="btn btn-success">مشاهده</button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>نشان</td>
+                                            <td class="fit">
+                                                <a target="_blank" href="<?php echo $request_property_locations['Neshan']; ?>">
+                                                    <button class="btn btn-success">مشاهده</button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>بلد</td>
+                                            <td class="fit">
+                                                <a target="_blank" href="<?php echo $request_property_locations['Balad']; ?>">
+                                                    <button class="btn btn-success">مشاهده</button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+
                     <div class="card">
                         <div class="card-body">
                             <h5 class="d-flex align-items-center mb-3 bg bg-success alert">اطلاعات ملک</h5>

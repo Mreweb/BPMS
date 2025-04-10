@@ -60,7 +60,7 @@ $config['404_image']= $config['base_url'].('assets/ui/assets/img/404.jpg');
 $config['SMSAPI']= '656B43504E624150746A2B526B485A6A79684E464E4C49385679646B783157596861584370582B514746303D';
 $config['SMSTemplate']= 'ticketverify';
 
-$config['CENTRALBANKVERSION'] = TRUE;
+$config['CENTRALBANKVERSION'] = FALSE;
 $config['ISBLOCKCHAIN'] = TRUE;
 
 $config['SMSTemplate']= 'ticketverify';
@@ -122,16 +122,20 @@ $config['ENUM'] = array(
         'DRAFT' => 'ثبت اولیه',
         'CENTRALBANK' => 'بررسی بانک مرکزی',
         'CENTRALBANKACCEPT' => 'تایید شده',
-        'LEGAL' => 'تایید شده',
-        'ECONOMIC' => ' کمیسیون اقتصادی',
-        'FINAL_ACCEPT' => ' نهایی ارشد',
-        'REJECT' => 'عدم تایید',
+        'LEGAL' => 'بررسی کمیسیون حقوقی',
+        'ECONOMIC' => 'بررسی  کمیسیون اقتصادی',
+        'FINAL_ACCEPT' => 'بررسی  نهایی ارشد',
+        'REJECT' => 'در درخواست',
         'ACCEPT' => 'تایید و پذیرش'
     ),
     'REQ_TYPE' => array(
         'EARTH' => 'زمین',
         'BUILDING' => 'ملک',
         'IRON_HOUSE' => 'ملک نیمه ساخته',
+    ),
+    'ContractFunctions' => array(
+        'createProposal' => 'ساخت پروپوزال درخواست',
+        'voteProposal' => 'رای دهی به درخواست'
     ),
     'DOC_TYPE' => array(
         '1' => 'مشاع',

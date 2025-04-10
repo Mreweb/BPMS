@@ -101,7 +101,7 @@
                                                 <select class="form-select" id="inputReqType"
                                                         data-placeholder="یک مورد راانتخاب کنید">
                                                     <option></option>
-                                                    <?php foreach ($enum['REQ_TYPE'] as $key => $value) { ?>
+                                                    <?php foreach ($enum['PROPERTY_TYPE'] as $key => $value) { ?>
                                                         <option value="<?php echo $key; ?>">
                                                             <?php echo $value; ?>
                                                         </option>
@@ -155,6 +155,30 @@
                                                         class="form-control">
                                             </div>
                                             <div class="uploaded-files mt-3">
+                                                <table class="table table-bordered table-hover table-stripped" style="display:none;">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>عنوان</th>
+                                                        <th>حذف</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-sm-12 mb-3">
+                                            <?php include VIEWPATH . 'photo-alerts.php'; ?>
+                                            <div class="input-group">
+                                                <label for="file" class="input-group-text">تصاویر را بارگذاری کنید</label>
+                                                <input
+                                                        type="file"
+                                                        id="file-image"
+                                                        aria-label=""
+                                                        class="form-control">
+                                            </div>
+                                            <div class="uploaded-image-files mt-3">
                                                 <table class="table table-bordered table-hover table-stripped" style="display:none;">
                                                     <thead>
                                                     <tr>
@@ -255,19 +279,6 @@
                                             <div class="input-group">
                                                 <span class="input-group-text">تاریخ ثبت</span>
                                                 <input type="text" id="inputPropertyRegisterDate" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
-                                            <div class="input-group">
-                                                <span class="input-group-text">نوع ملک</span>
-                                                <select class="form-select" id="inputPropertyType" data-placeholder="یک مورد راانتخاب کنید">
-                                                    <option></option>
-                                                    <?php foreach ($enum['PROPERTY_TYPE'] as $key => $value) { ?>
-                                                        <option value="<?php echo $key; ?>">
-                                                            <?php echo $value; ?>
-                                                        </option>
-                                                    <?php } ?>
-                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4 col-sm-6 mb-2">
@@ -398,6 +409,34 @@
                                                 <input type="text" id="inputPropertyBuildYear" class="form-control">
                                             </div>
                                         </div>
+
+                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">استان</span>
+                                                <select id="inputProvince" class="form-control">
+                                                    <?php foreach ($provinceList as $pr) { ?>
+                                                        <option <?php setOptionSelected($request['ReqProvinceId'], $pr['ProvinceId']); ?>
+                                                                value="<?php echo $pr['ProvinceId']; ?>">
+                                                            <?php echo $pr['ProvinceName']; ?>
+                                                        </option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">شهر</span>
+                                                <select id="inputCity" class="form-control">
+                                                    <?php foreach ($provinceList as $pr) { ?>
+                                                        <option <?php setOptionSelected($request['ReqProvinceId'], $pr['ProvinceId']); ?>
+                                                                value="<?php echo $pr['ProvinceId']; ?>">
+                                                            <?php echo $pr['ProvinceName']; ?>
+                                                        </option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
                                         <div class="col-12 col-md-4 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">کد پستی</span>
@@ -417,6 +456,24 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">آدرس گوگل مپ</span>
+                                                <input type="text" id="inputPropertyGoogleMap" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">آدرس نشان</span>
+                                                <input type="text" id="inputPropertyNeshan" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">آدرس بلد</span>
+                                                <input type="text" id="inputPropertyBalad" class="form-control">
+                                            </div>
+                                        </div>
 
                                     </div>
 

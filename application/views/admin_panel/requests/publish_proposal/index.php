@@ -169,11 +169,15 @@
                                 <tr class="item">
                                     <td class="fit">
                                         <a target="_blank" href="<?php echo blockChainUrl() . 'tx/' . $item['TransactionHash']; ?>">
-                                        # <?php echo $item['TransactionHash']; ?>
+                                            <button  class="btn btn-success">
+                                                مشاهده تراکنش  بلاکچین
+                                            </button>
                                         </a>
                                     </td>
                                     <td class="fit">
-                                        <?php echo $item['FunctionCall']; ?>
+                                        <label class="badge bg-primary">
+                                            <?php echo pipeEnum('ContractFunctions',$item['FunctionCall']); ?>
+                                        </label>
                                     </td>
                                     <td class="text-end">
                                         <?php foreach (json_decode($item['InputData'],true) as $key=>$value) {

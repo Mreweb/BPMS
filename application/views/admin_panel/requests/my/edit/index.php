@@ -114,7 +114,7 @@
                                             <select class="form-select" id="inputReqType"
                                                     data-placeholder="یک مورد راانتخاب کنید">
                                                 <option></option>
-                                                <?php foreach ($enum['REQ_TYPE'] as $key => $value) { ?>
+                                                <?php foreach ($enum['PROPERTY_TYPE'] as $key => $value) { ?>
                                                     <option
                                                         <?php setOptionSelected($key, $request['ReqType']); ?>
                                                             value="<?php echo $key; ?>">
@@ -160,12 +160,11 @@
                                     <div class="col-sm-12 mb-3">
                                         <label class="col-sm-12 col-md-3 mb-3">توضیحات</label>
                                         <textarea rows="6" id="inputDescription"
-                                                  class="form-control"><?php echo nl2br($request['ReqDescription']); ?></textarea>
+                                                  class="form-control"><?php echo($request['ReqDescription']); ?></textarea>
                                     </div>
                                     <div class="col-sm-12 mb-3">
+
                                         <?php include VIEWPATH . 'alerts.php'; ?>
-
-
                                         <?php if ($request['ReqStatus'] == 'DRAFT') { ?>
                                             <div class="input-group">
                                                 <span class="input-group-text">اسناد را بارگذاری کنید</span>
@@ -201,6 +200,47 @@
                                                 <?php } ?>
                                                 </tbody>
                                             </table>
+                                        </div>
+
+
+                                        <div class="col-sm-12 mb-3">
+                                            <?php include VIEWPATH . 'photo-alerts.php'; ?>
+                                            <div class="input-group">
+                                                <label for="file" class="input-group-text">تصاویر را بارگذاری
+                                                    کنید</label>
+                                                <input
+                                                        type="file"
+                                                        id="file-image"
+                                                        aria-label=""
+                                                        class="form-control">
+                                            </div>
+                                            <div class="uploaded-image-files mt-3">
+                                                <table class="table table-bordered table-hover table-stripped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>عنوان</th>
+                                                        <th>حذف</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <?php $ind = 0;
+                                                    foreach ($request_attachment_images as $item) { ?>
+                                                        <tr data-src='<?php echo $item['Image']; ?>'>
+                                                            <td>
+                                                                <a target="_blank" href="<?php echo $item['Image']; ?>">
+                                                                    <img class="img img-rounded" width="100" height="100"
+                                                                         src="<?php echo $item['Image']; ?>"/>
+                                                                </a>
+                                                            </td>
+                                                            <td class='fit'>
+                                                                <button class='btn btn-danger btn-sm remove-file'>X
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    <?php } ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
 
                                     </div>
@@ -304,29 +344,23 @@
                                                    id="inputPropertyRegisterDate" class="form-control">
                                         </div>
                                     </div>
+
+
                                     <div class="col-12 col-md-4 col-sm-6 mb-2">
                                         <div class="input-group">
-                                            <span class="input-group-text">نوع ملک</span>
-                                            <select class="form-select" id="inputPropertyType"
+                                            <span class="input-group-text">وضعیت خاص</span>
+                                            <select class="form-select" id="inputPropertySpecialStatus"
                                                     data-placeholder="یک مورد راانتخاب کنید">
                                                 <option></option>
-                                                <?php foreach ($enum['PROPERTY_TYPE'] as $key => $value) { ?>
-                                                    <option <?php setOptionSelected($key, $request_property_info['PropertyType']); ?>
-                                                            value="<?php echo $key; ?>">
+                                                <?php foreach ($enum['PROPERTY_SPECIAL_STATUS'] as $key => $value) { ?>
+                                                    <option <?php setOptionSelected($key ,$request_property_info['PropertySpecialStatus'] ); ?> value="<?php echo $key; ?>">
                                                         <?php echo $value; ?>
                                                     </option>
                                                 <?php } ?>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-4 col-sm-6 mb-2">
-                                        <div class="input-group">
-                                            <span class="input-group-text">وضعیت خاص</span>
-                                            <input type="text"
-                                                <?php setInputValue($request_property_info['PropertySpecialStatus']); ?>
-                                                   id="inputPropertySpecialStatus" class="form-control">
-                                        </div>
-                                    </div>
+
                                     <div class="col-12 col-md-4 col-sm-6 mb-2">
                                         <div class="input-group">
                                             <span class="input-group-text">کاربری</span>
@@ -469,6 +503,35 @@
                                                     type="text" id="inputPropertyBuildYear" class="form-control">
                                         </div>
                                     </div>
+
+                                    <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="input-group">
+                                            <span class="input-group-text">استان</span>
+                                            <select id="inputProvince" class="form-control">
+                                                <?php foreach ($provinceList as $pr) { ?>
+                                                    <option <?php setOptionSelected($request['ReqProvinceId'], $pr['ProvinceId']); ?>
+                                                            value="<?php echo $pr['ProvinceId']; ?>">
+                                                        <?php echo $pr['ProvinceName']; ?>
+                                                    </option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="input-group">
+                                            <span class="input-group-text">شهر</span>
+                                            <select id="inputCity" class="form-control">
+                                                <?php foreach ($request_property_cities as $pr) { ?>
+                                                    <option <?php setOptionSelected($pr['CityId'], $request['ReqCityId']); ?>
+                                                            value="<?php echo $pr['CityId']; ?>">
+                                                        <?php echo $pr['CityName']; ?>
+                                                    </option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
                                     <div class="col-12 col-md-4 col-sm-6 mb-2">
                                         <div class="input-group">
                                             <span class="input-group-text">کد پستی</span>
@@ -493,6 +556,37 @@
                                                     type="text" id="inputPropertyUseTypeSide" class="form-control">
                                         </div>
                                     </div>
+
+
+                                    <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="input-group">
+                                            <span class="input-group-text">آدرس گوگل مپ</span>
+                                            <input
+                                                <?php setInputValue($request_property_locations['Google']); ?>
+                                                    type="text" id="inputPropertyGoogleMap" class="form-control">
+                                        </div>
+                                        <a class="btn btn-info btn-sm" href="<?php echo $request_property_locations['Google']; ?>" target="_blank">مشاهده روی نقشه</a>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="input-group">
+                                            <span class="input-group-text">آدرس نشان</span>
+                                            <input
+                                                <?php setInputValue($request_property_locations['Neshan']); ?>
+                                                    type="text" id="inputPropertyNeshan" class="form-control">
+                                        </div>
+                                        <a class="btn btn-info btn-sm" href="<?php echo $request_property_locations['Neshan']; ?>" target="_blank">مشاهده روی نقشه</a>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-sm-6 mb-2">
+                                        <div class="input-group">
+                                            <span class="input-group-text">آدرس بلد</span>
+                                            <input
+                                                <?php setInputValue($request_property_locations['Balad']); ?>
+                                                    type="text" id="inputPropertyBalad" class="form-control">
+                                        </div>
+                                        <a class="btn btn-info btn-sm" href="<?php echo $request_property_locations['Balad']; ?>" target="_blank">مشاهده روی نقشه</a>
+                                    </div>
+
+
                                 </div>
 
                             </div>

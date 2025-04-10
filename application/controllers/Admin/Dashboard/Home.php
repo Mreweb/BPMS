@@ -23,7 +23,7 @@ class Home extends CI_Controller {
             die();
         }
 
-        $data['TYPE'] = $this->config->item('ENUM')['REQ_TYPE'];
+        $data['TYPE'] = $this->config->item('ENUM')['PROPERTY_TYPE'];
         $data['STATUS'] = $this->config->item('ENUM')['REQ_STATUS'];
         $data['STATUS']['ACCEPT']=  'تایید و پذیرش';
 
@@ -91,7 +91,7 @@ class Home extends CI_Controller {
 	    $this->load->view('admin_panel/home/index', $data);
 	    $this->load->view('admin_panel/static/footer');
 	}
-    public function uploadFile(){
+    public function uploadFile($width=null,$height=null){
         $inputs = $this->input->post(NULL, TRUE);
         $uploadPath = $this->config->item('upload_path');
         $error = array();
@@ -158,7 +158,8 @@ class Home extends CI_Controller {
                 echo json_encode($result);
                 die();
             }
-        } else {
+        }
+        else {
             $result = array(
                 'type' => "green",
                 'content' => "بارگذاری با موفقیت انجام شد",

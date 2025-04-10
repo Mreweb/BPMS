@@ -2,20 +2,41 @@
     $(document).ready(function () {
 
         $("#do_deploy_contract").click(function (e) {
+
             e.preventDefault();
-            toggleLoader();
-            $inputReqId = $.trim($("#inputReqId").val());
-            $sendData = {
-                'inputReqId': $inputReqId
-            };
-            $.ajax({
-                type: 'post',
-                url: base_url + 'Requests/doPublishProposal',
-                data: $sendData,
-                success: function (data) {
-                    $result = data;
-                    notify($result['content'], $result['type']);
-                    toggleLoader();
+            $.confirm({
+                title: 'انتشار پروپوزال',
+                theme: 'dark',
+                content: 'آیا از انتشار مطمئن هستید؟',
+                buttons: {
+                    بله: {
+                        btnClass: 'btn btn-success',
+                        action: function () {
+                            e.preventDefault();
+                            toggleLoader();
+                            $inputReqId = $.trim($("#inputReqId").val());
+                            $sendData = {
+                                'inputReqId': $inputReqId
+                            };
+                            $.ajax({
+                                type: 'post',
+                                url: base_url + 'Requests/doDeployContract',
+                                data: $sendData,
+                                success: function (data) {
+                                    $result = data;
+                                    notify($result['content'], $result['type']);
+                                    toggleLoader();
+                                    if($result['success']){
+                                        location.reload();
+                                    }
+                                }
+                            });
+                        },
+                    },
+                    انصراف: {
+                        btnClass: 'btn btn-default',
+                        action: function () { }
+                    }
                 }
             });
         });

@@ -104,9 +104,13 @@ class ModelProposal extends CI_Model{
 
         if (isset($transactionHash['transactionHash']) && startsWith($transactionHash['transactionHash'], "0x") && (strlen($transactionHash['transactionHash']) == 66 ) ) {
 
+            $this->db->where(array(
+                'ReqId' => $inputs['inputReqId']
+            ));
             $userArray = array(
                 'ReqProposalStatus' => 1,
-                'ReqProposalName' => $proposalTitle
+                'ReqProposalName' => $proposalTitle,
+                'ReqProposalId' => $proposalId
             );
             $this->db->update('person_requests', $userArray);
 

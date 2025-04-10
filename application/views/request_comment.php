@@ -74,4 +74,8 @@
         <?php } ?>
         <?php $index += 1;
     } ?>
+<?php } else{ ?>
+    <div class="alert alert-info text-white">
+        توضیحاتی در مورد این درخواست ثبت نشده است.
+    </div>
 <?php } ?>
