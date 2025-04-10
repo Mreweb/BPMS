@@ -1,0 +1,423 @@
+// Importing required modules
+import express from "express";
+import Web3 from "web3";
+import bodyParser from "body-parser";
+
+//const rpcURL = "https://data-seed-prebsc-1-s1.binance.org:8545";
+const rpcURL = "https://bsc-testnet-rpc.publicnode.com";
+const web3 = new Web3(rpcURL);
+
+const privateKey = "0x4f6d419e841a2a21c72ca84379707fc9926dd344c66ab01bab3866cfc5cd7e07";
+if (!web3.utils.isHex(privateKey) || privateKey.length !== 66) {
+    console.error("Invalid private key format.");
+    process.exit(1);
+}
+
+const account = web3.eth.accounts.privateKeyToAccount(privateKey);
+web3.eth.accounts.wallet.add(account);
+
+const abi = [
+    {
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
+        "stateMutability": "payable",
+        "type": "fallback"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_a",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_b",
+                "type": "string"
+            }
+        ],
+        "name": "compareStrings",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "pure",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "contractOwner",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_proposalId",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_name",
+                "type": "string"
+            }
+        ],
+        "name": "createProposal",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getAllProposal",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "string",
+                        "name": "proposalId",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "voteCount",
+                        "type": "uint256"
+                    }
+                ],
+                "internalType": "struct TokenizeVoteContract.Proposal[]",
+                "name": "",
+                "type": "tuple[]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_proposalId",
+                "type": "string"
+            }
+        ],
+        "name": "getProposal",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "string",
+                        "name": "proposalId",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "voteCount",
+                        "type": "uint256"
+                    }
+                ],
+                "internalType": "struct TokenizeVoteContract.Proposal",
+                "name": "",
+                "type": "tuple"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "isOwner",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "proposals",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "proposalId",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "voteCount",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_proposalId",
+                "type": "string"
+            },
+            {
+                "internalType": "bool",
+                "name": "_vote",
+                "type": "bool"
+            }
+        ],
+        "name": "voteProposal",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "string",
+                        "name": "proposalId",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "voteCount",
+                        "type": "uint256"
+                    }
+                ],
+                "internalType": "struct TokenizeVoteContract.Proposal",
+                "name": "",
+                "type": "tuple"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "stateMutability": "payable",
+        "type": "receive"
+    }
+];
+const byteCode = "6080604052348015600e575f80fd5b50335f806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506119f78061005b5f395ff3fe60806040526004361061007e575f3560e01c806365e481e21161004d57806365e481e2146101675780638f32d59b146101a3578063bed34bba146101cd578063ce606ee01461020957610085565b8063013cf08b1461008757806325d3a09d146100c55780634334498314610101578063492cedb21461012b57610085565b3661008557005b005b348015610092575f80fd5b506100ad60048036038101906100a89190610fbc565b610233565b6040516100bc93929190611066565b60405180910390f35b3480156100d0575f80fd5b506100eb60048036038101906100e691906111d5565b610374565b6040516100f891906112c7565b60405180910390f35b34801561010c575f80fd5b506101156105f1565b60405161012291906113f6565b60405180910390f35b348015610136575f80fd5b50610151600480360381019061014c919061144b565b610776565b60405161015e91906112c7565b60405180910390f35b348015610172575f80fd5b5061018d600480360381019061018891906114a5565b610b5f565b60405161019a91906112c7565b60405180910390f35b3480156101ae575f80fd5b506101b7610e0d565b6040516101c4919061152a565b60405180910390f35b3480156101d8575f80fd5b506101f360048036038101906101ee91906114a5565b610e71565b604051610200919061152a565b60405180910390f35b348015610214575f80fd5b5061021d610f35565b60405161022a9190611582565b60405180910390f35b60018181548110610242575f80fd5b905f5260205f2090600302015f91509050805f018054610261906115c8565b80601f016020809104026020016040519081016040528092919081815260200182805461028d906115c8565b80156102d85780601f106102af576101008083540402835291602001916102d8565b820191905f5260205f20905b8154815290600101906020018083116102bb57829003601f168201915b5050505050908060010180546102ed906115c8565b80601f0160208091040260200160405190810160405280929190818152602001828054610319906115c8565b80156103645780601f1061033b57610100808354040283529160200191610364565b820191905f5260205f20905b81548152906001019060200180831161034757829003601f168201915b5050505050908060020154905083565b61037c610f58565b5f5b6001805490508110156105b1575f61043e600183815481106103a3576103a26115f8565b5b905f5260205f2090600302015f0180546103bc906115c8565b80601f01602080910402602001604051908101604052809291908181526020018280546103e8906115c8565b80156104335780601f1061040a57610100808354040283529160200191610433565b820191905f5260205f20905b81548152906001019060200180831161041657829003601f168201915b505050505085610e71565b905080156105a3576001828154811061045a576104596115f8565b5b905f5260205f2090600302016040518060600160405290815f82018054610480906115c8565b80601f01602080910402602001604051908101604052809291908181526020018280546104ac906115c8565b80156104f75780601f106104ce576101008083540402835291602001916104f7565b820191905f5260205f20905b8154815290600101906020018083116104da57829003601f168201915b50505050508152602001600182018054610510906115c8565b80601f016020809104026020016040519081016040528092919081815260200182805461053c906115c8565b80156105875780601f1061055e57610100808354040283529160200191610587565b820191905f5260205f20905b81548152906001019060200180831161056a57829003601f168201915b50505050508152602001600282015481525050925050506105ec565b50808060010191505061037e565b50604051806060016040528060405180602001604052805f815250815260200160405180602001604052805f81525081526020015f81525090505b919050565b60606001805480602002602001604051908101604052809291908181526020015f905b8282101561076d578382905f5260205f2090600302016040518060600160405290815f82018054610644906115c8565b80601f0160208091040260200160405190810160405280929190818152602001828054610670906115c8565b80156106bb5780601f10610692576101008083540402835291602001916106bb565b820191905f5260205f20905b81548152906001019060200180831161069e57829003601f168201915b505050505081526020016001820180546106d4906115c8565b80601f0160208091040260200160405190810160405280929190818152602001828054610700906115c8565b801561074b5780601f106107225761010080835404028352916020019161074b565b820191905f5260205f20905b81548152906001019060200180831161072e57829003601f168201915b5050505050815260200160028201548152505081526020019060010190610614565b50505050905090565b61077e610f58565b5f805f5b60018054905081101561085a57610841600182815481106107a6576107a56115f8565b5b905f5260205f2090600302015f0180546107bf906115c8565b80601f01602080910402602001604051908101604052809291908181526020018280546107eb906115c8565b80156108365780601f1061080d57610100808354040283529160200191610836565b820191905f5260205f20905b81548152906001019060200180831161081957829003601f168201915b505050505087610e71565b9150811561084d578092505b8080600101915050610782565b508061089b576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004016108929061166f565b60405180910390fd5b5f600183815481106108b0576108af6115f8565b5b905f5260205f20906003020190508415610a1e576001816002015f8282546108d891906116ba565b92505081905550806040518060600160405290815f820180546108fa906115c8565b80601f0160208091040260200160405190810160405280929190818152602001828054610926906115c8565b80156109715780601f1061094857610100808354040283529160200191610971565b820191905f5260205f20905b81548152906001019060200180831161095457829003601f168201915b5050505050815260200160018201805461098a906115c8565b80601f01602080910402602001604051908101604052809291908181526020018280546109b6906115c8565b8015610a015780601f106109d857610100808354040283529160200191610a01565b820191905f5260205f20905b8154815290600101906020018083116109e457829003601f168201915b505050505081526020016002820154815250509350505050610b59565b806040518060600160405290815f82018054610a39906115c8565b80601f0160208091040260200160405190810160405280929190818152602001828054610a65906115c8565b8015610ab05780601f10610a8757610100808354040283529160200191610ab0565b820191905f5260205f20905b815481529060010190602001808311610a9357829003601f168201915b50505050508152602001600182018054610ac9906115c8565b80601f0160208091040260200160405190810160405280929190818152602001828054610af5906115c8565b8015610b405780601f10610b1757610100808354040283529160200191610b40565b820191905f5260205f20905b815481529060010190602001808311610b2357829003601f168201915b5050505050815260200160028201548152505093505050505b92915050565b610b67610f58565b5f5b600180549050811015610d70575f610c2960018381548110610b8e57610b8d6115f8565b5b905f5260205f2090600302015f018054610ba7906115c8565b80601f0160208091040260200160405190810160405280929190818152602001828054610bd3906115c8565b8015610c1e5780601f10610bf557610100808354040283529160200191610c1e565b820191905f5260205f20905b815481529060010190602001808311610c0157829003601f168201915b505050505086610e71565b90508015610c6c576040517f08c379a0000000000000000000000000000000000000000000000000000000008152600401610c6390611737565b60405180910390fd5b610d1f60018381548110610c8357610c826115f8565b5b905f5260205f2090600302016001018054610c9d906115c8565b80601f0160208091040260200160405190810160405280929190818152602001828054610cc9906115c8565b8015610d145780601f10610ceb57610100808354040283529160200191610d14565b820191905f5260205f20905b815481529060010190602001808311610cf757829003601f168201915b505050505085610e71565b90508015610d62576040517f08c379a0000000000000000000000000000000000000000000000000000000008152600401610d5990611737565b60405180910390fd5b508080600101915050610b69565b50600160405180606001604052808581526020018481526020015f815250908060018154018082558091505060019003905f5260205f2090600302015f909190919091505f820151815f019081610dc791906118f2565b506020820151816001019081610ddd91906118f2565b5060408201518160020155505060405180606001604052808481526020018381526020015f815250905092915050565b5f805f9054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614610e69575f9050610e6e565b600190505b90565b5f8151835114610e83575f9050610f2f565b5f5b8351811015610f2957828181518110610ea157610ea06115f8565b5b602001015160f81c60f81b7effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1916848281518110610ee157610ee06115f8565b5b602001015160f81c60f81b7effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff191614610f1c575f915050610f2f565b8080600101915050610e85565b50600190505b92915050565b5f8054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b604051806060016040528060608152602001606081526020015f81525090565b5f604051905090565b5f80fd5b5f80fd5b5f819050919050565b610f9b81610f89565b8114610fa5575f80fd5b50565b5f81359050610fb681610f92565b92915050565b5f60208284031215610fd157610fd0610f81565b5b5f610fde84828501610fa8565b91505092915050565b5f81519050919050565b5f82825260208201905092915050565b8281835e5f83830152505050565b5f601f19601f8301169050919050565b5f61102982610fe7565b6110338185610ff1565b9350611043818560208601611001565b61104c8161100f565b840191505092915050565b61106081610f89565b82525050565b5f6060820190508181035f83015261107e818661101f565b90508181036020830152611092818561101f565b90506110a16040830184611057565b949350505050565b5f80fd5b5f80fd5b7f4e487b71000000000000000000000000000000000000000000000000000000005f52604160045260245ffd5b6110e78261100f565b810181811067ffffffffffffffff82111715611106576111056110b1565b5b80604052505050565b5f611118610f78565b905061112482826110de565b919050565b5f67ffffffffffffffff821115611143576111426110b1565b5b61114c8261100f565b9050602081019050919050565b828183375f83830152505050565b5f61117961117484611129565b61110f565b905082815260208101848484011115611195576111946110ad565b5b6111a0848285611159565b509392505050565b5f82601f8301126111bc576111bb6110a9565b5b81356111cc848260208601611167565b91505092915050565b5f602082840312156111ea576111e9610f81565b5b5f82013567ffffffffffffffff81111561120757611206610f85565b5b611213848285016111a8565b91505092915050565b5f82825260208201905092915050565b5f61123682610fe7565b611240818561121c565b9350611250818560208601611001565b6112598161100f565b840191505092915050565b61126d81610f89565b82525050565b5f606083015f8301518482035f86015261128d828261122c565b915050602083015184820360208601526112a7828261122c565b91505060408301516112bc6040860182611264565b508091505092915050565b5f6020820190508181035f8301526112df8184611273565b905092915050565b5f81519050919050565b5f82825260208201905092915050565b5f819050602082019050919050565b5f606083015f8301518482035f86015261132a828261122c565b91505060208301518482036020860152611344828261122c565b91505060408301516113596040860182611264565b508091505092915050565b5f61136f8383611310565b905092915050565b5f602082019050919050565b5f61138d826112e7565b61139781856112f1565b9350836020820285016113a985611301565b805f5b858110156113e457848403895281516113c58582611364565b94506113d083611377565b925060208a019950506001810190506113ac565b50829750879550505050505092915050565b5f6020820190508181035f83015261140e8184611383565b905092915050565b5f8115159050919050565b61142a81611416565b8114611434575f80fd5b50565b5f8135905061144581611421565b92915050565b5f806040838503121561146157611460610f81565b5b5f83013567ffffffffffffffff81111561147e5761147d610f85565b5b61148a858286016111a8565b925050602061149b85828601611437565b9150509250929050565b5f80604083850312156114bb576114ba610f81565b5b5f83013567ffffffffffffffff8111156114d8576114d7610f85565b5b6114e4858286016111a8565b925050602083013567ffffffffffffffff81111561150557611504610f85565b5b611511858286016111a8565b9150509250929050565b61152481611416565b82525050565b5f60208201905061153d5f83018461151b565b92915050565b5f73ffffffffffffffffffffffffffffffffffffffff82169050919050565b5f61156c82611543565b9050919050565b61157c81611562565b82525050565b5f6020820190506115955f830184611573565b92915050565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52602260045260245ffd5b5f60028204905060018216806115df57607f821691505b6020821081036115f2576115f161159b565b5b50919050565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52603260045260245ffd5b7f50726f706f73616c204e6f7420457869737473000000000000000000000000005f82015250565b5f611659601383610ff1565b915061166482611625565b602082019050919050565b5f6020820190508181035f8301526116868161164d565b9050919050565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52601160045260245ffd5b5f6116c482610f89565b91506116cf83610f89565b92508282019050808211156116e7576116e661168d565b5b92915050565b7f50726f706f73616c2045786973747300000000000000000000000000000000005f82015250565b5f611721600f83610ff1565b915061172c826116ed565b602082019050919050565b5f6020820190508181035f83015261174e81611715565b9050919050565b5f819050815f5260205f209050919050565b5f6020601f8301049050919050565b5f82821b905092915050565b5f600883026117b17fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff82611776565b6117bb8683611776565b95508019841693508086168417925050509392505050565b5f819050919050565b5f6117f66117f16117ec84610f89565b6117d3565b610f89565b9050919050565b5f819050919050565b61180f836117dc565b61182361181b826117fd565b848454611782565b825550505050565b5f90565b61183761182b565b611842818484611806565b505050565b5b818110156118655761185a5f8261182f565b600181019050611848565b5050565b601f8211156118aa5761187b81611755565b61188484611767565b81016020851015611893578190505b6118a761189f85611767565b830182611847565b50505b505050565b5f82821c905092915050565b5f6118ca5f19846008026118af565b1980831691505092915050565b5f6118e283836118bb565b9150826002028217905092915050565b6118fb82610fe7565b67ffffffffffffffff811115611914576119136110b1565b5b61191e82546115c8565b611929828285611869565b5f60209050601f83116001811461195a575f8415611948578287015190505b61195285826118d7565b8655506119b9565b601f19841661196886611755565b5f5b8281101561198f5784890151825560018201915060208501945060208101905061196a565b868310156119ac57848901516119a8601f8916826118bb565b8355505b6001600288020188555050505b50505050505056fea264697066735822122051820872bdae707c036465e72408a182ab2fad2406fde1353a05cb3fcdc70fc964736f6c634300081a0033";
+
+
+const app = express();
+const port = 3000;
+app.use(bodyParser.json());
+
+function serializeBigInt(value) {
+    if (typeof value === 'bigint') {
+        return value.toString();
+    }
+    if (Array.isArray(value)) {
+        return value.map(serializeBigInt);
+    }
+    if (value && typeof value === 'object') {
+        const serializedObj = {};
+        for (const key in value) {
+            serializedObj[key] = serializeBigInt(value[key]);
+        }
+        return serializedObj;
+    }
+    return value;
+}
+
+app.post('/deployContract', async (req, res) => {
+
+
+    //res.json({ Contract : privateKey});
+
+    try {
+        const contract = new web3.eth.Contract(abi);
+        // Create deployment transaction
+        const deployTx = contract.deploy({
+            data: byteCode,
+            arguments: []
+        });
+
+        // Estimate gas
+        const gas = await deployTx.estimateGas({from: account.address});
+        const gasPrice = await web3.eth.getGasPrice();
+
+        const tx = {
+            from: account.address,
+            data: deployTx.encodeABI(),
+            gas,
+            gasPrice,
+        };
+        // Sign the transaction
+        const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
+        // Send the signed transaction
+        const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+        console.log("✅ Contract deployed at:", receipt.contractAddress);
+
+        res.json({Contract: receipt.contractAddress});
+    } catch (error) {
+        res.status(500).json({error: "Deployment failed", message: error.message});
+    }
+
+});
+
+app.post('/createProposal/:proposalId/:name/:proposalContractAddress', async (req, res) => {
+
+    let _proposalId = req.params.proposalId;
+    let _name = req.params.name;
+    let _proposalContractAddress = req.params.proposalContractAddress;
+    const contract = new web3.eth.Contract(abi, _proposalContractAddress);
+
+    try {
+        const txData = contract.methods.createProposal(_proposalId, _name).encodeABI();
+
+        const gas = await contract.methods.createProposal(_proposalId, _name).estimateGas({from: account.address});
+        const gasPrice = await web3.eth.getGasPrice();
+
+        const tx = {
+            from: account.address,
+            to: _proposalContractAddress,
+            gas: gas,
+            gasPrice: gasPrice,
+            data: txData
+        };
+        const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
+        const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+        res.json({transactionHash: receipt.transactionHash});
+    } catch (error) {
+        res.status(500).json({error: "Error creating proposal", message: error.message});
+    }
+});
+
+app.get('/getAllProposals/:proposalContractAddress', async (req, res) => {
+
+    let _proposalContractAddress = req.params.proposalContractAddress;
+    const contract = new web3.eth.Contract(abi, _proposalContractAddress);
+
+    try {
+        const proposals = await contract.methods.getAllProposal().call();
+        res.json({proposals: serializeBigInt(proposals)});
+    } catch (error) {
+        res.status(500).json({error: "Error fetching proposals", message: error.message});
+    }
+});
+
+app.get('/getProposal/:proposalId/:proposalContractAddress', async (req, res) => {
+
+    let proposalId = req.params.proposalId;
+    let _proposalContractAddress = req.params.proposalContractAddress;
+    const contract = new web3.eth.Contract(abi, _proposalContractAddress);
+
+    try {
+        const proposal = await contract.methods.getProposal(proposalId).call();
+        res.json({proposal: serializeBigInt(proposal)});
+    } catch (error) {
+        res.status(500).json({error: "Error fetching proposal", message: error.message});
+    }
+});
+
+app.get('/getTransactionHash/:tx', async (req, res) => {
+
+    let _txHash = req.params.tx;
+    try {
+        const tx = await web3.eth.getTransaction(_txHash);
+        if (!tx) {
+            console.log("Transaction not found.");
+            return;
+        }
+
+        const functionSignature = web3.eth.abi.encodeFunctionSignature('voteProposal(string,string)');
+        const input =  tx.input;
+        const params = web3.eth.abi.decodeParameters( abi[9].inputs, input.slice(10) );
+
+        res.json({
+            "Transaction Hash":  tx.hash,
+            "Transaction From":  tx.from,
+            "Transaction To (Contract)":  tx.to,
+            "Input Data":  tx.input,
+            "Proposal Id":  params[0],
+            "Vote":   params[1],
+        });
+
+    } catch (error) {
+        console.error("Error fetching transaction:", error);
+    }
+
+});
+
+app.post('/voteProposal/:proposalId/:vote/:proposalContractAddress', async (req, res) => {
+
+
+    let _proposalId = req.params.proposalId;
+    let _vote = req.params.vote;
+
+    let _proposalContractAddress = req.params.proposalContractAddress;
+    const contract = new web3.eth.Contract(abi, _proposalContractAddress);
+
+
+    if (_vote === 1) {
+        _vote = true;
+    } else{
+        _vote = false;
+    }
+
+    try {
+        const txData = contract.methods.voteProposal(_proposalId, _vote).encodeABI();
+
+
+        const gas = await contract.methods.voteProposal(_proposalId, _vote).estimateGas({from: account.address});
+        const gasPrice = await web3.eth.getGasPrice(); // Get current gas price from the network
+
+
+        const tx = {
+            from: account.address,
+            to: _proposalContractAddress,
+            gas: gas,
+            gasPrice: gasPrice,
+            data: txData,
+        };
+        const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
+        const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+        res.json({transactionHash: receipt.transactionHash});
+    } catch (error) {
+        res.status(500).json({error: "Error voting on proposal", message: error.message});
+    }
+});
+
+app.listen(port, () => {
+    console.log(`Node.js service is running at http://localhost:${port}`);
+});
