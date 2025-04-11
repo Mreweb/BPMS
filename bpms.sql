@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 10, 2025 at 01:00 PM
+-- Generation Time: Apr 11, 2025 at 09:21 AM
 -- Server version: 9.1.0
 -- PHP Version: 7.4.33
 
@@ -698,7 +698,9 @@ CREATE TABLE IF NOT EXISTS `logs` (
   `FullUserAgentString` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'مشخصات کامل مرورگر',
   `CreatePersonId` int NOT NULL COMMENT 'شناسه شخص سازنده',
   `CreateDateTime` int NOT NULL COMMENT 'زمان',
-  PRIMARY KEY (`LogId`)
+  PRIMARY KEY (`LogId`),
+  KEY `CreatePersonId` (`CreatePersonId`),
+  KEY `Action` (`Action`)
 ) ENGINE=InnoDB AUTO_INCREMENT=566 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='لاگ های سیستم';
 
 --
