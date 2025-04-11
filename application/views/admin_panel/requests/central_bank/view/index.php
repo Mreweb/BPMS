@@ -31,17 +31,13 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <?php if ($request['ReqStatus'] == 'CENTRALBANK') { ?>
+                            <?php if ( in_array($request['ReqStatus'] , array('CENTRALBANK' , 'CENTRALBANKACCEPT')  ) ) { ?>
                                 <div class="row forms">
-                                    <?php if ($request['ReqStatus'] == 'CENTRALBANK') { ?>
+                                    <?php /*if ($request['ReqStatus'] == 'CENTRALBANK') { ?>
                                         <div class="alert alert-success text-white">
                                             لطفا بعد از تکمیل اطلاعات تملک، وضعیت درخواست را مشخص کنید.
                                         </div>
-                                    <?php } else { ?>
-                                        <div class="alert alert-danger text-white">
-                                            درخواست در مرحله تایید بانک مرکزی قرار ندارد.
-                                        </div>
-                                    <?php } ?>
+                                    <?php }*/  ?>
 
 
                                     <div class="row d-none">
@@ -232,7 +228,7 @@
                                             <select class="form-select" id="inputResult"
                                                     data-placeholder="یک مورد راانتخاب کنید">
                                                 <option></option>
-                                                <?php foreach ($enum['ACCEPT'] as $key => $value) { ?>
+                                                <?php foreach ($enum['CENTRALBANKACCEPT'] as $key => $value) { ?>
                                                     <option value="<?php echo $key; ?>">
                                                         <?php echo $value; ?>
                                                     </option>

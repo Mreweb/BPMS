@@ -35,7 +35,7 @@
                                         <select class="form-select" id="inputResult" data-placeholder="یک مورد راانتخاب کنید">
                                             <option></option>
                                             <?php
-                                            foreach ($enum['REQ_STATUS'] as $key => $value) { ?>
+                                            foreach ($enum['FINALACCEPT'] as $key => $value) { ?>
                                                 <option value="<?php echo $key; ?>">
                                                     <?php echo $value; ?>
                                                 </option>

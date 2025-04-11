@@ -73,17 +73,33 @@ class ModelRequests extends CI_Model{
         }
         return $result;
     }
-    public function doStepCentralBankPagination($inputs)
-    {
+    public function doStepCentralBankPagination($inputs){
         $limit = $inputs['pageIndex'];
         $start = ($limit - 1) * $this->config->item('defaultPageSize');
         $end = $this->config->item('defaultPageSize');
-        $this->db->select('*');
+        $this->db->select('* , person_requests.CreateDateTime as RequestCreateDateTime');
         $this->db->from('person_requests');
+        $this->db->join('person', 'person.PersonId = person_requests.ReqPersonId');
+        if ($inputs['inputReqId'] != '') {
+            $this->db->like('ReqId', $inputs['inputReqId']);
+        }
         if ($inputs['inputTitle'] != '') {
             $this->db->like('ReqTitle', $inputs['inputTitle']);
         }
-        $this->db->where('ReqStatus', 'CENTRALBANK');
+        if ($inputs['inputNationalCode'] != '') {
+            $this->db->like('PersonNationalCode', $inputs['inputNationalCode']);
+        }
+        if ($inputs['inputName'] != '') {
+            $this->db->like('PersonFirstName', $inputs['inputName']);
+            $this->db->or_like('PersonLastName', $inputs['inputName']);
+        }
+        if ($inputs['inputFromDate'] != '') {
+            $this->db->where('person_requests.CreateDateTime >=', makeTimeFromDate($inputs['inputFromDate']));
+        }
+        if ($inputs['inputToDate'] != '') {
+            $this->db->where('person_requests.CreateDateTime <=', makeTimeFromDate($inputs['inputToDate']));
+        }
+        //$this->db->where('ReqStatus', 'CENTRALBANK');
         $this->db->order_by('ReqId', 'DESC');
 
         $tempdb = clone $this->db; /* For Count Of Rows */
@@ -592,8 +608,7 @@ class ModelRequests extends CI_Model{
     {
 
         $request = $this->getById($inputs['inputReqId'])[0];
-
-        if ($request['ReqStatus'] != 'CENTRALBANK') {
+        if ( !in_array($request['ReqStatus'] , array('CENTRALBANK' , 'CENTRALBANKACCEPT')  ) ) {
             $msg = $this->config->item('DBMessages')['ErrorAction'];
             $msg['content'] = 'درخواست در وضعیت بررسی بانک مرکزی قرار ندارد.';
             return $msg;
@@ -605,6 +620,9 @@ class ModelRequests extends CI_Model{
         }
         if ($inputs['inputResult'] == "1") {
             $status = "CENTRALBANKACCEPT";
+        }
+        if ($inputs['inputResult'] == "2") {
+            $status = "SURPLUS";
         }
         $userArray = array(
             'ReqStatus' => $status
@@ -811,9 +829,22 @@ class ModelRequests extends CI_Model{
     public function doEditFinal($inputs)
     {
         $request = $this->getById($inputs['inputReqId'])[0];
+        if ( !in_array($request['ReqStatus'] , array('FINAL_ACCEPT')  ) ) {
+            $msg = $this->config->item('DBMessages')['ErrorAction'];
+            $msg['content'] = 'درخواست در وضعیت نهایی قرار ندارد.';
+            return $msg;
+        }
+
+        $status = "FINAL_ACCEPT";
+        if ($inputs['inputResult'] == "0") {
+            $status = "REJECT";
+        }
+        if ($inputs['inputResult'] == "1") {
+            $status = "ACCEPT";
+        }
 
         $userArray = array(
-            'ReqStatus' => $inputs['inputResult']
+            'ReqStatus' => $status
         );
         $this->db->where('ReqId', $inputs['inputReqId']);
         $this->db->update('person_requests', $userArray);
@@ -830,7 +861,7 @@ class ModelRequests extends CI_Model{
             $this->db->insert('person_requests_comments', $userArray);
         }
 
-        if ($inputs['inputResult'] == "ACCEPT" || $inputs['inputResult'] == "REJECT") {
+        if ($inputs['inputResult'] == "0" || $inputs['inputResult'] == "1") {
 
             $result = ($inputs['inputResult'] == "ACCEPT") ? 1 : 0;
             $proposalId = $request['ReqProposalId'];
@@ -875,7 +906,7 @@ class ModelRequests extends CI_Model{
         }
 
         $person = getPersonInfoById($request['ReqPersonId']);
-        sendSMS($this->config->item('SMSTemplate')['bpms-change-order'], $person['PersonPhone'], array($inputs['inputReqId'], pipeEnum('REQ_STATUS', $inputs['inputResult'], null, true)));
+        sendSMS($this->config->item('SMSTemplate')['bpms-change-order'], $person['PersonPhone'], array($inputs['inputReqId'], pipeEnum('REQ_STATUS', $status, null, true)));
         return $this->config->item('DBMessages')['SuccessAction'];
     }
     public function getCommentsById($id)

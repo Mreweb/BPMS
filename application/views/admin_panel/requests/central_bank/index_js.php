@@ -8,7 +8,12 @@
         function loadData(selectedPage = $selectedPage) {
             toggleLoader();
             $sendData = {
+                'inputReqId': $("#inputReqId").val(),
                 'inputTitle': $("#inputTitle").val(),
+                'inputNationalCode': $("#inputNationalCode").val(),
+                'inputName': $("#inputName").val(),
+                'inputFromDate': $("#inputFromDate").val(),
+                'inputToDate': $("#inputToDate").val(),
                 'pageIndex': selectedPage
             }
             $.ajax({

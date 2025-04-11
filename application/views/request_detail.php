@@ -14,7 +14,7 @@
                             <h6 class="mb-0">نوع</h6>
                             <span class="text-white">
                                  <?php
-                                 foreach ($enum['REQ_TYPE'] as $key => $value) {
+                                 foreach ($enum['PROPERTY_TYPE'] as $key => $value) {
                                      if ($key == $request['ReqType']) {
                                          echo $value;
                                      }
@@ -23,27 +23,17 @@
                             </span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                            <h6 class="mb-0">کاربری</h6>
-                            <span class="text-white">
-                                 <?php foreach ($enum['USE_TYPE'] as $key => $value) {
-                                     if ($key == $request['ReqUseType']) {
-                                         echo $value;
-                                     }
-                                 } ?>
-                            </span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                             <h6 class="mb-0">ارزش گذاری رسمی</h6>
                             <span class="text-white"><?php echo $request['ReqPrice']; ?></span>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                            <h6 class="mb-0">کد ملی نماینده</h6>
-                            <span class="text-white"><?php echo $request['ReqAgentNationalCode']; ?></span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                            <h6 class="mb-0">کد ملی بازارگردان</h6>
-                            <span class="text-white"><?php echo $request['ReqMarketMakerNationalCode']; ?></span>
-                        </li>
+<!--                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">-->
+<!--                            <h6 class="mb-0">کد ملی نماینده</h6>-->
+<!--                            <span class="text-white">--><?php //echo $request['ReqAgentNationalCode']; ?><!--</span>-->
+<!--                        </li>-->
+<!--                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">-->
+<!--                            <h6 class="mb-0">کد ملی بازارگردان</h6>-->
+<!--                            <span class="text-white">--><?php //echo $request['ReqMarketMakerNationalCode']; ?><!--</span>-->
+<!--                        </li>-->
                         <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                             <span class="text-white"
                                   style="text-align:justify"><?php echo $request['ReqDescription']; ?></span>

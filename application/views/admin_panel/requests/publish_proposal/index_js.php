@@ -2,7 +2,6 @@
     $(document).ready(function () {
 
         $("#do_deploy_contract").click(function (e) {
-
             e.preventDefault();
             $.confirm({
                 title: 'انتشار پروپوزال',
@@ -42,7 +41,6 @@
         });
 
         $("#do_create_proposal").click(function (e) {
-
             e.preventDefault();
             $.confirm({
                 title: 'انتشار پروپوزال',
@@ -81,7 +79,6 @@
                     }
                 }
             });
-
         });
 
     });

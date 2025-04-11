@@ -83,6 +83,10 @@ class Home extends CI_Controller {
 
         $data['Stats']['PersonCount'] =  $this->ModelReport->getTotalPerson($inputs)['Counts'][0];
 
+        $inputs = array();
+        $inputs['provinceList'] = $this->ModelCountry->getProvinceList();
+        $data['Stats']['ProvinceBase'] =  $this->ModelReport->getTotalSaleByProvince($inputs);
+
 
         $data['pageTitle'] = 'پیشخوان';
         $personId = $this->loginInfo['PersonId'];

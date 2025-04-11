@@ -27,6 +27,8 @@ function getRequestsStatusClass($status){
             return 'badge bg-primary';
         case 'CENTRALBANKACCEPT':
             return 'badge bg-primary';
+        case 'SURPLUS':
+            return 'badge bg-primary';
         case 'ECONOMIC':
             return 'badge bg-warning';
         case 'FINAL_ACCEPT':
@@ -466,6 +468,14 @@ function getPrevDayByDate($date , $dayCount = 1){
     $time = $date;
     $time = $time - ($dayCount*24*60*60);
     return $time;
+}
+function getReqCountByStatus($status){
+    $ci =& get_instance();
+    $ci->db->select('*');
+    $ci->db->from('person_requests');
+    $ci->db->where('ReqStatus', $status);
+    $ReqCount = $ci->db->get()->num_rows();
+    return $ReqCount;
 }
 
 ?>

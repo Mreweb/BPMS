@@ -21,13 +21,33 @@
         <div class="card">
             <div class="card-body">
 
-
                 <div class="row Page-Search-Form ">
                     <div class="col-sm-12 col-md-10 row">
+                        <div class="col-sm-12 col-md-2 mb-3">
+                            شماره:
+                            <input type="text" id="inputReqId" class="form-control">
+                        </div>
                         <div class="col-sm-12 col-md-2 mb-3">
                             عنوان:
                             <input type="text" id="inputTitle" class="form-control">
                         </div>
+                        <div class="col-sm-12 col-md-2 mb-3">
+                            کد ملی:
+                            <input type="text" id="inputNationalCode" class="form-control">
+                        </div>
+                        <div class="col-sm-12 col-md-2 mb-3">
+                            نام یا نام خانوادگی:
+                            <input type="text" id="inputName" class="form-control">
+                        </div>
+                        <div class="col-sm-12 col-md-2 mb-3">
+                            از تاریخ:
+                            <input type="text" id="inputFromDate" name="<?php echo md5(rand()); ?>" class="form-control" data-jdp>
+                        </div>
+                        <div class="col-sm-12 col-md-2 mb-3">
+                            تا تاریخ:
+                            <input type="text" id="inputToDate" name="<?php echo md5(rand()); ?>" class="form-control" data-jdp>
+                        </div>
+
                     </div>
                     <div class="col-sm-12 col-md-2">
                         <label class="col-sm-12 mb-3 text-end">

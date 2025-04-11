@@ -341,7 +341,7 @@
                                         <div class="input-group">
                                             <span class="input-group-text">تاریخ ثبت</span>
                                             <input type="text" <?php setInputValue($request_property_info['PropertyRegisterDate']); ?>
-                                                   id="inputPropertyRegisterDate" class="form-control">
+                                                   id="inputPropertyRegisterDate" name="<?php echo md5(rand()); ?>" class="form-control" data-jdp>
                                         </div>
                                     </div>
 
@@ -518,7 +518,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-4 col-sm-6 mb-2">
-                                        <div class="input-group">
+                                         <div class="input-group">
                                             <span class="input-group-text">شهر</span>
                                             <select id="inputCity" class="form-control">
                                                 <?php foreach ($request_property_cities as $pr) { ?>
@@ -642,7 +642,7 @@
                                             <span class="input-group-text">تاریخ تملک/خرید تحصیل</span>
                                             <input type="text"
                                                 <?php setInputValue($request_central_bank_info['FinalPropertyBuyDate']); ?>
-                                                   id="inputFinalPropertyBuyDate" class="form-control">
+                                                   id="inputFinalPropertyBuyDate" name="<?php echo md5(rand()); ?>" class="form-control" data-jdp>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-sm-6 mb-2">
@@ -722,7 +722,7 @@
                                             <span class="input-group-text">تاریخ آخرین حکم</span>
                                             <input type="text"
                                                 <?php setInputValue($request_central_bank_info['FinalPropertyOrderDate']); ?>
-                                                   id="inputFinalPropertyOrderDate" class="form-control">
+                                                   id="inputFinalPropertyOrderDate" name="<?php echo md5(rand()); ?>" class="form-control" data-jdp>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-sm-6 mb-2">
@@ -786,7 +786,7 @@
                                             <span class="input-group-text">تاریخ آخرین کارشناسی رسمی</span>
                                             <input type="text"
                                                 <?php setInputValue($request_central_bank_info['FinalPropertyValueCheck']); ?>
-                                                   id="inputFinalPropertyValueCheck" class="form-control">
+                                                   id="inputFinalPropertyValueCheck" name="<?php echo md5(rand()); ?>" class="form-control" data-jdp>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-sm-6 mb-2">

@@ -212,7 +212,7 @@
                                     $result = data;
                                     notify($result['content'], $result['type']);
                                     toggleLoader();
-                                    //window.history.back();
+                                    window.history.back();
                                 }
                             });
                         }

@@ -41,6 +41,7 @@ class MyRequests extends CI_Controller{
         $page['pageTitle'] = 'افزودن درخواست پذیرش';
         $data['loginInfo'] = $this->loginInfo;
         $data['enum'] = $this->enum;
+        $data['provinceList'] = $this->ModelCountry->getProvinceList();
 
         $this->load->view('admin_panel/static/header', $page);
         $this->load->view('admin_panel/requests/my/add/index', $data);

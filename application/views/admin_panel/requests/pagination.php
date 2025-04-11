@@ -12,7 +12,7 @@ foreach ($data as $item) { ?>
                 <?php echo $item['ReqTitle']; ?>
             </td>
             <td class="fit">
-                <?php echo pipeEnum('REQ_TYPE', $item['ReqType'], 'badge bg-success'); ?>
+                <?php echo pipeEnum('PROPERTY_TYPE', $item['ReqType'], 'badge bg-success'); ?>
             </td>
             <td>
                 <?php echo $item['ReqPrice']; ?>

@@ -278,7 +278,7 @@
                                         <div class="col-12 col-md-4 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">تاریخ ثبت</span>
-                                                <input type="text" id="inputPropertyRegisterDate" class="form-control">
+                                                <input type="text" id="inputPropertyRegisterDate" name="<?php echo md5(rand()); ?>" class="form-control" data-jdp>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4 col-sm-6 mb-2">
@@ -523,7 +523,7 @@
                                         <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">تاریخ تملک/خرید تحصیل</span>
-                                                <input type="text" id="inputFinalPropertyBuyDate" class="form-control">
+                                                <input type="text" id="inputFinalPropertyBuyDate" name="<?php echo md5(rand()); ?>" class="form-control" data-jdp>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-sm-6 mb-2">
@@ -591,7 +591,7 @@
                                         <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">تاریخ آخرین حکم</span>
-                                                <input type="text" id="inputFinalPropertyOrderDate" class="form-control">
+                                                <input type="text" id="inputFinalPropertyOrderDate" name="<?php echo md5(rand()); ?>" class="form-control" data-jdp>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-sm-6 mb-2">
@@ -643,7 +643,7 @@
                                         <div class="col-12 col-md-6 col-sm-6 mb-2">
                                             <div class="input-group">
                                                 <span class="input-group-text">تاریخ آخرین کارشناسی رسمی</span>
-                                                <input type="text" id="inputFinalPropertyValueCheck" class="form-control">
+                                                <input type="text" id="inputFinalPropertyValueCheck" name="<?php echo md5(rand()); ?>" class="form-control" data-jdp>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-sm-6 mb-2">

@@ -364,7 +364,7 @@ $ci =& get_instance(); ?>
                 </li>
             <?php } ?>
 
-            <?php if (getLoginRoles()[0] == 'ADMIN' || getLoginRoles()[0] == 'MANAGER') { ?>
+            <?php if (getLoginRoles()[0] == 'ADMIN' ) { ?>
             <li>
                 <a href="javascript:;" class="has-arrow">
                     <div class="parent-icon"><i class="bx bx-category"></i></div>
@@ -382,7 +382,7 @@ $ci =& get_instance(); ?>
         </li>
         <?php } ?>
 
-        <?php if (getLoginRoles()[0] == 'PUBLISHER' || getLoginRoles()[0] == 'ADMIN') { ?>
+        <?php if (/*getLoginRoles()[0] == 'PUBLISHER' || getLoginRoles()[0] == 'ADMIN'*/1) { ?>
             <li>
                 <a href="javascript:;" class="has-arrow">
                     <div class="parent-icon"><i class="bx bx-category"></i></div>
@@ -409,7 +409,15 @@ $ci =& get_instance(); ?>
             <li>
                 <a href="<?php echo base_url('Admin/Dashboard/Requests/centralBank'); ?>">
                     <div class="parent-icon"><i class="bx bx-category"></i></div>
-                    <div class="menu-title">کارتابل بانک مرکزی</div>
+                    <div class="menu-title">
+                        کارتابل بانک مرکزی
+                        <?php
+                        $cnt = getReqCountByStatus('CENTRALBANK');
+                        if($cnt > 0){
+                            echo "<b class='badge bg-danger'>(".  getReqCountByStatus('CENTRALBANK').")</b>";
+                        }
+                        ?>
+                    </div>
                 </a>
             </li>
         <?php } ?>
@@ -419,7 +427,15 @@ $ci =& get_instance(); ?>
                 <li>
                     <a href="<?php echo base_url('Admin/Dashboard/Requests/legal'); ?>">
                         <div class="parent-icon"><i class="bx bx-category"></i></div>
-                        <div class="menu-title">کارتابل حقوقی</div>
+                        <div class="menu-title">
+                            کارتابل حقوقی
+                            <?php
+                            $cnt = getReqCountByStatus('LEGAL');
+                            if($cnt > 0){
+                                echo "<b class='badge bg-danger'>(".  getReqCountByStatus('LEGAL').")</b>";
+                            }
+                            ?>
+                        </div>
                     </a>
                 </li>
             <?php } ?>
@@ -427,7 +443,15 @@ $ci =& get_instance(); ?>
                 <li>
                     <a href="<?php echo base_url('Admin/Dashboard/Requests/economic'); ?>">
                         <div class="parent-icon"><i class="bx bx-category"></i></div>
-                        <div class="menu-title">کارتابل اقتصادی</div>
+                        <div class="menu-title">
+                            کارتابل اقتصادی
+                            <?php
+                            $cnt = getReqCountByStatus('ECONOMIC');
+                            if($cnt > 0){
+                                echo "<b class='badge bg-danger'>(".  getReqCountByStatus('ECONOMIC').")</b>";
+                            }
+                            ?>
+                        </div>
                     </a>
                 </li>
             <?php } ?>
@@ -435,7 +459,15 @@ $ci =& get_instance(); ?>
                 <li>
                     <a href="<?php echo base_url('Admin/Dashboard/Requests/final'); ?>">
                         <div class="parent-icon"><i class="bx bx-category"></i></div>
-                        <div class="menu-title">کارتابل نهایی</div>
+                        <div class="menu-title">
+                            کارتابل نهایی
+                            <?php
+                            $cnt = getReqCountByStatus('FINAL_ACCEPT');
+                            if($cnt > 0){
+                                echo "<b class='badge bg-danger'>(".  getReqCountByStatus('FINAL_ACCEPT').")</b>";
+                            }
+                            ?>
+                        </div>
                     </a>
                 </li>
                 <li>

@@ -4,7 +4,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Persons extends CI_Controller{
 
-
     private $loginInfo;
     private $loginRoles;
     private $enum;
@@ -60,6 +59,8 @@ class Persons extends CI_Controller{
 
         $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId'];
         $result = $this->ModelPerson->doAddPerson($inputs);
+
+
         /* Log Action */
         $logArray = getVisitorInfo();
         $logArray['Action'] = $this->router->fetch_class() . "_" . $this->router->fetch_method();
