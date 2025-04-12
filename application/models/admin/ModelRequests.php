@@ -826,10 +826,9 @@ class ModelRequests extends CI_Model{
 
         return $this->config->item('DBMessages')['SuccessAction'];
     }
-    public function doEditFinal($inputs)
-    {
+    public function doEditFinal($inputs){
         $request = $this->getById($inputs['inputReqId'])[0];
-        if ( !in_array($request['ReqStatus'] , array('FINAL_ACCEPT')  ) ) {
+        if ( !in_array($request['ReqStatus'] , array('FINAL_ACCEPT' , 'SURPLUS')  ) ) {
             $msg = $this->config->item('DBMessages')['ErrorAction'];
             $msg['content'] = 'درخواست در وضعیت نهایی قرار ندارد.';
             return $msg;
@@ -907,6 +906,35 @@ class ModelRequests extends CI_Model{
 
         $person = getPersonInfoById($request['ReqPersonId']);
         sendSMS($this->config->item('SMSTemplate')['bpms-change-order'], $person['PersonPhone'], array($inputs['inputReqId'], pipeEnum('REQ_STATUS', $status, null, true)));
+        return $this->config->item('DBMessages')['SuccessAction'];
+    }
+    public function doEditFinalByAdmin($inputs){
+        /*$request = $this->getById($inputs['inputReqId'])[0];
+        if ( !in_array($request['ReqStatus'] , array('FINAL_ACCEPT' , 'SURPLUS')  ) ) {
+            $msg = $this->config->item('DBMessages')['ErrorAction'];
+            $msg['content'] = 'درخواست در وضعیت نهایی قرار ندارد.';
+            return $msg;
+        }*/
+
+        $status = $inputs['inputResult'];
+        $userArray = array( 'ReqStatus' => $status);
+        $this->db->where('ReqId', $inputs['inputReqId']);
+        $this->db->update('person_requests', $userArray);
+
+        if ($inputs['inputResultDescription'] != "") {
+            $userArray = array(
+                'CommentReqId' => $inputs['inputReqId'],
+                'CommentType' => 'FINAL_ACCEPT',
+                'CommentContent' => $inputs['inputResultDescription'],
+                'CommentPersonId' => $inputs['inputCreatePersonId'],
+                'CreatePersonId' => $inputs['inputCreatePersonId'],
+                'CreateDateTime' => time()
+            );
+            $this->db->insert('person_requests_comments', $userArray);
+        }
+        $person = getPersonInfoById($request['ReqPersonId']);
+        sendSMS($this->config->item('SMSTemplate')['bpms-change-order'], $person['PersonPhone'], array($inputs['inputReqId'], pipeEnum('REQ_STATUS', $status, null, true)));
+
         return $this->config->item('DBMessages')['SuccessAction'];
     }
     public function getCommentsById($id)

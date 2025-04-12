@@ -434,6 +434,29 @@ class Requests extends CI_Controller{
         }
 
     }
+    public function doEditFinalByAdmin(){
+        $inputs = $this->input->post(NULL, TRUE);
+
+        $inputs['inputModifyPersonId'] = $this->loginInfo['PersonId'];
+        $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId']; /* For Editing Roles Need create Person Id */
+        $result = $this->ModelRequests->doEditFinalByAdmin($inputs);
+
+        /* Log Action */
+        $logArray = getVisitorInfo();
+        $logArray['Action'] = $this->router->fetch_class() . "_" . $this->router->fetch_method();
+        $logArray['Description'] = json_encode($inputs);
+        $logArray['LogPersonId'] = $this->loginInfo['PersonId'];
+        $this->ModelLog->doAdd($logArray);
+        /* End Log Action */
+        if (!$result['success']) {
+            response(get_req_message('DuplicateInfo') , 400);
+        } else {
+            response(get_req_message('SuccessAction') , 200);
+        }
+
+    }
+
+
 
     public function finished(){
         $page['pageTitle'] = 'درخواست های در مرحله کمیسیون اقتصادی';

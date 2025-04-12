@@ -27,7 +27,7 @@
                             };
                             $.ajax({
                                 type: 'post',
-                                url: base_url + 'Requests/doEditFinal',
+                                url: base_url + 'Requests/doEditFinalByAdmin',
                                 data: $sendData,
                                 success: function (data) {
                                     $result = data;
