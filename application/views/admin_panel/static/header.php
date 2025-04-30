@@ -1,5 +1,21 @@
-<?php $_DIR = base_url();
-$ci =& get_instance(); ?>
+<?php
+$_DIR = base_url();
+$ci =& get_instance();
+$cookie_name = "csrf";
+$cookie_value = randomString('alpha' , 32);
+if(!isset($_COOKIE[$cookie_name]) && $_COOKIE[$cookie_name] == NULL) {
+    setcookie($cookie_name, $cookie_value, [
+        'expires' => 0,
+        'path' => '/',
+        'domain' => '',
+        'secure' => false,
+        'httponly' => false,
+        'samesite' => 'strict',
+    ]);
+} else{
+    $cookie_value = $_COOKIE[$cookie_name];
+}
+?>
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
@@ -7,6 +23,7 @@ $ci =& get_instance(); ?>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf_cms_design" content="<?php echo $cookie_value;?>" />
     <!--favicon-->
     <link rel="icon" href="<?php echo $_DIR; ?>/assets/images/white.png" type="image/png"/>
     <!--plugins-->
@@ -87,6 +104,7 @@ $ci =& get_instance(); ?>
 
 
             $.ajaxSetup({
+                headers: { 'csrf-header': $("meta[name='csrf_cms_design']").attr('content') },
                 error: function (data, status, error) {
                     $result = data.responseText;
                     $result = JSON.parse($result);
@@ -150,7 +168,6 @@ $ci =& get_instance(); ?>
             $(document).on('click', '.indicator-button', function () {
                 $(this).toggleClass('active');
             });
-
             $(document).on('click', '.switcher li', function () {
                 setTheme($(this).attr('id'));
                 $('body').attr('class', 'bg-theme bg-' + $(this).attr('id'));

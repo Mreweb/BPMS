@@ -15,6 +15,7 @@ class Persons extends CI_Controller{
         $this->loginInfo = getLoginInfo();
         $this->loginRoles = getLoginRoles();
         $this->enum = $this->config->item('ENUM');
+        $this->load->helper('pipes/check_csrf');
         checkPersonAccess($this->loginRoles, 'ADMIN');
     }
     public function index(){

@@ -4,11 +4,15 @@ class Account extends CI_Controller{
 
     public function __construct(){
         parent::__construct();
+
         $this->load->model('admin/ModelAccount');
         if($this->session->userdata('AdminIsLogged') ){
             redirect(base_url('Admin/Dashboard/Home'));
             die();
         }
+
+        $this->load->helper('pipes/check_csrf');
+
     }
 
     /*login by username*/

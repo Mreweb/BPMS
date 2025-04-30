@@ -1,1 +1,0 @@
-{"type":"https://tools.ietf.org/html/rfc9110#section-15.5.1","title":"One or more validation errors occurred.","status":400,"errors":{"PersonInfo.LastName":["The LastName field is required."],"PersonInfo.FirstName":["The FirstName field is required."]},"traceId":"00-12a0124a15069a01be969a4e8f146a19-da9a4c34971b16d6-00"}

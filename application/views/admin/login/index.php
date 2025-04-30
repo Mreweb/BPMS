@@ -2,6 +2,22 @@
 $_URL = base_url();
 $_DIR = base_url('assets');
 ?>
+<?php
+$cookie_name = "csrf";
+$cookie_value = randomString('alpha' , 32);
+if(!isset($_COOKIE[$cookie_name]) && $_COOKIE[$cookie_name] == NULL) {
+    setcookie($cookie_name, $cookie_value, [
+        'expires' => 0,
+        'path' => '/',
+        'domain' => '',
+        'secure' => false,
+        'httponly' => false,
+        'samesite' => 'strict',
+    ]);
+} else{
+    $cookie_value = $_COOKIE[$cookie_name];
+}
+?>
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
@@ -9,6 +25,7 @@ $_DIR = base_url('assets');
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf_cms_design" content="<?php echo $cookie_value;?>" />
     <!--favicon-->
     <link rel="icon" href="<?php echo $_DIR ?>/images/favicon-32x32.png" type="image/png"/>
     <!--plugins-->
@@ -62,6 +79,7 @@ $_DIR = base_url('assets');
         }
         $(document).ready(function(){
             $.ajaxSetup({
+                headers: { 'csrf-header': $("meta[name='csrf_cms_design']").attr('content') },
                 error: function (data, status, error) {
                     $result = data.responseJSON;
                     if($result['message'] != undefined){

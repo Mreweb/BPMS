@@ -44,6 +44,16 @@
                             $("#inputCaptcha").val('');
                         }
                         $(".recaptcha").click();
+                    },
+                    error: function(data){
+                        $result = data.responseJSON;
+                        iziToast.show({
+                            title: $result['content'],
+                            color: $result['type'],
+                            zindex: 2030,
+                            position: 'topLeft'
+                        });
+                        $(".recaptcha").click();
                     }
                 });
             } else {
@@ -84,6 +94,16 @@
                         if ($result['success']) {
                             window.location.href = "<?php echo base_url('Admin/Dashboard/Home');  ?>";
                         }
+                    },
+                    error: function(data){
+                        $result = data.responseJSON;
+                        iziToast.show({
+                            title: $result['content'],
+                            color: $result['type'],
+                            zindex: 2030,
+                            position: 'topLeft'
+                        });
+                        $(".recaptcha").click();
                     }
                 });
             } else {

@@ -60,8 +60,8 @@ $config['404_image']= $config['base_url'].('assets/ui/assets/img/404.jpg');
 $config['SMSAPI']= '656B43504E624150746A2B526B485A6A79684E464E4C49385679646B783157596861584370582B514746303D';
 $config['SMSTemplate']= 'ticketverify';
 
-$config['CENTRALBANKVERSION'] = FALSE;
-$config['ISBLOCKCHAIN'] = TRUE;
+$config['CENTRALBANKVERSION'] = TRUE;
+$config['ISBLOCKCHAIN'] = FALSE;
 
 $config['SMSTemplate']= 'ticketverify';
 /* Enums */
@@ -79,6 +79,11 @@ $config['DBMessages'] = array(
     'RequiredFields' => array(
         'type' => "red",
         'content' => 'تمامی مقادیر الزامی را وارد کنید',
+        'success' => false
+    ),
+    'CSRFAction' => array(
+        'type' => "csrf",
+        'content' => "CSRF",
         'success' => false
     ),
     'DuplicateInfo' => array(

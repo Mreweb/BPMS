@@ -15,9 +15,9 @@ class Requests extends CI_Controller{
         $this->loginInfo = getLoginInfo();
         $this->loginRoles = getLoginRoles();
         $this->enum = $this->config->item('ENUM');
+        $this->load->helper('pipes/check_csrf');
         checkPersonAccess($this->loginRoles, array('Admin','CENTRALBANK') );
     }
-
 
     public function index(){
 
@@ -57,7 +57,7 @@ class Requests extends CI_Controller{
 
         checkPersonAccess($this->loginRoles, array('Admin') );
         $inputs = $this->input->post(NULL, TRUE);
-
+        $inputs = secureInput($inputs);
         //$inputs = secureInput($inputs);
         /*$this->form_validation->set_data($inputs);
         $this->form_validation->set_rules('inputPackageTitle', 'عنوان', 'trim|required|min_length[3]|max_length[80]');
@@ -117,6 +117,7 @@ class Requests extends CI_Controller{
 
         checkPersonAccess($this->loginRoles, array('Admin') );
         $inputs = $this->input->post(NULL, TRUE);
+        $inputs = secureInput($inputs);
 
         $inputs['inputModifyPersonId'] = $this->loginInfo['PersonId'];
         $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId']; /* For Editing Roles Need create Person Id */
@@ -241,6 +242,7 @@ class Requests extends CI_Controller{
     public function doEditCentralBank(){
         checkPersonAccess($this->loginRoles, array('Admin','CENTRALBANK') );
         $inputs = $this->input->post(NULL, TRUE);
+        $inputs = secureInput($inputs);
         $inputs['inputModifyPersonId'] = $this->loginInfo['PersonId'];
         $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId']; /* For Editing Roles Need create Person Id */
         $result = $this->ModelRequests->doEditCentralBank($inputs);
@@ -299,6 +301,7 @@ class Requests extends CI_Controller{
     }
     public function doEditLegal(){
         $inputs = $this->input->post(NULL, TRUE);
+        $inputs = secureInput($inputs);
 
         $inputs['inputModifyPersonId'] = $this->loginInfo['PersonId'];
         $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId']; /* For Editing Roles Need create Person Id */
@@ -356,6 +359,7 @@ class Requests extends CI_Controller{
     }
     public function doEditEconimic(){
         $inputs = $this->input->post(NULL, TRUE);
+        $inputs = secureInput($inputs);
 
         $inputs['inputModifyPersonId'] = $this->loginInfo['PersonId'];
         $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId']; /* For Editing Roles Need create Person Id */
@@ -415,6 +419,7 @@ class Requests extends CI_Controller{
     }
     public function doEditFinal(){
         $inputs = $this->input->post(NULL, TRUE);
+        $inputs = secureInput($inputs);
 
         $inputs['inputModifyPersonId'] = $this->loginInfo['PersonId'];
         $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId']; /* For Editing Roles Need create Person Id */
@@ -455,8 +460,6 @@ class Requests extends CI_Controller{
         }
 
     }
-
-
 
     public function finished(){
         $page['pageTitle'] = 'درخواست های در مرحله کمیسیون اقتصادی';

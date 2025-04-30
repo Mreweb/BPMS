@@ -14,6 +14,8 @@ class Home extends CI_Controller {
         $this->loginInfo = getLoginInfo();
         $this->loginRoles = getLoginRoles();
         $this->enum = $this->config->item('ENUM');
+        $this->load->helper('pipes/check_csrf');
+
     }
 
 	public function index(){

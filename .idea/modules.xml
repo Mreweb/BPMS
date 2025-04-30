@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/BPMS.iml" filepath="$PROJECT_DIR$/.idea/BPMS.iml" />
       <module fileurl="file://$PROJECT_DIR$/../BPMSDAO/.idea/BPMSDAO.iml" filepath="$PROJECT_DIR$/../BPMSDAO/.idea/BPMSDAO.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../NicHolding/.idea/NicHolding.iml" filepath="$PROJECT_DIR$/../NicHolding/.idea/NicHolding.iml" />
     </modules>
   </component>
 </project>
