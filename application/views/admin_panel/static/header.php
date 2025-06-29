@@ -418,6 +418,18 @@ if(!isset($_COOKIE[$cookie_name]) && $_COOKIE[$cookie_name] == NULL) {
                             افزودن
                         </a>
                     </li>
+                    <li>
+                        <a href="<?php echo base_url('Admin/Dashboard/MyRequests/import'); ?>">
+                            <i class='bx bx-radio-circle'></i>
+                            بارگذاری اکسل
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url('Admin/Dashboard/MyRequests/idImport'); ?>">
+                            <i class='bx bx-radio-circle'></i>
+                            دریافت با شناسه ملک
+                        </a>
+                    </li>
                 </ul>
             </li>
         <?php } ?>

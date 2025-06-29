@@ -144,7 +144,9 @@ class ModelPerson extends CI_Model{
         if (count($query) > 0) {
             $index = 0;
             foreach ($query as $item) {
-                $query[$index]['PersonRoles'] = $this->db->select('*')->from('person_roles')->where(array('PersonId' => $item['PersonId']))->get()->num_rows();
+                $query[$index]['PersonRoles'] = $this->db->select('*')->from('person_roles')->where(array('PersonId' => $item['PersonId']))->get()->result();
+                $query[$index]['PersonRole'] = $this->db->select('*')->from('person_roles')->where(array('PersonId' => $item['PersonId']))->get()->result_array();
+
                 $index += 1;
             }
             $result['data'] = $query;

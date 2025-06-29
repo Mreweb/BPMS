@@ -16,7 +16,7 @@ class MyRequests extends CI_Controller{
         $this->loginRoles = getLoginRoles();
         $this->enum = $this->config->item('ENUM');
         $this->load->helper('pipes/check_csrf');
-        checkPersonAccess($this->loginRoles, 'PUBLISHER');
+        checkPersonAccess($this->loginRoles, array('PUBLISHER','ADMIN') );
     }
 
     public function index(){
@@ -124,5 +124,42 @@ class MyRequests extends CI_Controller{
 
     }
 
+    public function import(){
+
+        $page['pageTitle'] = 'افزودن درخواست پذیرش';
+        $data['loginInfo'] = $this->loginInfo;
+        $data['enum'] = $this->enum;
+        $this->load->view('admin_panel/static/header', $page);
+        $this->load->view('admin_panel/requests/my/import/index', $data);
+        $this->load->view('admin_panel/requests/my/import/index_js', $data);
+        $this->load->view('admin_panel/static/footer');
+    }
+    public function doImport(){
+
+        $inputs = $this->input->post(NULL, TRUE);
+        $inputs = secureInput($inputs);
+        $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId'];
+        $result = $this->ModelRequests->doAdd($inputs);
+
+        if (!$result['success']) {
+            response(get_req_message('DuplicateInfo') , 400);
+        } else {
+            logAction($inputs,$this->loginInfo['PersonId']);
+            response(get_req_message('SuccessAction') , 200);
+        }
+
+    }
+
+
+    public function idImport(){
+
+        $page['pageTitle'] = 'افزودن درخواست پذیرش';
+        $data['loginInfo'] = $this->loginInfo;
+        $data['enum'] = $this->enum;
+        $this->load->view('admin_panel/static/header', $page);
+        $this->load->view('admin_panel/requests/my/id_import/index', $data);
+        $this->load->view('admin_panel/requests/my/id_import/index_js', $data);
+        $this->load->view('admin_panel/static/footer');
+    }
 
 }

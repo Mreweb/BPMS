@@ -120,10 +120,27 @@ class ModelRequests extends CI_Model{
         $limit = $inputs['pageIndex'];
         $start = ($limit - 1) * $this->config->item('defaultPageSize');
         $end = $this->config->item('defaultPageSize');
-        $this->db->select('*');
+        $this->db->select('* , person_requests.CreateDateTime as RequestCreateDateTime');
         $this->db->from('person_requests');
+        $this->db->join('person', 'person.PersonId = person_requests.ReqPersonId');
+        if ($inputs['inputReqId'] != '') {
+            $this->db->like('ReqId', $inputs['inputReqId']);
+        }
         if ($inputs['inputTitle'] != '') {
             $this->db->like('ReqTitle', $inputs['inputTitle']);
+        }
+        if ($inputs['inputNationalCode'] != '') {
+            $this->db->like('PersonNationalCode', $inputs['inputNationalCode']);
+        }
+        if ($inputs['inputName'] != '') {
+            $this->db->like('PersonFirstName', $inputs['inputName']);
+            $this->db->or_like('PersonLastName', $inputs['inputName']);
+        }
+        if ($inputs['inputFromDate'] != '') {
+            $this->db->where('person_requests.CreateDateTime >=', makeTimeFromDate($inputs['inputFromDate']));
+        }
+        if ($inputs['inputToDate'] != '') {
+            $this->db->where('person_requests.CreateDateTime <=', makeTimeFromDate($inputs['inputToDate']));
         }
         $this->db->where('ReqStatus', 'LEGAL');
         $this->db->order_by('ReqId', 'DESC');
@@ -146,10 +163,27 @@ class ModelRequests extends CI_Model{
         $limit = $inputs['pageIndex'];
         $start = ($limit - 1) * $this->config->item('defaultPageSize');
         $end = $this->config->item('defaultPageSize');
-        $this->db->select('*');
+        $this->db->select('* , person_requests.CreateDateTime as RequestCreateDateTime');
         $this->db->from('person_requests');
+        $this->db->join('person', 'person.PersonId = person_requests.ReqPersonId');
+        if ($inputs['inputReqId'] != '') {
+            $this->db->like('ReqId', $inputs['inputReqId']);
+        }
         if ($inputs['inputTitle'] != '') {
             $this->db->like('ReqTitle', $inputs['inputTitle']);
+        }
+        if ($inputs['inputNationalCode'] != '') {
+            $this->db->like('PersonNationalCode', $inputs['inputNationalCode']);
+        }
+        if ($inputs['inputName'] != '') {
+            $this->db->like('PersonFirstName', $inputs['inputName']);
+            $this->db->or_like('PersonLastName', $inputs['inputName']);
+        }
+        if ($inputs['inputFromDate'] != '') {
+            $this->db->where('person_requests.CreateDateTime >=', makeTimeFromDate($inputs['inputFromDate']));
+        }
+        if ($inputs['inputToDate'] != '') {
+            $this->db->where('person_requests.CreateDateTime <=', makeTimeFromDate($inputs['inputToDate']));
         }
         $this->db->where('ReqStatus', 'ECONOMIC');
         $this->db->order_by('ReqId', 'DESC');
@@ -172,10 +206,27 @@ class ModelRequests extends CI_Model{
         $limit = $inputs['pageIndex'];
         $start = ($limit - 1) * $this->config->item('defaultPageSize');
         $end = $this->config->item('defaultPageSize');
-        $this->db->select('*');
+        $this->db->select('* , person_requests.CreateDateTime as RequestCreateDateTime');
         $this->db->from('person_requests');
+        $this->db->join('person', 'person.PersonId = person_requests.ReqPersonId');
+        if ($inputs['inputReqId'] != '') {
+            $this->db->like('ReqId', $inputs['inputReqId']);
+        }
         if ($inputs['inputTitle'] != '') {
             $this->db->like('ReqTitle', $inputs['inputTitle']);
+        }
+        if ($inputs['inputNationalCode'] != '') {
+            $this->db->like('PersonNationalCode', $inputs['inputNationalCode']);
+        }
+        if ($inputs['inputName'] != '') {
+            $this->db->like('PersonFirstName', $inputs['inputName']);
+            $this->db->or_like('PersonLastName', $inputs['inputName']);
+        }
+        if ($inputs['inputFromDate'] != '') {
+            $this->db->where('person_requests.CreateDateTime >=', makeTimeFromDate($inputs['inputFromDate']));
+        }
+        if ($inputs['inputToDate'] != '') {
+            $this->db->where('person_requests.CreateDateTime <=', makeTimeFromDate($inputs['inputToDate']));
         }
         $this->db->where('ReqStatus', 'FINAL_ACCEPT');
         $this->db->order_by('ReqId', 'DESC');
@@ -198,10 +249,27 @@ class ModelRequests extends CI_Model{
         $limit = $inputs['pageIndex'];
         $start = ($limit - 1) * $this->config->item('defaultPageSize');
         $end = $this->config->item('defaultPageSize');
-        $this->db->select('*');
+        $this->db->select('* , person_requests.CreateDateTime as RequestCreateDateTime');
         $this->db->from('person_requests');
+        $this->db->join('person', 'person.PersonId = person_requests.ReqPersonId');
+        if ($inputs['inputReqId'] != '') {
+            $this->db->like('ReqId', $inputs['inputReqId']);
+        }
         if ($inputs['inputTitle'] != '') {
             $this->db->like('ReqTitle', $inputs['inputTitle']);
+        }
+        if ($inputs['inputNationalCode'] != '') {
+            $this->db->like('PersonNationalCode', $inputs['inputNationalCode']);
+        }
+        if ($inputs['inputName'] != '') {
+            $this->db->like('PersonFirstName', $inputs['inputName']);
+            $this->db->or_like('PersonLastName', $inputs['inputName']);
+        }
+        if ($inputs['inputFromDate'] != '') {
+            $this->db->where('person_requests.CreateDateTime >=', makeTimeFromDate($inputs['inputFromDate']));
+        }
+        if ($inputs['inputToDate'] != '') {
+            $this->db->where('person_requests.CreateDateTime <=', makeTimeFromDate($inputs['inputToDate']));
         }
         $this->db->where_in('ReqStatus', array('ACCEPT', 'REJECT'));
         $this->db->order_by('ReqId', 'DESC');
@@ -628,12 +696,13 @@ class ModelRequests extends CI_Model{
             'ReqStatus' => $status
         );
 
-
         $this->db->where('ReqId', $inputs['inputReqId']);
         $this->db->update('person_requests', $userArray);
         if ($inputs['inputResult'] == "1") {
-            /*$userArray = array(
-                'RequestId' => $inputs['inputReqId'],
+
+            $this->db->reset_query();
+            $this->db->where('RequestId', $inputs['inputReqId']);
+            $userArray = array(
                 'FinalPropertyPercentageOwnership' => $inputs['inputFinalPropertyPercentageOwnership'],
                 'FinalPropertyAcquire' => $inputs['inputFinalPropertyAcquire'],
                 'FinalPropertyType' => $inputs['inputFinalPropertyType'],
@@ -655,7 +724,7 @@ class ModelRequests extends CI_Model{
                 'CreatePersonId' => $inputs['inputCreatePersonId'],
                 'CreateDateTime' => time()
             );
-            $this->db->insert('person_requests_property_central_bank_result', $userArray);*/
+            $this->db->update('person_requests_property_central_bank_result', $userArray);
         }
 
         if ($inputs['inputResultDescription'] != "") {

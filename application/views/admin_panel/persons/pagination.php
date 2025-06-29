@@ -7,13 +7,16 @@ if ($data == NULL || empty($data)) { ?>
         </div>
     </div>
 <?php } else {
-foreach ($data as $item) { ?>
+foreach ($data as $item) {   ?>
         <tr class="item">
             <td class="fit">
                 # <?php echo $item['PersonId']; ?>
             </td>
             <td>
                 <?php echo $item['PersonFirstName']." ".$item['PersonLastName']; ?>
+            </td>
+            <td>
+                <?php echo pipeEnum('ROLES', $item['PersonRole'][0]['Role'], 'badge bg-danger'); ?>
             </td>
             <td class="fit">
                 <?php

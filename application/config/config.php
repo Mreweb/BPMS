@@ -60,8 +60,8 @@ $config['404_image']= $config['base_url'].('assets/ui/assets/img/404.jpg');
 $config['SMSAPI']= '656B43504E624150746A2B526B485A6A79684E464E4C49385679646B783157596861584370582B514746303D';
 $config['SMSTemplate']= 'ticketverify';
 
-$config['CENTRALBANKVERSION'] = TRUE;
-$config['ISBLOCKCHAIN'] = FALSE;
+$config['CENTRALBANKVERSION'] = FALSE;
+$config['ISBLOCKCHAIN'] = TRUE;
 
 $config['SMSTemplate']= 'ticketverify';
 /* Enums */
@@ -130,7 +130,7 @@ $config['ENUM'] = array(
     ),
     'FINALACCEPT' => array(
         '0' => 'عدم تایید',
-        '1' => 'ارسال جهت انتشار توکن'
+        '1' => 'ارسال جهت مولد سازی'
     ),
     'REQ_STATUS' => array(
         'DRAFT' => 'ثبت اولیه',
@@ -147,6 +147,7 @@ $config['ENUM'] = array(
         'EARTH' => 'زمین',
         'BUILDING' => 'ملک',
         'IRON_HOUSE' => 'ملک نیمه ساخته',
+        'STOCK' => 'اوراق بهادار',
     ),
     'ContractFunctions' => array(
         'createProposal' => 'ساخت پروپوزال درخواست',
@@ -163,8 +164,8 @@ $config['ENUM'] = array(
         'PROPERTY_DEED' => 'سند ملک',
         'VALUATION_REPORT' => 'گزارش ارزش گذاری',
         'PROJECT_DESIGN_DOCUMENTATION' => 'مستندات طراحی پروژه',
-        /*'REPRESENTATIVE_INTRODUCTION_LETTER' => 'نامه معرفی نماینده',
-        'MARKET_MANAGER_INTRODUCTION_LETTER' => 'نامه معرفی بازارگردان',*/
+        'REPRESENTATIVE_INTRODUCTION_LETTER' => 'نامه معرفی نماینده',
+        /*'MARKET_MANAGER_INTRODUCTION_LETTER' => 'نامه معرفی بازارگردان',*/
         'WHITE_PAPER' => 'سپیدنامه',
         'OTHER' => 'سایر',
     ),
@@ -191,7 +192,8 @@ $config['ENUM'] = array(
         '2' => 'زمين',
         '3' => 'ویلایی',
         '4' => 'در حال ساخت',
-        '5' => 'ساير',
+        '5' => 'اوراق بهادار',
+        '6' => 'ساير',
     ),
     'PROPERTY_SPECIAL_STATUS' => array(
         '1' => 'طلق',
