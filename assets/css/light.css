@@ -1,0 +1,157 @@
+:root body.bg-theme22{
+  --blue: #0d6efd;
+  --dark: #05103a; /*#093d6f*/
+}
+body.bg-theme22 .page-content {
+  min-height: calc(100vh - 95px);
+}
+body.bg-theme22{
+  background: #fff;
+  color: var(--dark);
+}
+body.bg-theme22 .topbar {
+  background: var(--dark);
+  border-bottom: 1px solid rgb(255 255 255 / 15%);
+}
+body.bg-theme22 .sidebar-wrapper {
+  background: var(--dark);
+}
+body.bg-theme22  .sidebar-header {
+  background: var(--dark);
+}
+body.bg-theme22  .card {
+  background-color: #fff;
+}
+body.bg-theme22  .form-select,
+body.bg-theme22  .form-control {
+  color: #000;
+  background-color: #fff;
+  border: 1px solid #cacaca;
+  border-radius: 0;
+}
+body.bg-theme22  .table-striped>tbody>tr:nth-of-type(odd)>* {
+   color: var(--dark);
+}
+body.bg-theme22  .table {
+  border-color: #000;
+}
+body.bg-theme22  .table-bordered>:not(caption)>*>* {
+  border-width: 0 var(--dark);
+}
+body.bg-theme22  .table th,
+body.bg-theme22  .table td{
+  color: var(--dark);
+  border: 1px solid #ccc;
+}
+body.bg-theme22  .btn-light {
+  color: #000000;
+  background-color: #ccc;
+  border-color: #000;
+}
+body.bg-theme22   .breadcrumb-item.active,
+body.bg-theme22   .breadcrumb-item * {
+  color:  var(--dark);;
+}
+body.bg-theme22  .page-breadcrumb .breadcrumb-item+.breadcrumb-item::before {
+  color: var(--dark);
+}
+body.bg-theme22  .page-footer {
+  background: var(--dark);
+  color: #fff;
+  border-top: 1px solid rgb(255 255 255 / 15%);
+}
+
+body.bg-theme22 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link  {
+  color: var(--dark);
+  border-color: var(--dark);
+}
+
+body.bg-theme22 .nav-tabs .nav-item.show .nav-link,
+body.bg-theme22  .nav-tabs .nav-link.active {
+  color: #fff;
+  background-color: var(--dark);
+}
+body.bg-theme22  .input-group-text {
+  color: #000;
+  /*background-color: var(--dark);*/
+  border: 1px solid rgb(255 255 255 / 20%);
+}
+body.bg-theme22 .alert {
+  background-color: var(--dark);
+}
+
+body.bg-theme22  .card-body {
+  flex: 1 1 auto;
+  padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+  color: #000;
+}
+body.bg-theme22 select option{
+  background: #fff !important;
+  color:#000 !important;
+}
+body.bg-theme22 .page-content table a {
+  color: blue !important;
+}
+
+body.bg-theme22 .select2-container--bootstrap-5 .select2-selection--single .select2-selection__rendered .select2-selection__placeholder {
+  color: #000000;
+  font-size: 14px;
+}
+
+
+body.bg-theme22  .card h1,
+body.bg-theme22  .card h2,
+body.bg-theme22  .card h3,
+body.bg-theme22  .card h4,
+body.bg-theme22  .card h5,
+body.bg-theme22  .card h6,
+body.bg-theme22  .card p,
+body.bg-theme22  .card span,
+body.bg-theme22  .card strong,
+body.bg-theme22  .card b,
+body.bg-theme22  .card div {
+  color:#000 ;
+}
+
+body.bg-theme22  .card .nav-link.active .tab-title{
+  color:#fff ;
+}
+body.bg-theme22  .bg-success {
+  color:#fff !important;
+}
+body.bg-theme22 .dark-theme .current {
+  background: #222;
+  color: #FFF;
+}
+
+body.bg-theme22  .alert-dismissible .text-white {
+  color: #FFF !important;
+}
+
+
+body.bg-theme22 .list-group ,
+body.bg-theme22 .list-group li ,
+body.bg-theme22 .list-group li * ,
+body.bg-theme22 .card-title ,
+body.bg-theme22 .card-text {
+  color:#000 !important;
+}
+
+body.bg-theme22 .bg-light {
+  background-color: rgb(0 0 0 / 1) !important;
+}
+
+body.bg-theme22 .border-end {
+  border-left: 1px solid rgb(0 0 0 / 1) !important;
+}
+
+body.bg-theme22 .text-white {
+  color: rgb(var(--dark)) !important;
+}
+body.bg-theme22 .alert.text-white {
+  color: #fff !important;
+}
+
+body .badge {
+  color:#fff !important;
+}

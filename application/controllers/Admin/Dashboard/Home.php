@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Home extends CI_Controller {
@@ -9,12 +10,86 @@ class Home extends CI_Controller {
         $this->load->model('admin/ModelPerson');
         $this->load->model('admin/ModelProfile');
         $this->load->model('admin/ModelCountry');
+        $this->load->model('admin/ModelReport');
         $this->loginInfo = getLoginInfo();
         $this->loginRoles = getLoginRoles();
         $this->enum = $this->config->item('ENUM');
+        $this->load->helper('pipes/check_csrf');
+
     }
 
 	public function index(){
+
+        if($this->loginRoles[0] == 'PUBLISHER'){
+            redirect(base_url('Admin/Dashboard/MyRequests'));
+            die();
+        }
+
+        $data['TYPE'] = $this->config->item('ENUM')['PROPERTY_TYPE'];
+        $data['STATUS'] = $this->config->item('ENUM')['REQ_STATUS'];
+        $data['STATUS']['ACCEPT']=  'تایید و پذیرش';
+
+        $currentDate = time();
+        $dateFromMidNight = convertDate($currentDate);
+        $currentDate = makeTimeFromDate($dateFromMidNight);
+        $currentDate += 86400;
+        $data['LastYearSale'] = array();
+        $data['LastYearType'] = array();
+        for ($i = 0; $i < 12; $i++) {
+
+            $inputs = array(
+                'inputFromDate' => getPrevDayByDate($currentDate, ($i + 1) * 30),
+                'inputToDate' => getPrevDayByDate($currentDate, $i * 30)
+            );
+
+            $data['LastYearSale'][] = array(
+                'Date' => convertDate(getPrevDayByDate($currentDate, ($i+1) * 30), false, 'Y/m'),
+                'Total' => $this->ModelReport->getTotalSaleByDate($inputs)['Counts'][0]
+            );
+
+
+            foreach ($data['TYPE'] as $key => $value) {
+                $inputs['Type'] = $key;
+                $data['LastYearType'][] = array(
+                    'Date' => convertDate(getPrevDayByDate($currentDate, ($i+1) * 30), false, 'Y/m'),
+                    'Type' => $value,
+                    'Key' => $key,
+                    'Total' => $this->ModelReport->getTotalByType($inputs)['Counts'][0]
+                );
+            }
+
+            foreach ($data['STATUS'] as $key => $value) {
+                $inputs['Status'] = $key;
+                $data['LastYearStatus'][] = array(
+                    'Date' => convertDate(getPrevDayByDate($currentDate, ($i+1) * 30), false, 'Y/m'),
+                    'Status' => $value,
+                    'Key' => $key,
+                    'Total' => $this->ModelReport->getTotalByStatus($inputs)['Counts'][0]
+                );
+            }
+
+        }
+        $data['LastYearSale'] = array_reverse($data['LastYearSale']);
+        $data['LastYearType'] = array_reverse($data['LastYearType']);
+        $data['LastYearStatus'] = array_reverse($data['LastYearStatus']);
+
+
+        $inputs = array();
+        $data['Stats']['TotalReq'] =  $this->ModelReport->getTotalSaleByDate($inputs)['Counts'][0];
+
+        $inputs['Status'] = 'CENTRALBANK';
+        $data['Stats']['CENTRALBANK'] =  $this->ModelReport->getTotalByStatus($inputs)['Counts'][0];
+
+        $inputs['Status'] = 'LEGAL';
+        $data['Stats']['LEGAL'] =  $this->ModelReport->getTotalByStatus($inputs)['Counts'][0];
+
+        $data['Stats']['PersonCount'] =  $this->ModelReport->getTotalPerson($inputs)['Counts'][0];
+
+        $inputs = array();
+        $inputs['provinceList'] = $this->ModelCountry->getProvinceList();
+        $data['Stats']['ProvinceBase'] =  $this->ModelReport->getTotalSaleByProvince($inputs);
+
+
         $data['pageTitle'] = 'پیشخوان';
         $personId = $this->loginInfo['PersonId'];
         $this->loginRoles = getLoginRoles();
@@ -22,7 +97,7 @@ class Home extends CI_Controller {
 	    $this->load->view('admin_panel/home/index', $data);
 	    $this->load->view('admin_panel/static/footer');
 	}
-    public function uploadFile(){
+    public function uploadFile($width=null,$height=null){
         $inputs = $this->input->post(NULL, TRUE);
         $uploadPath = $this->config->item('upload_path');
         $error = array();
@@ -89,7 +164,8 @@ class Home extends CI_Controller {
                 echo json_encode($result);
                 die();
             }
-        } else {
+        }
+        else {
             $result = array(
                 'type' => "green",
                 'content' => "بارگذاری با موفقیت انجام شد",

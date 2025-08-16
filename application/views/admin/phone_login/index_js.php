@@ -41,7 +41,18 @@
                             $(".verify-code").show();
                             $(".verify-button").show();
                             $(".verify-code input").focus();
+                            $("#inputCaptcha").val('');
                         }
+                        $(".recaptcha").click();
+                    },
+                    error: function(data){
+                        $result = data.responseJSON;
+                        iziToast.show({
+                            title: $result['content'],
+                            color: $result['type'],
+                            zindex: 2030,
+                            position: 'topLeft'
+                        });
                         $(".recaptcha").click();
                     }
                 });
@@ -83,6 +94,16 @@
                         if ($result['success']) {
                             window.location.href = "<?php echo base_url('Admin/Dashboard/Home');  ?>";
                         }
+                    },
+                    error: function(data){
+                        $result = data.responseJSON;
+                        iziToast.show({
+                            title: $result['content'],
+                            color: $result['type'],
+                            zindex: 2030,
+                            position: 'topLeft'
+                        });
+                        $(".recaptcha").click();
                     }
                 });
             } else {

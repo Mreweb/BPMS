@@ -6,8 +6,8 @@ class ModelPerson extends CI_Model{
         $this->db->select('*');
         $this->db->from('person');
         $this->db->group_start();
-        $this->db->where(array('PersonPhone' => $inputs['inputPersonPhone']));
-        $this->db->or_where(array('Username' => $inputs['inputPersonUserName']));
+        $this->db->where('PersonPhone' , $inputs['inputPersonPhone']);
+        $this->db->or_where('Username' , $inputs['inputPersonUserName']);
         $this->db->group_end();
         $data = $this->db->get()->result_array();
         if (!empty($data)) {
@@ -52,6 +52,63 @@ class ModelPerson extends CI_Model{
         }
         return $this->config->item('DBMessages')['SuccessAction'];
     }
+    public function doEditPerson($inputs){
+        $this->db->select('*');
+        $this->db->from('person');
+        $this->db->where('PersonId !=' , $inputs['inputPersonId']);
+        $this->db->group_start();
+        $this->db->where('PersonPhone' , $inputs['inputPersonPhone']);
+        $this->db->or_where('Username' , $inputs['inputPersonUserName']);
+        $this->db->group_end();
+        $data = $this->db->get()->result_array();
+        if (!empty($data)) {
+            return $this->config->item('DBMessages')['DuplicateInfo'];
+        } else {
+            if ($inputs['inputPersonPassword'] != '') {
+                $userArray = array(
+                    'PersonFirstName' => $inputs['inputPersonFirstName'],
+                    'PersonLastName' => $inputs['inputPersonLastName'],
+                    'PersonPhone' => $inputs['inputPersonPhone'],
+                    'PersonNationalCode' => $inputs['inputPersonNationalCode'],
+                    'PersonEmail' => $inputs['inputPersonEmail'],
+                    'IsActive' => $inputs['inputIsActive'],
+                    'PersonGender' => $inputs['inputGender'],
+                    'Username' => $inputs['inputPersonUserName'],
+                    'Password' => md5($inputs['inputPersonPassword']),
+                    'ModifyDatetime' => time(),
+                    'ModifyPersonId' => $inputs['inputModifyPersonId']
+                );
+                $this->db->where('PersonId', $inputs['inputPersonId']);
+                $this->db->update('person', $userArray);
+            } else {
+                $userArray = array(
+                    'PersonFirstName' => $inputs['inputPersonFirstName'],
+                    'PersonLastName' => $inputs['inputPersonLastName'],
+                    'PersonNationalCode' => $inputs['inputPersonNationalCode'],
+                    'PersonPhone' => $inputs['inputPersonPhone'],
+                    'PersonEmail' => $inputs['inputPersonEmail'],
+                    'Username' => $inputs['inputPersonUserName'],
+                    'IsActive' => $inputs['inputIsActive'],
+                    'PersonGender' => $inputs['inputGender'],
+                    'ModifyDatetime' => time(),
+                    'ModifyPersonId' => $inputs['inputModifyPersonId']
+                );
+                $this->db->where('PersonId', $inputs['inputPersonId']);
+                $this->db->update('person', $userArray);
+            }
+
+            $this->db->delete('person_roles', array(
+                'PersonId' =>  $inputs['inputPersonId']
+            ));
+            $userArray = array(
+                'PersonId' => $inputs['inputPersonId'],
+                'Role' => $inputs['inputRole']
+            );
+            $this->db->insert('person_roles', $userArray);
+
+        }
+        return $this->config->item('DBMessages')['SuccessAction'];
+    }
     public function doPersonsPagination($inputs)
     {
         $limit = $inputs['pageIndex'];
@@ -87,7 +144,9 @@ class ModelPerson extends CI_Model{
         if (count($query) > 0) {
             $index = 0;
             foreach ($query as $item) {
-                $query[$index]['PersonRoles'] = $this->db->select('*')->from('person_roles')->where(array('PersonId' => $item['PersonId']))->get()->num_rows();
+                $query[$index]['PersonRoles'] = $this->db->select('*')->from('person_roles')->where(array('PersonId' => $item['PersonId']))->get()->result();
+                $query[$index]['PersonRole'] = $this->db->select('*')->from('person_roles')->where(array('PersonId' => $item['PersonId']))->get()->result_array();
+
                 $index += 1;
             }
             $result['data'] = $query;
@@ -149,67 +208,6 @@ class ModelPerson extends CI_Model{
 
         return $data;
 
-    }
-    public function doEditPerson($inputs)
-    {
-        $this->db->select('*');
-        $this->db->from('person');
-        $this->db->where(array('PersonId !=' => $inputs['inputPersonId']));
-        $this->db->group_start();
-        $this->db->where(array('PersonPhone' => $inputs['inputPersonPhone']));
-        $this->db->or_where(array('Username' => $inputs['inputPersonUserName']));
-        $this->db->group_end();
-        $data = $this->db->get()->result_array();
-        if (!empty($data)) {
-            return $this->config->item('DBMessages')['DuplicateInfo'];
-        } else {
-            if ($inputs['inputPersonPassword'] != '') {
-                $userArray = array(
-                    'PersonFirstName' => $inputs['inputPersonFirstName'],
-                    'PersonLastName' => $inputs['inputPersonLastName'],
-                    'PersonPhone' => $inputs['inputPersonPhone'],
-                    'PersonNationalCode' => $inputs['inputPersonNationalCode'],
-                    'PersonEmail' => $inputs['inputPersonEmail'],
-                    'IsActive' => $inputs['inputIsActive'],
-                    'PersonGender' => $inputs['inputGender'],
-                    'Username' => $inputs['inputPersonUserName'],
-                    'Password' => md5($inputs['inputPersonPassword']),
-                    'ModifyDatetime' => time(),
-                    'ModifyPersonId' => $inputs['inputModifyPersonId']
-                );
-                $this->db->where('PersonId', $inputs['inputPersonId']);
-                $this->db->update('person', $userArray);
-            } else {
-                $userArray = array(
-                    'PersonFirstName' => $inputs['inputPersonFirstName'],
-                    'PersonLastName' => $inputs['inputPersonLastName'],
-                    'PersonNationalCode' => $inputs['inputPersonNationalCode'],
-                    'PersonPhone' => $inputs['inputPersonPhone'],
-                    'PersonEmail' => $inputs['inputPersonEmail'],
-                    'Username' => $inputs['inputPersonUserName'],
-                    'IsActive' => $inputs['inputIsActive'],
-                    'PersonGender' => $inputs['inputGender'],
-                    'ModifyDatetime' => time(),
-                    'ModifyPersonId' => $inputs['inputModifyPersonId']
-                );
-                $this->db->where('PersonId', $inputs['inputPersonId']);
-                $this->db->update('person', $userArray);
-            }
-
-
-            $this->db->delete('person_roles', array(
-                'PersonId' =>  $inputs['inputPersonId']
-            ));
-
-            $userArray = array(
-                'PersonId' => $inputs['inputPersonId'],
-                'Role' => $inputs['inputRole']
-            );
-            $this->db->insert('person_roles', $userArray);
-
-
-        }
-        return $this->config->item('DBMessages')['SuccessAction'];
     }
     public function doEditPersonLegalInfo($inputs){
         if ($this->db->select('*')->from('person_legal_info')->where('PersonId', $inputs['inputPersonId'])->get()->num_rows() > 0) {

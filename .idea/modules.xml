@@ -3,8 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/BPMS.iml" filepath="$PROJECT_DIR$/.idea/BPMS.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../BPMSDAO/.idea/BPMSDAO.iml" filepath="$PROJECT_DIR$/../BPMSDAO/.idea/BPMSDAO.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../Web3/.idea/Web3.iml" filepath="$PROJECT_DIR$/../Web3/.idea/Web3.iml" />
     </modules>
   </component>
 </project>

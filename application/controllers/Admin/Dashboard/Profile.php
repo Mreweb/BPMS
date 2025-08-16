@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Profile extends CI_Controller {
 
@@ -10,10 +11,10 @@ class Profile extends CI_Controller {
         $this->load->model('admin/ModelCountry');
         $this->loginInfo = getLoginInfo();
         $this->loginRoles = getLoginRoles();
+        $this->load->helper('pipes/check_csrf');
         $this->enum = $this->config->item('ENUM');
     }
-	public function index()
-	{
+	public function index(){
         $data['pageTitle'] = 'ویرایش پروفایل';
         $data['person'] = $this->ModelProfile->getMyInfo();
         $data['enum'] = $this->enum;
@@ -33,6 +34,26 @@ class Profile extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             response(get_req_message('ErrorAction', validation_errors()), 400);
         }
+
+        $strength = 0;
+        if (preg_match("/[a-z]+/", $inputs['inputPersonPassword'])) {
+            $strength += 1;
+        }
+        if (preg_match("/[A-Z]+/", $inputs['inputPersonPassword'])) {
+            $strength += 1;
+        }
+        if (preg_match("/[0-9]+/", $inputs['inputPersonPassword'])) {
+            $strength += 1;
+        }
+        if (preg_match("/[$@#&!]+/", $inputs['inputPersonPassword'])) {
+            $strength += 1;
+        }
+
+        if ($strength < 3) {
+            response(get_req_message('ErrorAction',"رمز عبور باید شامل حروف و اعداد و عبارات خاص باشد") , 400);
+        }
+
+
         $this->ModelProfile->doUpdateProfile($inputs);
         response(get_req_message('SuccessAction') , 200);
     }
@@ -89,7 +110,6 @@ class Profile extends CI_Controller {
 
         echo json_encode($result);
     }
-
 
     public function my_requests(){
         $data['pageTitle'] = 'تاریخچه گزارشات من';

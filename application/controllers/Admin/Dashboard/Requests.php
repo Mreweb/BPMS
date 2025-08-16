@@ -11,13 +11,17 @@ class Requests extends CI_Controller{
         parent::__construct();
         $this->load->helper('admin/admin_login');
         $this->load->model('admin/ModelRequests');
+        $this->load->model('admin/ModelProposal');
         $this->loginInfo = getLoginInfo();
         $this->loginRoles = getLoginRoles();
         $this->enum = $this->config->item('ENUM');
-        //checkPersonAccess($this->loginRoles, 'Admin');
+        $this->load->helper('pipes/check_csrf');
+        checkPersonAccess($this->loginRoles, array('Admin','CENTRALBANK') );
     }
 
     public function index(){
+
+        checkPersonAccess($this->loginRoles, array('Admin') );
         $page['pageTitle'] = 'فهرست درخواست های من';
         $data['loginInfo'] = $this->loginInfo;
         $data['enum'] = $this->enum;
@@ -27,6 +31,8 @@ class Requests extends CI_Controller{
         $this->load->view('admin_panel/static/footer');
     }
     public function doPagination(){
+
+        checkPersonAccess($this->loginRoles, array('Admin') );
         $inputs = $this->input->post(NULL, TRUE);
         $data = $this->ModelRequests->doPagination($inputs);
         $data['htmlResult'] = $this->load->view('admin_panel/requests/pagination', $data, TRUE);
@@ -34,7 +40,10 @@ class Requests extends CI_Controller{
         echo json_encode($data);
     }
 
+    //Depricated
     public function Add(){
+
+        checkPersonAccess($this->loginRoles, array('Admin') );
         $page['pageTitle'] = 'افزودن درخواست پذیرش';
         $data['loginInfo'] = $this->loginInfo;
         $data['enum'] = $this->enum;
@@ -45,8 +54,10 @@ class Requests extends CI_Controller{
         $this->load->view('admin_panel/static/footer');
     }
     public function doAdd(){
-        $inputs = $this->input->post(NULL, TRUE);
 
+        checkPersonAccess($this->loginRoles, array('Admin') );
+        $inputs = $this->input->post(NULL, TRUE);
+        $inputs = secureInput($inputs);
         //$inputs = secureInput($inputs);
         /*$this->form_validation->set_data($inputs);
         $this->form_validation->set_rules('inputPackageTitle', 'عنوان', 'trim|required|min_length[3]|max_length[80]');
@@ -74,8 +85,11 @@ class Requests extends CI_Controller{
         }
     }
 
+    //Depricated
     public function Edit($id){
 
+
+        checkPersonAccess($this->loginRoles, array('Admin') );
         if(!is_numeric($id)){
             invalidUrlParameterInput();
         }
@@ -86,6 +100,11 @@ class Requests extends CI_Controller{
         $data['request'] = $this->ModelRequests->getById($id)[0];
         $data['request_attachment'] = $this->ModelRequests->getAttachmentByReqId($id);
         $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
+        $data['request_attachment_images'] = $this->ModelRequests->getImagesByReqId($id);
+        $data['request_property_info'] = $this->ModelRequests->getPropertyInfoById($id)[0];
+        $data['request_owner_info'] = $this->ModelRequests->getPropertyOwnerInfoById($id)[0];
+        $data['request_central_bank_info'] = $this->ModelRequests->getPropertyCentralBankInfoById($id)[0];
+        $data['request_property_locations'] = $this->ModelRequests->getPropertyLocationsById($id)[0];
 
 
         $this->load->view('admin_panel/static/header', $page);
@@ -95,7 +114,10 @@ class Requests extends CI_Controller{
         $this->load->view('admin_panel/static/footer');
     }
     public function doEdit(){
+
+        checkPersonAccess($this->loginRoles, array('Admin') );
         $inputs = $this->input->post(NULL, TRUE);
+        $inputs = secureInput($inputs);
 
         $inputs['inputModifyPersonId'] = $this->loginInfo['PersonId'];
         $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId']; /* For Editing Roles Need create Person Id */
@@ -116,9 +138,9 @@ class Requests extends CI_Controller{
 
     }
 
-
     public function publishProposal($id){
 
+        checkPersonAccess($this->loginRoles, array('Admin') );
         if(!is_numeric($id)){
             invalidUrlParameterInput();
         }
@@ -129,7 +151,9 @@ class Requests extends CI_Controller{
         $data['request'] = $this->ModelRequests->getById($id)[0];
         $data['request_attachment'] = $this->ModelRequests->getAttachmentByReqId($id);
         $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
-
+        $data['request_property_info'] = $this->ModelRequests->getPropertyInfoById($id)[0];
+        $data['request_owner_info'] = $this->ModelRequests->getPropertyOwnerInfoById($id)[0];
+        $data['request_transactions'] = $this->ModelProposal->getRequestTransactions($id);
 
         $this->load->view('admin_panel/static/header', $page);
         $this->load->view('admin_panel/requests/publish_proposal/index', $data);
@@ -137,29 +161,106 @@ class Requests extends CI_Controller{
         $this->load->view('admin_panel/requests/publish_proposal/index_js', $data);
         $this->load->view('admin_panel/static/footer');
     }
-    public function doPublishProposal(){
-        $inputs = $this->input->post(NULL, TRUE);
-        $data['proposalId'] = $inputs['inputReqId'];
-        $data['proposalName'] = $inputs['inputProposalTitle'];
-        $this->load->view('admin_panel/requests/publish_proposal/publish', $data );
+    public function doDeployContract(){
 
-        /*$inputs = $this->input->post(NULL, TRUE);
+        checkPersonAccess($this->loginRoles, array('Admin') );
+
+
+        $inputs = $this->input->post(NULL, TRUE);
         $inputs['inputModifyPersonId'] = $this->loginInfo['PersonId'];
         $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId'];
-        $result = $this->ModelRequests->doPublishProposal($inputs);
+        $result = $this->ModelProposal->doDeployContract($inputs);
+
+        if (!$result['success']) {
+            logAction($inputs,$this->loginInfo['PersonId']);
+            response($result , 400);
+        } else {
+            response($result , 200);
+        }
+
+    }
+    public function doPublishProposal(){
+
+        checkPersonAccess($this->loginRoles, array('Admin') );
+
+
+        $inputs = $this->input->post(NULL, TRUE);
+        $inputs['inputModifyPersonId'] = $this->loginInfo['PersonId'];
+        $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId'];
+        $result = $this->ModelProposal->doPublishProposal($inputs);
+
+        if (!$result['success']) {
+            logAction($inputs,$this->loginInfo['PersonId']);
+            response($result , 400);
+        } else {
+            response($result , 200);
+        }
+
+    }
+
+    public function centralBank(){
+        checkPersonAccess($this->loginRoles, array('Admin','CENTRALBANK') );
+        $page['pageTitle'] = 'درخواست های در مرحله کمیسیون حقوقی';
+        $data['loginInfo'] = $this->loginInfo;
+        $data['enum'] = $this->enum;
+        $this->load->view('admin_panel/static/header', $page);
+        $this->load->view('admin_panel/requests/central_bank/index', $data);
+        $this->load->view('admin_panel/requests/central_bank/index_js', $data);
+        $this->load->view('admin_panel/static/footer');
+    }
+    public function doStepCentralBankPagination(){
+        checkPersonAccess($this->loginRoles, array('Admin','CENTRALBANK') );
+        $inputs = $this->input->post(NULL, TRUE);
+        $data = $this->ModelRequests->doStepCentralBankPagination($inputs);
+        $data['htmlResult'] = $this->load->view('admin_panel/requests/central_bank/pagination', $data, TRUE);
+        unset($data['data']);
+        echo json_encode($data);
+    }
+    public function EditCentralBank($id){
+        checkPersonAccess($this->loginRoles, array('Admin','CENTRALBANK') );
+        if(!is_numeric($id)){
+            invalidUrlParameterInput();
+        }
+        $page['pageTitle'] = 'بررسی درخواست';
+        $data['loginInfo'] = $this->loginInfo;
+        $data['enum'] = $this->enum;
+        $data['request'] = $this->ModelRequests->getById($id)[0];
+        $data['request_attachment'] = $this->ModelRequests->getAttachmentByReqId($id);
+        $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
+        $data['request_attachment_images'] = $this->ModelRequests->getImagesByReqId($id);
+        $data['request_property_info'] = $this->ModelRequests->getPropertyInfoById($id)[0];
+        $data['request_owner_info'] = $this->ModelRequests->getPropertyOwnerInfoById($id)[0];
+        $data['request_central_bank_info'] = $this->ModelRequests->getPropertyCentralBankInfoById($id)[0];
+        $data['request_property_locations'] = $this->ModelRequests->getPropertyLocationsById($id)[0];
+
+        $this->load->view('admin_panel/static/header', $page);
+        $this->load->view('admin_panel/requests/central_bank/view/index', $data);
+        $this->load->view('admin_panel/requests/central_bank/view/index_css', $data);
+        $this->load->view('admin_panel/requests/central_bank/view/index_js', $data);
+        $this->load->view('admin_panel/static/footer');
+    }
+    public function doEditCentralBank(){
+        checkPersonAccess($this->loginRoles, array('Admin','CENTRALBANK') );
+        $inputs = $this->input->post(NULL, TRUE);
+        $inputs = secureInput($inputs);
+        $inputs['inputModifyPersonId'] = $this->loginInfo['PersonId'];
+        $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId']; /* For Editing Roles Need create Person Id */
+        $result = $this->ModelRequests->doEditCentralBank($inputs);
+
+        /* Log Action */
         $logArray = getVisitorInfo();
         $logArray['Action'] = $this->router->fetch_class() . "_" . $this->router->fetch_method();
         $logArray['Description'] = json_encode($inputs);
         $logArray['LogPersonId'] = $this->loginInfo['PersonId'];
         $this->ModelLog->doAdd($logArray);
+        /* End Log Action */
         if (!$result['success']) {
-            response(get_req_message('DuplicateInfo') , 400);
+            response($result , 400);
         } else {
             response(get_req_message('SuccessAction') , 200);
-        }*/
+        }
 
     }
-
 
     public function legal(){
         $page['pageTitle'] = 'درخواست های در مرحله کمیسیون حقوقی';
@@ -187,6 +288,11 @@ class Requests extends CI_Controller{
         $data['request'] = $this->ModelRequests->getById($id)[0];
         $data['request_attachment'] = $this->ModelRequests->getAttachmentByReqId($id);
         $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
+        $data['request_attachment_images'] = $this->ModelRequests->getImagesByReqId($id);
+        $data['request_property_info'] = $this->ModelRequests->getPropertyInfoById($id)[0];
+        $data['request_owner_info'] = $this->ModelRequests->getPropertyOwnerInfoById($id)[0];
+        $data['request_central_bank_info'] = $this->ModelRequests->getPropertyCentralBankInfoById($id)[0];
+        $data['request_property_locations'] = $this->ModelRequests->getPropertyLocationsById($id)[0];
         $this->load->view('admin_panel/static/header', $page);
         $this->load->view('admin_panel/requests/legal/view/index', $data);
         $this->load->view('admin_panel/requests/legal/view/index_css', $data);
@@ -195,6 +301,7 @@ class Requests extends CI_Controller{
     }
     public function doEditLegal(){
         $inputs = $this->input->post(NULL, TRUE);
+        $inputs = secureInput($inputs);
 
         $inputs['inputModifyPersonId'] = $this->loginInfo['PersonId'];
         $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId']; /* For Editing Roles Need create Person Id */
@@ -241,6 +348,9 @@ class Requests extends CI_Controller{
         $data['request'] = $this->ModelRequests->getById($id)[0];
         $data['request_attachment'] = $this->ModelRequests->getAttachmentByReqId($id);
         $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
+        $data['request_property_info'] = $this->ModelRequests->getPropertyInfoById($id)[0];
+        $data['request_owner_info'] = $this->ModelRequests->getPropertyOwnerInfoById($id)[0];
+        $data['request_central_bank_info'] = $this->ModelRequests->getPropertyCentralBankInfoById($id)[0];
         $this->load->view('admin_panel/static/header', $page);
         $this->load->view('admin_panel/requests/economic/view/index', $data);
         $this->load->view('admin_panel/requests/economic/view/index_css', $data);
@@ -249,6 +359,7 @@ class Requests extends CI_Controller{
     }
     public function doEditEconimic(){
         $inputs = $this->input->post(NULL, TRUE);
+        $inputs = secureInput($inputs);
 
         $inputs['inputModifyPersonId'] = $this->loginInfo['PersonId'];
         $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId']; /* For Editing Roles Need create Person Id */
@@ -295,6 +406,11 @@ class Requests extends CI_Controller{
         $data['request'] = $this->ModelRequests->getById($id)[0];
         $data['request_attachment'] = $this->ModelRequests->getAttachmentByReqId($id);
         $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
+        $data['request_attachment_images'] = $this->ModelRequests->getImagesByReqId($id);
+        $data['request_property_info'] = $this->ModelRequests->getPropertyInfoById($id)[0];
+        $data['request_owner_info'] = $this->ModelRequests->getPropertyOwnerInfoById($id)[0];
+        $data['request_central_bank_info'] = $this->ModelRequests->getPropertyCentralBankInfoById($id)[0];
+        $data['request_property_locations'] = $this->ModelRequests->getPropertyLocationsById($id)[0];
         $this->load->view('admin_panel/static/header', $page);
         $this->load->view('admin_panel/requests/final/view/index', $data);
         $this->load->view('admin_panel/requests/final/view/index_css', $data);
@@ -303,10 +419,32 @@ class Requests extends CI_Controller{
     }
     public function doEditFinal(){
         $inputs = $this->input->post(NULL, TRUE);
+        $inputs = secureInput($inputs);
 
         $inputs['inputModifyPersonId'] = $this->loginInfo['PersonId'];
         $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId']; /* For Editing Roles Need create Person Id */
         $result = $this->ModelRequests->doEditFinal($inputs);
+
+        /* Log Action */
+        $logArray = getVisitorInfo();
+        $logArray['Action'] = $this->router->fetch_class() . "_" . $this->router->fetch_method();
+        $logArray['Description'] = json_encode($inputs);
+        $logArray['LogPersonId'] = $this->loginInfo['PersonId'];
+        $this->ModelLog->doAdd($logArray);
+        /* End Log Action */
+        if (!$result['success']) {
+            response(get_req_message('DuplicateInfo') , 400);
+        } else {
+            response(get_req_message('SuccessAction') , 200);
+        }
+
+    }
+    public function doEditFinalByAdmin(){
+        $inputs = $this->input->post(NULL, TRUE);
+
+        $inputs['inputModifyPersonId'] = $this->loginInfo['PersonId'];
+        $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId']; /* For Editing Roles Need create Person Id */
+        $result = $this->ModelRequests->doEditFinalByAdmin($inputs);
 
         /* Log Action */
         $logArray = getVisitorInfo();
@@ -349,6 +487,11 @@ class Requests extends CI_Controller{
         $data['request'] = $this->ModelRequests->getById($id)[0];
         $data['request_attachment'] = $this->ModelRequests->getAttachmentByReqId($id);
         $data['request_comments'] = $this->ModelRequests->getCommentsById($id);
+        $data['request_attachment_images'] = $this->ModelRequests->getImagesByReqId($id);
+        $data['request_property_info'] = $this->ModelRequests->getPropertyInfoById($id)[0];
+        $data['request_owner_info'] = $this->ModelRequests->getPropertyOwnerInfoById($id)[0];
+        $data['request_central_bank_info'] = $this->ModelRequests->getPropertyCentralBankInfoById($id)[0];
+        $data['request_property_locations'] = $this->ModelRequests->getPropertyLocationsById($id)[0];
         $this->load->view('admin_panel/static/header', $page);
         $this->load->view('admin_panel/requests/finished/view/index', $data);
         $this->load->view('admin_panel/requests/finished/view/index_css', $data);

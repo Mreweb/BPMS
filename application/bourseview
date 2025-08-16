@@ -1,0 +1,17 @@
+server {
+    listen 80;
+    server_name aban.boorsview.ir abtin.boorsview.ir apadana.boorsview.ir atisaz.boorsview.ir atieh.boorsview.ir arman.boorsview.ir armoon.boorsview.ir mes.boorsview.ir agah.boorsview.ir kharazmi.boorsview.ir oibourse.boorsview.ir arg.boorsview.ir etminan.boorsview.ir taban.boorsview.ir ebidar.boorsview.ir alvand.boorsview.ir omid.boorsview.ir aminavid.boorsview.ir aminsahm.boorsview.ir pishro.boorsview.ir aseman.boorsview.ir padash.boorsview.ir ideal.boorsview.ir ipb.boorsview.ir imen.boorsview.ir bazar.boorsview.ir babc.boorsview.ir enovin.boorsview.ir ansar.boorsview.ir pasargad.boorsview.ir tejarat.boorsview.ir mebbco.boorsview.ir day.boorsview.ir refah.boorsview.ir saman.boorsview.ir sepah.boorsview.ir saderat.boorsview.ir sm.boorsview.ir karafarin.boorsview.ir bki.boorsview.ir maskan.boorsview.ir mellat.boorsview.ir bmibourse.boorsview.ir bahonar.boorsview.ir bsbourse.boorsview.ir ebraz.boorsview.ir behgozin.boorsview.ir bimeiran.boorsview.ir Boursiran.boorsview.ir bahman.boorsview.ir behinp.boorsview.ir pib.boorsview.ir parsnem.boorsview.ir parsian.boorsview.ir pouyan.boorsview.ir epouyesh.boorsview.ir behparvar.boorsview.ir tamadon.boorsview.ir nibb.boorsview.ir tadbirgar.boorsview.ir tadbir.boorsview.ir tavazonex.boorsview.ir tavana.boorsview.ir danabc.boorsview.ir tsd.boorsview.ir sahand.boorsview.ir farda.boorsview.ir bkis.boorsview.ir kian.boorsview.ir js.boorsview.ir hafez.boorsview.ir khobregan.boorsview.ir arianovin.boorsview.ir darab.boorsview.ir danayan.boorsview.ir daliran.boorsview.ir dkhobreh.boorsview.ir dnovinbr.boorsview.ir erahbord.boorsview.ir rahnam.boorsview.ir rahin.boorsview.ir sav.boorsview.ir sepehr.boorsview.ir sj.boorsview.ir nibi.boorsview.ir sd.boorsview.ir barez.boorsview.ir spshayan.boorsview.ir sgsb.boorsview.ir azin.boorsview.ir abco.boorsview.ir ebidar.boorsview.ir seavolex.boorsview.ir sina.boorsview.ir bank.boorsview.ir shahrb.boorsview.ir saba.boorsview.ir sjb.boorsview.ir irfarabi.boorsview.ir firouzeh.boorsview.ir irankbc.boorsview.ir charisma.boorsview.ir mecb.boorsview.ir iganjineh.boorsview.ir mobinsb.boorsview.ir artan.boorsview.ir emofid.boorsview.ir melal.boorsview.ir mehr.boorsview.ir mei.boorsview.ir nnovin.boorsview.ir namad.boorsview.ir noandishan.boorsview.ir nahayat.boorsview.ir rbc.boorsview.ir hbc.boorsview.ir rabin.boorsview.ir yazdan.boorsview.ir;
+  # You can also use your server's IP or domain name
+
+    #root /var/www/html;  # This should point to the build folder
+
+    #index index.html index.htm;
+
+    location / {
+        proxy_pass http://192.168.100.91:4000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}

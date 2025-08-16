@@ -18,7 +18,7 @@
             </div>
             <div class="ms-auto">
                 <div class="btn-group">
-                    <a href="<?php echo base_url('Admin/Dashboard/Requests/add'); ?>">
+                    <a href="<?php echo base_url('Admin/Dashboard/MyRequests/add'); ?>">
                         <button type="button" class="btn btn-success">درخواست جدید</button>
                     </a>
                 </div>
@@ -28,14 +28,12 @@
         <div class="card">
             <div class="card-body">
 
-
                 <div class="row Page-Search-Form ">
                     <div class="col-sm-12 col-md-10 row">
                         <div class="col-sm-12 col-md-2 mb-3">
                             عنوان:
                             <input type="text" id="inputTitle" class="form-control">
                         </div>
-
                     </div>
                     <div class="col-sm-12 col-md-2">
                         <label class="col-sm-12 mb-3 text-end">
@@ -45,7 +43,6 @@
                     </div>
                 </div>
 
-
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover">
                         <thead>
@@ -53,12 +50,11 @@
                             <th class="fit">شناسه</th>
                             <th>عنوان</th>
                             <th class="fit">نوع</th>
-                            <th class="fit">کاربری</th>
                             <th class="fit">ارزش گذاری رسمی</th>
                             <th class="fit">وضعیت</th>
-                            <th class="fit">ناشر</th>
-                            <th class="fit">کد ملی ناشر</th>
-                            <th class="fit">تلفن ناشر</th>
+                            <th class="fit">نام و نام خانوادگی</th>
+                            <th class="fit">کد ملی</th>
+                            <th class="fit">تلفن</th>
                             <th class="fit">تاریخ ثبت</th>
                             <th class="fit">ویرایش</th>
                         </tr>

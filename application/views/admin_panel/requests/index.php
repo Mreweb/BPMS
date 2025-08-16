@@ -18,7 +18,7 @@
             </div>
             <div class="ms-auto">
                 <div class="btn-group">
-                    <a href="<?php echo base_url('Admin/Dashboard/Requests/add'); ?>">
+                    <a href="<?php echo base_url('Admin/Dashboard/MyRequests/add'); ?>">
                         <button type="button" class="btn btn-success">درخواست جدید</button>
                     </a>
                 </div>
@@ -32,6 +32,10 @@
                 <div class="row Page-Search-Form ">
                     <div class="col-sm-12 col-md-10 row">
                         <div class="col-sm-12 col-md-2 mb-3">
+                            شماره:
+                            <input type="text" id="inputReqId" class="form-control">
+                        </div>
+                        <div class="col-sm-12 col-md-2 mb-3">
                             عنوان:
                             <input type="text" id="inputTitle" class="form-control">
                         </div>
@@ -40,10 +44,18 @@
                             <input type="text" id="inputNationalCode" class="form-control">
                         </div>
                         <div class="col-sm-12 col-md-2 mb-3">
-                            تلفن:
-                            <input type="text" id="inputPhone" class="form-control">
+                            نام یا نام خانوادگی:
+                            <input type="text" id="inputName" class="form-control">
                         </div>
-                        <div class="col-sm-12 col-md-4 mb-3">
+                        <div class="col-sm-12 col-md-2 mb-3">
+                            از تاریخ:
+                            <input type="text" id="inputFromDate" name="<?php echo md5(rand()); ?>" class="form-control" data-jdp>
+                        </div>
+                        <div class="col-sm-12 col-md-2 mb-3">
+                            تا تاریخ:
+                            <input type="text" id="inputToDate" name="<?php echo md5(rand()); ?>" class="form-control" data-jdp>
+                        </div>
+                        <div class="col-sm-12 col-md-2 mb-3">
                             <label>وضعیت:</label>
                             <select class="form-select" id="inputReqStatus" data-placeholder="یک وضعیت راانتخاب کنید">
                                 <option value="">همه</option>
@@ -72,16 +84,19 @@
                             <th class="fit">شناسه</th>
                             <th>عنوان</th>
                             <th class="fit">نوع</th>
-                            <th class="fit">کاربری</th>
                             <th class="fit">ارزش گذاری رسمی</th>
                             <th class="fit">وضعیت</th>
-                            <th class="fit">قرارداد هوشمند</th>
-                            <th class="fit">ناشر</th>
-                            <th class="fit">کد ملی ناشر</th>
-                            <th class="fit">تلفن ناشر</th>
+                            <th class="fit">ثبت کننده</th>
+                            <th class="fit">کد ملی</th>
+                            <th class="fit">تلفن</th>
                             <th class="fit">تاریخ ثبت</th>
                             <th class="fit">ویرایش</th>
-                            <th class="fit">انتشار پروپوزال</th>
+
+                            <?php if($this->config->item('ISBLOCKCHAIN')){ ?>
+                            <th class="fit">قراردادهوشمند</th>
+                            <th class="fit">پروپوزال</th>
+                            <th class="fit">مدیریت قراردادهوشمند</th>
+                            <?php } ?>
                         </tr>
                         </thead>
                         <tbody class="table-rows"></tbody>

@@ -1,6 +1,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
+
         $("#show_hide_password a").on('click', function (event) {
             event.preventDefault();
             if ($('#show_hide_password input').attr("type") == "text") {
@@ -36,14 +37,26 @@
                             zindex: 2030,
                             position: 'topLeft'
                         });
+                        $(".recaptcha").click();
                         if ($result['success']) {
                             setTimeout(function () {
                                 window.location.href = "<?php echo base_url('Admin/Dashboard/Home');  ?>";
                             }, 2000);
                         }
+                    },
+                    error: function(data){
+                        $result = data.responseJSON;
+                        iziToast.show({
+                            title: $result['content'],
+                            color: $result['type'],
+                            zindex: 2030,
+                            position: 'topLeft'
+                        });
+                        $(".recaptcha").click();
                     }
                 });
-            } else {
+            }
+            else {
                 iziToast.show({
                     title: 'لطفا تمامی مقادیر را کامل کنید',
                     color: 'yellow', // blue, red, green, yellow

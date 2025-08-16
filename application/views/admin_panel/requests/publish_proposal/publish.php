@@ -11,8 +11,6 @@
 </head>
 <body>
 
-<?php var_dump($proposalId); ?>
-<?php var_dump($proposalName); ?>
 
 <button onclick="createProposal('707fc9926dd344c66ab01bab3866c','KASHEF')">createProposal Kashef</button>
 <button onclick="compareStrings('11','11')">compareStrings</button>

@@ -15,6 +15,7 @@ class Persons extends CI_Controller{
         $this->loginInfo = getLoginInfo();
         $this->loginRoles = getLoginRoles();
         $this->enum = $this->config->item('ENUM');
+        $this->load->helper('pipes/check_csrf');
         checkPersonAccess($this->loginRoles, 'ADMIN');
     }
     public function index(){
@@ -59,6 +60,8 @@ class Persons extends CI_Controller{
 
         $inputs['inputCreatePersonId'] = $this->loginInfo['PersonId'];
         $result = $this->ModelPerson->doAddPerson($inputs);
+
+
         /* Log Action */
         $logArray = getVisitorInfo();
         $logArray['Action'] = $this->router->fetch_class() . "_" . $this->router->fetch_method();

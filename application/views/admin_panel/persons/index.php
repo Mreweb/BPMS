@@ -67,6 +67,7 @@
                         <tr>
                             <th class="fit">شناسه کاربری</th>
                             <th>نام و نام خانوادگی</th>
+                            <th class="fit">نقش</th>
                             <th class="fit">وضعیت</th>
                             <th class="fit">کد ملی</th>
                             <th class="fit">تلفن همراه</th>

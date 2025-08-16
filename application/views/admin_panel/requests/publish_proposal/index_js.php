@@ -1,83 +1,85 @@
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#do_save").click(function (e) {
+
+        $("#do_deploy_contract").click(function (e) {
             e.preventDefault();
-            toggleLoader();
-            $attachments = [];
-            $inputReqId = $.trim($("#inputReqId").val());
-            $inputProposalTitle = $.trim($("#inputProposalTitle").val());
-            $sendData = {
-                'inputReqId': $inputReqId,
-                'inputProposalTitle': $inputProposalTitle
-            };
-            $.ajax({
-                type: 'post',
-                url: base_url + 'Requests/doPublishProposal',
-                data: $sendData,
-                success: function (data) {
-                    $result = data;
-                    notify($result['content'], $result['type']);
-                    toggleLoader();
+            $.confirm({
+                title: 'انتشار پروپوزال',
+                theme: 'dark',
+                content: 'آیا از انتشار مطمئن هستید؟',
+                buttons: {
+                    بله: {
+                        btnClass: 'btn btn-success',
+                        action: function () {
+                            e.preventDefault();
+                            toggleLoader();
+                            $inputReqId = $.trim($("#inputReqId").val());
+                            $sendData = {
+                                'inputReqId': $inputReqId
+                            };
+                            $.ajax({
+                                type: 'post',
+                                url: base_url + 'Requests/doDeployContract',
+                                data: $sendData,
+                                success: function (data) {
+                                    $result = data;
+                                    notify($result['content'], $result['type']);
+                                    toggleLoader();
+                                    if($result['success']){
+                                        location.reload();
+                                    }
+                                }
+                            });
+                        },
+                    },
+                    انصراف: {
+                        btnClass: 'btn btn-default',
+                        action: function () { }
+                    }
                 }
             });
         });
 
-        $(document).on('click', '.remove-file',function(){
-            $(this).parent().parent().remove();
-        });
-        function readURL(input) {
-            toggleLoader();
-            if (input.files && input.files[0] && input.files[0].name.match(/\.(jpg|jpeg|png|gif|pdf|word|zip|rar)$/)) {
-                $FileSize = input.files[0].size / 1024 / 1024;
-                if ($FileSize < 20) {
-                    if (input.files && input.files[0]) {
-                        var reader = new FileReader();
-                        reader.onload = function (e) {
-                            var file = e.target.result;
-                        };
-                        reader.readAsDataURL(input.files[0]);
-                        var file_data = input.files[0];
-                        var form_data = new FormData();
-                        form_data.append('file',file_data);
-                        $.ajax({
-                            url: base_url + '/Home/uploadFile',
-                            dataType: 'text',
-                            cache: false,
-                            contentType: false,
-                            processData: false,
-                            data: form_data,
-                            type: 'post',
-                            success: function (data) {
-                                $result = JSON.parse(data);
-                                if($result['success']) {
-                                    $inputAttachmentSource = $result['fileSrc'];
-                                    notify('بارگذاری فایل با موفقیت انجام شد', 'green');
-                                    $(".uploaded-files tbody").append("<tr data-name='" + $result['fileName'] + "' data-src='" + $result['fileSrc'] + "'><td>" + $result['fileName'] + "</td><td  class='fit'><button class='btn btn-danger btn-sm remove-file'>X</button></td></tr>");
-                                    $(".uploaded-files table").show();
-                                    $("#file").val('');
-                                } else{
-                                    notify($result['content'], 'red');
-                                    $("#file").val('');
+        $("#do_create_proposal").click(function (e) {
+            e.preventDefault();
+            $.confirm({
+                title: 'انتشار پروپوزال',
+                theme: 'dark',
+                content: 'آیا از انتشار مطمئن هستید؟',
+                buttons: {
+                    بله: {
+                        btnClass: 'btn btn-success',
+                        action: function () {
+                            e.preventDefault();
+                            toggleLoader();
+                            $inputReqId = $.trim($("#inputReqId").val());
+                            $inputProposalTitle  = $.trim($("#inputProposalTitle").val());
+                            $sendData = {
+                                'inputReqId': $inputReqId,
+                                'inputProposalTitle': $inputProposalTitle
+                            };
+                            $.ajax({
+                                type: 'post',
+                                url: base_url + 'Requests/doPublishProposal',
+                                data: $sendData,
+                                success: function (data) {
+                                    $result = data;
+                                    notify($result['content'], $result['type']);
+                                    toggleLoader();
+                                    if($result['success']){
+                                        location.reload();
+                                    }
                                 }
-                                toggleLoader();
-                            },
-                            error: function (data) {
-                            }
-                        });
+                            });
+                        },
+                    },
+                    انصراف: {
+                        btnClass: 'btn btn-default',
+                        action: function () { }
                     }
                 }
-                else {
-                    toggleLoader();
-                    notify("فایل شما باید کمتر از هشت مگابایت باشد", "red");
-                }
-            }
-            else {
-                toggleLoader();
-                notify("فرمت فایل نامعتبر است", "red");
-            }
-        }
-        $("#file").change(function () {
-            readURL(this);
+            });
         });
+
     });
 </script>

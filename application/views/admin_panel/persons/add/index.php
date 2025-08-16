@@ -180,7 +180,7 @@
                                         <label class="input-group-text" for="inputIsActive">وضعیت</label>
                                         <select class="form-select" id="inputIsActive">
                                             <option selected="">انتخاب کنید</option>
-                                            <?php setSelectData($enum['ACTIVEUSER']); ?>
+                                            <?php setSelectData($enum['ACTIVE_USER']); ?>
                                         </select>
                                     </div>
                                 </div>

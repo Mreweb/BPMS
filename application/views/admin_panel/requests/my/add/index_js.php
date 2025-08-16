@@ -2,8 +2,179 @@
     $(document).ready(function () {
         $("#do_save").click(function (e) {
             e.preventDefault();
-
             $this = $(this);
+            $attachments = [];
+            $attachmentsImages = [];
+
+
+            /*Request Info*/
+            $inputTitle = $.trim($("#inputTitle").val());
+            $inputReqType = $.trim($("#inputReqType").val());
+            $inputAgentNationalCode = $.trim($("#inputAgentNationalCode").val());
+            $inputMarketMakerNationalCode = $.trim($("#inputMarketMakerNationalCode").val());
+            $inputPrice = $.trim($("#inputPrice").val());
+            $inputDescription = $.trim($("#inputDescription").val());
+            $inputProvince = $.trim($("#inputProvince").val());
+            $inputCity = $.trim($("#inputCity").val());
+
+            /*Request Property Info*/
+            $inputPropertyID = $.trim($("#inputPropertyID").val());
+            $inputPropertyRegisterDate = $.trim($("#inputPropertyRegisterDate").val());
+            $inputPropertyType = $.trim($("#inputPropertyType").val());
+            $inputPropertySpecialStatus = $.trim($("#inputPropertySpecialStatus").val());
+            $inputPropertyUseType = $.trim($("#inputPropertyUseType").val());
+            $inputPropertyDocType = $.trim($("#inputPropertyDocType").val());
+            $inputPropertyUseReason = $.trim($("#inputPropertyUseReason").val());
+            $inputPropertyUUID = $.trim($("#inputPropertyUUID").val());
+            $inputPropertyPassword = $.trim($("#inputPropertyPassword").val());
+            $inputPropertyAreaSupply = $.trim($("#inputPropertyAreaSupply").val());
+            $inputPropertyAreaNobility = $.trim($("#inputPropertyAreaNobility").val());
+            $inputPropertyRegistrationPlate = $.trim($("#inputPropertyRegistrationPlate").val());
+            $inputPropertySeparate = $.trim($("#inputPropertySeparate").val());
+            $inputPropertyPiece = $.trim($("#inputPropertyPiece").val());
+            $inputPropertyRegistrationDepartment = $.trim($("#inputPropertyRegistrationDepartment").val());
+            $inputPropertyDistrict = $.trim($("#inputPropertyDistrict").val());
+            $inputPropertyBlock = $.trim($("#inputPropertyBlock").val());
+            $inputPropertyFloor = $.trim($("#inputPropertyFloor").val());
+            $inputPropertySide = $.trim($("#inputPropertySide").val());
+            $inputPropertyBuildYear = $.trim($("#inputPropertyBuildYear").val());
+            $inputPropertyPostalCode = $.trim($("#inputPropertyPostalCode").val());
+            $inputPropertyAddress= $.trim($("#inputPropertyAddress").val());
+            $inputPropertyUseTypeSide = $.trim($("#inputPropertyUseTypeSide").val());
+
+            /*Request Property Owner Info*/
+            $inputOwnerNationalCode = $.trim($("#inputOwnerNationalCode").val());
+            $inputOwnerName = $.trim($("#inputOwnerName").val());
+            $inputOwnerBankRelation = $.trim($("#inputOwnerBankRelation").val());
+            $inputOwnerCompanyType = $.trim($("#inputOwnerCompanyType").val());
+            $inputOwnerTypeDependentPerson = $.trim($("#inputOwnerTypeDependentPerson").val());
+            $inputOwnerOwnershipPercentage = $.trim($("#inputOwnerOwnershipPercentage").val());
+
+
+            /* Final Property Info  */
+            $inputFinalPropertyPercentageOwnership = $.trim($("#inputFinalPropertyPercentageOwnership").val());
+            $inputFinalPropertyAcquire = $.trim($("#inputFinalPropertyAcquire").val());
+            $inputFinalPropertyType = $.trim($("#inputFinalPropertyType").val());
+            $inputFinalPropertyBuyDate = $.trim($("#inputFinalPropertyBuyDate").val());
+            $inputFinalPropertySurplus = $.trim($("#inputFinalPropertySurplus").val());
+            $inputFinalPropertyExcluded = $.trim($("#inputFinalPropertyExcluded").val());
+            $inputFinalPropertyExcludeReason  = $.trim($("#inputFinalPropertyExcludeReason").val());
+            $inputFinalPropertyUnopposed  = $.trim($("#inputFinalPropertyUnopposed").val());
+            $inputFinalPropertyHasLegal = $.trim($("#inputFinalPropertyHasLegal").val());
+            $inputFinalPropertyOrderDate = $.trim($("#inputFinalPropertyOrderDate").val());
+            $inputFinalPropertyVote  = $.trim($("#inputFinalPropertyVote").val());
+            $inputFinalPropertyWithdrawBenefit = $.trim($("#inputFinalPropertyWithdrawBenefit").val());
+            $inputFinalPropertyDocFinalStatus  = $.trim($("#inputFinalPropertyDocFinalStatus").val());
+            $inputFinalPropertySummary = $.trim($("#inputFinalPropertySummary").val());
+            $inputFinalPropertyValue = $.trim($("#inputFinalPropertyValue").val());
+            $inputFinalPropertyValueCheck  = $.trim($("#inputFinalPropertyValueCheck").val());
+            $inputFinalPropertyCheckValue = $.trim($("#inputFinalPropertyCheckValue").val());
+            $inputFinalPropertySurvey = $.trim($("#inputFinalPropertySurvey").val());
+
+            /*Request Property Owner Info*/
+            $inputPropertyGoogleMap = $.trim($("#inputPropertyGoogleMap").val());
+            $inputPropertyNeshan = $.trim($("#inputPropertyNeshan").val());
+            $inputPropertyBalad = $.trim($("#inputPropertyBalad").val());
+
+
+            $(".uploaded-files tbody tr").each(function(){
+                $attach = {
+                    'type' : $(this).data('type'),
+                    'name' : $(this).data('name'),
+                    'src'  : $(this).data('src')
+                };
+                $attachments.push($attach);
+            });
+
+
+            $(".uploaded-image-files tr").each(function(){
+                $attach = {
+                    'src'  : $(this).data('src')
+                };
+                $attachmentsImages.push($attach);
+            });
+
+
+            $sendData = {
+
+                /* Property Info */
+                'inputPropertyID': $inputPropertyID,
+                'inputPropertyRegisterDate': $inputPropertyRegisterDate,
+                'inputPropertyType': $inputPropertyType,
+                'inputPropertySpecialStatus': $inputPropertySpecialStatus,
+                'inputPropertyUseType': $inputPropertyUseType,
+                'inputPropertyDocType': $inputPropertyDocType,
+                'inputPropertyUseReason': $inputPropertyUseReason,
+                'inputPropertyUUID': $inputPropertyUUID,
+                'inputPropertyPassword': $inputPropertyPassword,
+                'inputPropertyAreaSupply': $inputPropertyAreaSupply,
+                'inputPropertyAreaNobility': $inputPropertyAreaNobility,
+                'inputPropertyRegistrationPlate': $inputPropertyRegistrationPlate,
+                'inputPropertySeparate': $inputPropertySeparate,
+                'inputPropertyPiece': $inputPropertyPiece,
+                'inputPropertyRegistrationDepartment': $inputPropertyRegistrationDepartment,
+                'inputPropertyDistrict': $inputPropertyDistrict,
+                'inputPropertyBlock': $inputPropertyBlock,
+                'inputPropertyFloor': $inputPropertyFloor,
+                'inputPropertySide': $inputPropertySide,
+                'inputPropertyBuildYear': $inputPropertyBuildYear,
+                'inputPropertyPostalCode': $inputPropertyPostalCode,
+                'inputPropertyAddress': $inputPropertyAddress,
+                'inputPropertyUseTypeSide': $inputPropertyUseTypeSide,
+
+                /* Request Info */
+                'inputTitle': $inputTitle,
+                'inputReqType': $inputReqType,
+                'inputAgentNationalCode': $inputAgentNationalCode,
+                'inputMarketMakerNationalCode': $inputMarketMakerNationalCode,
+                'inputPrice': $inputPrice,
+                'inputDescription': $inputDescription,
+                'inputAttachments': $attachments,
+                'inputAttachmentImages': $attachmentsImages,
+
+
+                /* Property Owner Info */
+                'inputOwnerNationalCode': $inputOwnerNationalCode,
+                'inputOwnerName': $inputOwnerName,
+                'inputOwnerBankRelation': $inputOwnerBankRelation,
+                'inputOwnerCompanyType': $inputOwnerCompanyType,
+                'inputOwnerTypeDependentPerson': $inputOwnerTypeDependentPerson,
+                'inputOwnerOwnershipPercentage': $inputOwnerOwnershipPercentage,
+
+
+
+                /* Property Owner Info */
+                'inputPropertyGoogleMap': $inputPropertyGoogleMap,
+                'inputPropertyNeshan': $inputPropertyNeshan,
+                'inputPropertyBalad': $inputPropertyBalad,
+
+                /* Property Province */
+                'inputProvince': $inputProvince,
+                'inputCity': $inputCity,
+
+                /* Final Property Info  */
+                'inputFinalPropertyPercentageOwnership': $inputFinalPropertyPercentageOwnership,
+                'inputFinalPropertyAcquire': $inputFinalPropertyAcquire,
+                'inputFinalPropertyType': $inputFinalPropertyType,
+                'inputFinalPropertyBuyDate': $inputFinalPropertyBuyDate,
+                'inputFinalPropertySurplus': $inputFinalPropertySurplus,
+                'inputFinalPropertyExcluded': $inputFinalPropertyExcluded,
+                'inputFinalPropertyExcludeReason': $inputFinalPropertyExcludeReason,
+                'inputFinalPropertyUnopposed': $inputFinalPropertyUnopposed,
+                'inputFinalPropertyHasLegal': $inputFinalPropertyHasLegal,
+                'inputFinalPropertyOrderDate': $inputFinalPropertyOrderDate,
+                'inputFinalPropertyVote': $inputFinalPropertyVote,
+                'inputFinalPropertyWithdrawBenefit': $inputFinalPropertyWithdrawBenefit,
+                'inputFinalPropertyDocFinalStatus': $inputFinalPropertyDocFinalStatus,
+                'inputFinalPropertySummary': $inputFinalPropertySummary,
+                'inputFinalPropertyValue': $inputFinalPropertyValue,
+                'inputFinalPropertyValueCheck': $inputFinalPropertyValueCheck,
+                'inputFinalPropertyCheckValue': $inputFinalPropertyCheckValue,
+                'inputFinalPropertySurvey': $inputFinalPropertySurvey,
+
+            };
+
+
             $.confirm({
                 title: 'ثبت درخواست',
                 content: 'آیا از ثبت درخواست مطمئن هستید؟',
@@ -15,33 +186,6 @@
                         btnClass: 'btn-green',
                         action: function () {
                             toggleLoader();
-                            $attachments = [];
-                            $inputTitle = $.trim($("#inputTitle").val());
-                            $inputReqType = $.trim($("#inputReqType").val());
-                            $inputReqUseType = $.trim($("#inputReqUseType").val());
-                            $inputAgentNationalCode = $.trim($("#inputAgentNationalCode").val());
-                            $inputMarketMakerNationalCode = $.trim($("#inputMarketMakerNationalCode").val());
-                            $inputPrice = $.trim($("#inputPrice").val());
-                            $inputDescription = $.trim($("#inputDescription").val());
-                            $(".uploaded-files tbody tr").each(function(){
-                                $attach = {
-                                    'type' : $(this).data('type'),
-                                    'name' : $(this).data('name'),
-                                    'src'  : $(this).data('src')
-                                };
-                                $attachments.push($attach);
-                            });
-                            $sendData = {
-                                'inputTitle': $inputTitle,
-                                'inputReqType': $inputReqType,
-                                'inputAgentNationalCode': $inputAgentNationalCode,
-                                'inputMarketMakerNationalCode': $inputMarketMakerNationalCode,
-                                'inputReqUseType': $inputReqUseType,
-                                'inputReqStatus': 'LEGAL',
-                                'inputPrice': $inputPrice,
-                                'inputDescription': $inputDescription,
-                                'inputAttachments': $attachments
-                            };
                             $.ajax({
                                 type: 'post',
                                 url: base_url + 'MyRequests/doAdd',
@@ -50,7 +194,7 @@
                                     $result = data;
                                     notify($result['content'], $result['type']);
                                     toggleLoader();
-                                    //location.reload();
+                                    window.history.back();
                                 }
                             });
                         }
@@ -60,44 +204,15 @@
                         btnClass: 'btn-blue',
                         action: function () {
                             toggleLoader();
-                            $attachments = [];
-                            $inputReqId = $.trim($("#inputReqId").val());
-                            $inputTitle = $.trim($("#inputTitle").val());
-                            $inputAgentNationalCode = $.trim($("#inputAgentNationalCode").val());
-                            $inputMarketMakerNationalCode = $.trim($("#inputMarketMakerNationalCode").val());
-                            $inputReqType = $.trim($("#inputReqType").val());
-                            $inputReqUseType = $.trim($("#inputReqUseType").val());
-                            $inputPrice = $.trim($("#inputPrice").val());
-                            $inputDescription = $.trim($("#inputDescription").val());
-                            $(".uploaded-files tbody tr").each(function(){
-                                $attach = {
-                                    'type' : $(this).data('type'),
-                                    'name' : $(this).data('name'),
-                                    'src'  : $(this).data('src')
-                                };
-                                $attachments.push($attach);
-                            });
-                            $sendData = {
-                                'inputReqId': $inputReqId,
-                                'inputTitle': $inputTitle,
-                                'inputReqType': $inputReqType,
-                                'inputAgentNationalCode': $inputAgentNationalCode,
-                                'inputMarketMakerNationalCode': $inputMarketMakerNationalCode,
-                                'inputReqUseType': $inputReqUseType,
-                                'inputReqStatus': 'DRAFT',
-                                'inputPrice': $inputPrice,
-                                'inputDescription': $inputDescription,
-                                'inputAttachments': $attachments
-                            };
                             $.ajax({
                                 type: 'post',
-                                url: base_url + 'MyRequests/doAdd',
+                                url: base_url + 'MyRequests/doAdd?draft=true',
                                 data: $sendData,
                                 success: function (data) {
                                     $result = data;
                                     notify($result['content'], $result['type']);
                                     toggleLoader();
-                                    //location.reload();
+                                    window.history.back();
                                 }
                             });
                         }
@@ -125,7 +240,6 @@
                     },
                 }
             });
-
         });
         function readURL(input , name) {
             toggleLoader();
@@ -218,5 +332,90 @@
             }
         });
         $('.alert-form select').change();
+
+        function readImageURL(input , name) {
+            toggleLoader();
+            if (input.files && input.files[0] && input.files[0].name.match(/\.(jpg|JPG|JPEG|jpeg|png|PNG|gif|pdf|word|zip|docx|doc|xlsx|xls|rar)$/)) {
+                $FileSize = input.files[0].size / 1024 / 1024;
+                if ($FileSize < 20) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            var file = e.target.result;
+                        };
+                        reader.readAsDataURL(input.files[0]);
+                        var file_data = input.files[0];
+                        var form_data = new FormData();
+                        form_data.append('file',file_data);
+                        $.ajax({
+                            url: base_url + '/Home/uploadFile',
+                            dataType: 'text',
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            data: form_data,
+                            type: 'post',
+                            success: function (data) {
+                                $result = JSON.parse(data);
+                                if($result['success']) {
+                                    $inputAttachmentSource = $result['fileSrc'];
+                                    notify('بارگذاری فایل با موفقیت انجام شد', 'green');
+
+                                    $(".uploaded-image-files tbody").append("<tr data-src='" + $inputAttachmentSource + "'><td><img width='100' height='100' src='" + $inputAttachmentSource   + "' /></td><td  class='fit'><button class='btn btn-danger btn-sm remove-file'>X</button></td></tr>");
+                                    $(".uploaded-image-files table").show();
+                                    $("#file-image").val('');
+                                } else{
+                                    notify($result['content'], 'red');
+                                    $("#file-image").val('');
+                                }
+                                toggleLoader();
+                            },
+                            error: function (data) {
+                                $("#file").val('');
+                            }
+                        });
+                    }
+                }
+                else {
+                    toggleLoader();
+                    notify("فایل شما باید کمتر از هشت مگابایت باشد", "red");
+                }
+            }
+            else {
+                toggleLoader();
+                notify("فرمت فایل نامعتبر است", "red");
+            }
+        }
+        $("#file-image").change(function () {
+            readImageURL(this)
+        });
+
+        $('#inputProvince').change(function () {
+            toggleLoader();
+            $("#inputCity").html('');
+            $stateId = $(this).val();
+            $.ajax({
+                type: 'post',
+                url: "<?php echo base_url(); ?>" + 'Country/getCityByProvinceId/' + $stateId,
+                success: function (data) {
+                    toggleLoader();
+                    $result = jQuery.parseJSON(data);
+                    for (let i = 0; i < $result.length; i++) {
+                        $("#inputCity").append('<option value="' + $result[i].CityId + '">' + $result[i].CityName + '</option>');
+                    }
+                    cutSelectOptionLongText();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    iziToast.show({
+                        title: 'خطای ارتباط با سرور.دقایقی دیگر تلاش کنید',
+                        color: 'red',
+                        zindex: 9060,
+                        position: 'topLeft'
+                    });
+                    toggleLoader();
+                }
+            });
+        });
+
     });
 </script>

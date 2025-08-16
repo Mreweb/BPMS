@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 $config['base_url'] = 'http://localhost:8080/BPMS/';
+$config['node_url'] = 'http://localhost:3000/';
+$config['blockchain_url'] = 'https://testnet.bscscan.com/';
 //$config['base_url'] = 'http://paziresh.dgval.ir:5055/';
 $config['index_page'] = '';
 $config['uri_protocol']	= 'REQUEST_URI';
@@ -55,9 +57,13 @@ $config['defaultPageTitle'] = '';
 $config['defaultPageSize'] = 10;
 $config['upload_path']= './uploads/';
 $config['404_image']= $config['base_url'].('assets/ui/assets/img/404.jpg');
-$config['SMSAPI']= 'QUiRP61z2Q5BcNd0d9zRjj947LWIZ5VQfAUS0EwOloI';
+$config['SMSAPI']= '656B43504E624150746A2B526B485A6A79684E464E4C49385679646B783157596861584370582B514746303D';
 $config['SMSTemplate']= 'ticketverify';
 
+$config['CENTRALBANKVERSION'] = FALSE;
+$config['ISBLOCKCHAIN'] = TRUE;
+
+$config['SMSTemplate']= 'ticketverify';
 /* Enums */
 $config['DBMessages'] = array(
     'SuccessAction' => array(
@@ -75,6 +81,11 @@ $config['DBMessages'] = array(
         'content' => 'تمامی مقادیر الزامی را وارد کنید',
         'success' => false
     ),
+    'CSRFAction' => array(
+        'type' => "csrf",
+        'content' => "CSRF",
+        'success' => false
+    ),
     'DuplicateInfo' => array(
         'type' => "yellow",
         'content' => 'اطلاعات قبلا در سامانه ثبت شده است',
@@ -82,8 +93,16 @@ $config['DBMessages'] = array(
     )
 );
 $config['API'] = array();
+$config['SMSTemplate']  = array(
+    'bpms-otp' => 'bpms-otp',
+    'bpms-success-order' => 'bpms-success-order',
+    'bpms-check-order' => 'bpms-check-order',
+    'bpms-add-user' => 'bpms-add-user',
+    'bpms-change-order' => 'bpms-change-order',
+    'bpms-add-order' => 'bpms-add-order'
+);
 $config['ENUM'] = array(
-    'APP_Name' => 'سامانه پذیرش دارایی ها',
+    'APP_Name' => 'سامانه املاک و مستندات شبکه بانکی',
     'ACTIVE_USER' => array(
         '0' => 'غیرفعال',
         '1' => 'فعال'
@@ -91,6 +110,10 @@ $config['ENUM'] = array(
     'HAS_NOT' => array(
         '0' => 'ندارد',
         '1' => 'دارد'
+    ),
+    'YES_NO' => array(
+        '0' => 'خیر',
+        '1' => 'بله'
     ),
     'GENDER' => array(
         'MALE' => 'آقا',
@@ -100,27 +123,97 @@ $config['ENUM'] = array(
         '0' => 'عدم تایید',
         '1' => 'تایید شده'
     ),
+    'CENTRALBANKACCEPT' => array(
+        '0' => 'عدم تایید',
+        '1' => 'تایید شده',
+        '2' => 'ثبت به عنوان مازاد'
+    ),
+    'FINALACCEPT' => array(
+        '0' => 'عدم تایید',
+        '1' => 'ارسال جهت مولد سازی'
+    ),
     'REQ_STATUS' => array(
         'DRAFT' => 'ثبت اولیه',
+        'CENTRALBANK' => 'بررسی بانک مرکزی',
+        'CENTRALBANKACCEPT' => 'تایید بانک مرکزی',
+        'SURPLUS' => 'تایید مازاد بانک مرکزی',
         'LEGAL' => 'بررسی کمیسیون حقوقی',
-        'ECONOMIC' => 'بررسی کمیسیون اقتصادی',
-        'FINAL_ACCEPT' => 'بررسی نهایی ارشد',
-        'REJECT' => 'عدم تایید',
+        'ECONOMIC' => 'بررسی  کمیسیون اقتصادی',
+        'FINAL_ACCEPT' => 'بررسی  نهایی ارشد',
+        'REJECT' => 'در درخواست',
         'ACCEPT' => 'تایید و پذیرش'
     ),
     'REQ_TYPE' => array(
         'EARTH' => 'زمین',
         'BUILDING' => 'ملک',
         'IRON_HOUSE' => 'ملک نیمه ساخته',
+        'STOCK' => 'اوراق بهادار',
+    ),
+    'ContractFunctions' => array(
+        'createProposal' => 'ساخت پروپوزال درخواست',
+        'voteProposal' => 'رای دهی به درخواست'
+    ),
+    'DOC_TYPE' => array(
+        '1' => 'مشاع',
+        '2' => 'شش دانگ',
+        '3' => 'منگوله دار',
+        '4' => 'تک برگ',
+        '5' => 'سایر',
     ),
     'REQ_DOC_TYPE' => array(
         'PROPERTY_DEED' => 'سند ملک',
         'VALUATION_REPORT' => 'گزارش ارزش گذاری',
         'PROJECT_DESIGN_DOCUMENTATION' => 'مستندات طراحی پروژه',
         'REPRESENTATIVE_INTRODUCTION_LETTER' => 'نامه معرفی نماینده',
-        'MARKET_MANAGER_INTRODUCTION_LETTER' => 'نامه معرفی بازارگردان',
+        /*'MARKET_MANAGER_INTRODUCTION_LETTER' => 'نامه معرفی بازارگردان',*/
         'WHITE_PAPER' => 'سپیدنامه',
         'OTHER' => 'سایر',
+    ),
+    'COMPANY_TYPE' => array(
+        '1' => 'شرکت هاي سهامي (خاص يا عام)',
+        '2' => 'شرکت با مسئولیت محدود',
+        '3' => 'شرکت تضامني',
+        '4' => 'شرکت مختلط سهامي و غیرسهامي',
+        '5' => 'شرکت تعاوني',
+        '6' => 'شرکت نسبي',
+    ),
+    'BANK_RELATION' => array(
+        '1' => ' بانک يا موسسه اعتباري',
+        '2' => ' شرکت مستقیم',
+        '3' => 'شرکت غیرمستقیم'
+    ),
+    'PERSON_RELATION_TYPE' => array(
+        '1' => 'سهامداري',
+        '2' => 'نمايندگي',
+        '3' => 'طرح خاص ',
+    ),
+    'PROPERTY_TYPE' => array(
+        '1' => 'آپارتمان',
+        '2' => 'زمين',
+        '3' => 'ویلایی',
+        '4' => 'در حال ساخت',
+        '5' => 'اوراق بهادار',
+        '6' => 'ساير',
+    ),
+    'PROPERTY_SPECIAL_STATUS' => array(
+        '1' => 'طلق',
+        '2' => 'وقفی',
+        '3' => 'دولتی',
+        '4' => 'بلامعارض بودن',
+        '5' => 'سایر'
+    ),
+    'PROPERTY_BUY_TYPE' => array(
+        '1' => 'خرید',
+        '2' => 'تملیک',
+        '3' => 'سایر'
+    ),
+    'PROPERTY_JUDGE_RESULT' => array(
+        '0' => 'له',
+        '1' => 'علیه'
+    ),
+    'PROPERTY_DOC_EXACT' => array(
+        '0' => 'قطعی',
+        '1' => 'وکالتی'
     ),
     'USE_TYPE' => array(
         '1' => 'مسکونی',
@@ -146,7 +239,8 @@ $config['ENUM'] = array(
         'MANAGER' => 'ارشد',
         'ECONOMIC' => 'اقتصادی',
         'LEGAL' => 'حقوقی',
-        'PUBLISHER' => 'ناشر'
+        'PUBLISHER' => 'بانک/ناشر',
+        'CENTRALBANK' => 'بانک مرکزی'
     ),
     'TRANSLATES' => array(
         'Report' => 'گزارشات',

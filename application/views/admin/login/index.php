@@ -2,6 +2,22 @@
 $_URL = base_url();
 $_DIR = base_url('assets');
 ?>
+<?php
+$cookie_name = "csrf";
+$cookie_value = randomString('alpha' , 32);
+if(!isset($_COOKIE[$cookie_name]) && $_COOKIE[$cookie_name] == NULL) {
+    setcookie($cookie_name, $cookie_value, [
+        'expires' => 0,
+        'path' => '/',
+        'domain' => '',
+        'secure' => false,
+        'httponly' => false,
+        'samesite' => 'strict',
+    ]);
+} else{
+    $cookie_value = $_COOKIE[$cookie_name];
+}
+?>
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
@@ -9,6 +25,7 @@ $_DIR = base_url('assets');
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf_cms_design" content="<?php echo $cookie_value;?>" />
     <!--favicon-->
     <link rel="icon" href="<?php echo $_DIR ?>/images/favicon-32x32.png" type="image/png"/>
     <!--plugins-->
@@ -62,6 +79,7 @@ $_DIR = base_url('assets');
         }
         $(document).ready(function(){
             $.ajaxSetup({
+                headers: { 'csrf-header': $("meta[name='csrf_cms_design']").attr('content') },
                 error: function (data, status, error) {
                     $result = data.responseJSON;
                     if($result['message'] != undefined){
@@ -85,7 +103,6 @@ $_DIR = base_url('assets');
     </script>
 </head>
 <body class="bg-theme bg-theme2">
-
 <!--wrapper-->
 <div class="wrapper">
     <div class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-lg-0">
@@ -99,7 +116,7 @@ $_DIR = base_url('assets');
                                     <img src="<?php echo $_DIR ?>/images/logo-icon.png" width="60" alt="توضیح تصویر"/>
                                 </div>
                                 <div class="text-center mb-4">
-                                    <h5 class="">ورود به داشبورد</h5>
+                                    <h5 class="">پلتفرم پذیرش املاک و مستغلات شمین</h5>
                                     <p class="mb-0">برای ورود اطلاعات خود را وارد کنید</p>
                                 </div>
                                 <div class="form-body">
@@ -116,8 +133,9 @@ $_DIR = base_url('assets');
                                                 <input type="password" class="form-control border-end-0"
                                                        id="inputPassword" value=""
                                                        placeholder="رمز ورود خود را وارد کنید">
-                                                <a href="javascript:;"
-                                                   class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                                                <a href="javascript:;" class="input-group-text bg-transparent">
+                                                    <i class='bx bx-hide'></i>
+                                                </a>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -147,7 +165,6 @@ $_DIR = base_url('assets');
                                         <i class="bx bx-phone"></i>
                                     </a>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -158,7 +175,5 @@ $_DIR = base_url('assets');
     </div>
 </div>
 <!--end wrapper-->
-
-
 </body>
 </html>
