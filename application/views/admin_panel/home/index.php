@@ -89,6 +89,59 @@
                 </div>
             </div>
             <div  class="row">
+                <div class="col-12">
+                    <div class="card radius-10">
+                        <div class="card-header">
+                            <h2>املاک معرفی نشده</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="alert bg-danger text-white">
+                                در صورت عدم معرفی و ثبت املاک مازاد مشمول جریمه خواهید شد.
+                            </div>
+                            <table class="table table-bordred table-striped">
+                                <thead>
+                                <tr>
+                                    <th class="fit">ردیف</th>
+                                    <th>شناسه ملک</th>
+                                    <th class="fit">آدرس</th>
+                                    <th class="fit">شناسه مالک</th>
+                                    <th class="fit">تاریخ خرید</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="fit">1</td>
+                                        <td class="fit">225421541204</td>
+                                        <td class="fit">اصفهان نبش میدان نقش جهان خیابان طالقانی کوچه مروج پلاک 4</td>
+                                        <td class="fit">4900354370</td>
+                                        <td class="fit">1391/04/18</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fit">2</td>
+                                        <td class="fit">450542021204</td>
+                                        <td class="fit">تهران میدان ونک خیابان طالقانی کوچه مروج پلاک 254</td>
+                                        <td class="fit">4900354370</td>
+                                        <td class="fit">1398/01/25</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fit">3</td>
+                                        <td class="fit">385421541204</td>
+                                        <td class="fit">تبریز  میدان ساعت خیابان طالقانی کوچه مروج پلاک 254</td>
+                                        <td class="fit">4900354370</td>
+                                        <td class="fit">1390/06/11</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fit">4</td>
+                                        <td class="fit">465421541204</td>
+                                        <td class="fit">خوزستان  میدان امام خمینی (ره) خیابان ولی عصر (عج)  پلاک 12</td>
+                                        <td class="fit">4900354370</td>
+                                        <td class="fit">140/08/07</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-lg-6 col-12">
                     <div class="card radius-10">
                         <div class="card-header">

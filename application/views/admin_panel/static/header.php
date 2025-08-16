@@ -85,8 +85,9 @@ if(!isset($_COOKIE[$cookie_name]) && $_COOKIE[$cookie_name] == NULL) {
 
 
     <script>
-        function setTheme(theme = null) {
 
+
+        function setTheme(theme = null) {
             localStorage.setItem("theme", 'bg-theme ' + theme);
             $('body').attr('class', 'bg-theme ' + theme);
 

@@ -81,7 +81,5 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="BPMSDAO" />
-    <orderEntry type="module" module-name="NicHolding" />
   </component>
 </module>
