@@ -27,4 +27,5 @@ jobs:
             mv BPMS/* /var/www/html/shamin_paziresh/
             mv config.php /var/www/html/shamin_paziresh/application/config/
             mv database.php /var/www/html/shamin_paziresh/application/config/
+            rm -rf BPMS
           "
