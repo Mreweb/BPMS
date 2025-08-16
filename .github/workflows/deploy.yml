@@ -22,6 +22,6 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -p 1997 root@45.149.78.155 "
             cd /var/www/html/shamin_paziresh || exit 1
-            rm -f BPMS
+            rm -rf BPMS
             git pull origin main || git clone https://github.com/Mreweb/BPMS.git
           "
