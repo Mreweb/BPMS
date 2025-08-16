@@ -24,4 +24,7 @@ jobs:
             cd /var/www/html/shamin_paziresh || exit 1
             rm -rf BPMS
             git pull origin main || git clone https://github.com/Mreweb/BPMS.git
+            mv BPMS/* /var/www/html/shamin_paziresh/
+            mv config.php /var/www/html/shamin_paziresh/application/config/
+            mv database.php /var/www/html/shamin_paziresh/application/config/
           "
