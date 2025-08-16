@@ -23,5 +23,5 @@ jobs:
           ssh -o StrictHostKeyChecking=no -p 1997 root@45.149.78.155 "
             cd /var/www/html/shamin_paziresh || exit 1
             git pull origin main || git clone git@github.com:Mreweb/BPMS.git .
-            composer install --no-dev --optimize-autoloader || true
+            composer install --ignore-platform-reqs --no-dev --optimize-autoloader || true
           "
