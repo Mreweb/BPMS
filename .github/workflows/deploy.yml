@@ -1,8 +1,8 @@
 - name: Deploy to server
   run: |
     ssh -o StrictHostKeyChecking=no -p 1997 root@45.149.78.155 "
-      cd /var/www/codeigniter || exit 1
-      git pull origin Amlak || git clone git@github.com:Mreweb/BPMS.git .
+      cd /var/www/html/shamin_paziresh || exit 1
+      git pull origin || git clone git@github.com:Mreweb/BPMS.git .
       composer install --no-dev --optimize-autoloader || true
       php index.php migrate || true
     "
