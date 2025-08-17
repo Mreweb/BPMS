@@ -1,4 +1,5 @@
 <?php
+die('CI TEST');
 define('ENVIRONMENT', 'production');
 switch (ENVIRONMENT) {
     case 'development':
