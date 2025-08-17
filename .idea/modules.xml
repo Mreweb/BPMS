@@ -3,6 +3,12 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/BPMS.iml" filepath="$PROJECT_DIR$/.idea/BPMS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../BPMSTicket/.idea/BPMSTicket.iml" filepath="$PROJECT_DIR$/../BPMSTicket/.idea/BPMSTicket.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Bep20TokenNodeJs/.idea/Bep20TokenNodeJs.iml" filepath="$PROJECT_DIR$/../Bep20TokenNodeJs/.idea/Bep20TokenNodeJs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ShaminCMS/.idea/ShaminCMS.iml" filepath="$PROJECT_DIR$/../ShaminCMS/.idea/ShaminCMS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ShaminCoreNew/.idea/ShaminCoreNew.iml" filepath="$PROJECT_DIR$/../ShaminCoreNew/.idea/ShaminCoreNew.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ShaminReact/.idea/ShaminReact.iml" filepath="$PROJECT_DIR$/../ShaminReact/.idea/ShaminReact.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Solidity/.idea/Solidity.iml" filepath="$PROJECT_DIR$/../Solidity/.idea/Solidity.iml" />
     </modules>
   </component>
 </project>

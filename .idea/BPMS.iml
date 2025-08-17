@@ -81,5 +81,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="Bep20TokenNodeJs" />
+    <orderEntry type="module" module-name="BPMSTicket" />
+    <orderEntry type="module" module-name="ShaminCMS" />
+    <orderEntry type="module" module-name="ShaminCoreNew" />
+    <orderEntry type="module" module-name="ShaminReact" />
+    <orderEntry type="module" module-name="Solidity" />
   </component>
 </module>
