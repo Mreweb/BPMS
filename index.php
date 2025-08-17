@@ -1,5 +1,4 @@
 <?php
-die('TEST');
 define('ENVIRONMENT', 'production');
 switch (ENVIRONMENT) {
     case 'development':
