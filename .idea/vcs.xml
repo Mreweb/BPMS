@@ -3,5 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../Bep20TokenNodeJs" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../ShaminCoreNew/shamincore2" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../ShaminReact/site" vcs="Git" />
   </component>
 </project>
